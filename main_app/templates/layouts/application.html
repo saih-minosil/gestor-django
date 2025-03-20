@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main_app/css/style.css' %}" type="text/css">
+
+    <script src="{% static 'main_app/js/ajax.js' %}"></script>
+    <script src="{% static 'main_app/js/global.js' %}"></script>
+    {% block header %}
+    {% endblock %}
+
+</head>
+<body         {% block onload %}
+    {% endblock %}>
+<div id="cuerpo_app">
+    <div id="contenido">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+</body>

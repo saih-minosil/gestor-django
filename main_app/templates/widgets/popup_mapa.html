@@ -1,0 +1,25 @@
+  <table class="tabla_popup_estacion ancho100">
+    <tbody>
+        <tr>
+          <td class="celdacn" style="background-color:{{estacion.color}};" colspan="4">
+            <a href='#' onclick="mostrarEstacion('{{estacion.codigo}}')"> {{estacion.codigo}} : {{estacion.nombre}}</a>
+          </td>
+        </tr>
+      {% for senal in senales %}
+        <tr>
+          <td class="marca_alarma" style="background-color:{{senal.color_alarma}};">
+            &nbsp;
+          </td>
+          <td class="celdaln">
+            <a href="#" onclick="mostrarSenal('{{senal.ls_tag_txt}}');">{{senal.ls_descripcion}}:</a>
+          </td>
+          <td class="celdal">
+            {{senal.ultimo_valor}}
+          </td>
+          <td class="celdal">
+            {{senal.unidad}}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>

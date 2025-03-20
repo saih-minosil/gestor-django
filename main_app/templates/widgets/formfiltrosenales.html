@@ -1,0 +1,73 @@
+<div id="Filtrado_por_estacion"  hidden>
+  <form name="FiltrarPorEstacion">
+    <div id="Contenedor_tabla_filtrado_estacion" class="Contenedor_oscuro ancho_fijo">
+      <table id="tabla_filtrado_estacion" >
+        <tr>
+          <td><p> Tipo de estación </p></td>
+        <td>
+          <select name = "Tipo" id="select_tipo_estacion" onchange="buscarEstaciones();">
+            <option value="A">Aforo</option>
+            <option value="N">Nivel</option>
+            <option value="P">Pluvio</option>
+            <option value="M">Meteo</option>
+            <option value="E">Embalse</option>
+            <option value="CH">Concesion</option>
+            <option value="PZ">Piezo</option>
+            <option value="R">Riego</option>
+            <option value="V">Vertido</option>
+          </select>
+        </td>
+        <td><p> Zona </p></td>
+        <td>
+          <select name="Zona" id="select_zona_estacion" onchange="buscarEstaciones();">
+            <option value=1 >Miño alto</option>
+            <option value=2 >Miño bajo</option>
+            <option value=3 >Sil alto</option>
+            <option value=4 >Sil bajo</option>
+            <option value=5 >Cabe</option>
+            <option value=6 >Limia</option>
+          </select>
+        </td>
+        </tr>
+      </table>
+    </div>
+    <div id="Contenedor_estaciones">
+    </div>
+  </form>
+</div>
+<div id="filtro_senales" >
+  <form id="form-filtro_senales">
+      <div id="div_filtro_senales" class="Contenedor_oscuro ancho_fijo">
+          <table id="table_filtro_senales">
+              <tbody>
+                  <tr>
+                      <td><input type="button" onclick="javascript:abrirFiltroPorEstacion();" id="filtrarEstacion" value="Filtrar por estación">
+                      </td>
+                      <td><div id="Label_codigo_estacion">Todas</div></td>
+                      <td><p>Filtrar por tipo: </p>
+                      </td>
+                      <td>
+                        <select name="Tipo" id="select_tipo_senal" onchange="mostrarSenales();">
+                          <option value="" selected="selected"> Todos los tipos: </option>
+                          {% for tipo in tipos %}
+                            <option value="{{ tipo.ts_codigo }}" >{{ tipo.ts_descripcion }}</option>
+                          {% endfor  %}
+                        </select>
+                      </td>
+                      <td><p>Buscar: </p>
+                      </td>
+                      <td>    <select id="select_buscar_senal" oninput="javascript:mostrarSenales()">
+                                    <option value=1 selected>En codigo</option>
+                                    <option value=2>En descripcion</option>
+                              </select>
+                      </td>
+                      <td>    <input type="text" id="input_buscar_senal" oninput="javascript:mostrarSenales()">
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+   </form>
+</div>
+
+<!-- <script lang="javascript">filtrarPorEstacion()</script> -->

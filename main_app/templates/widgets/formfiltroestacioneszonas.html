@@ -1,0 +1,23 @@
+{% load static %}
+<form id="Selector_zonas" class="Selector">
+    <div id="div_selector_zonas" class="div_selector">
+        <table>
+            <tbody>
+                <tr><th>Filtrar por zonas</th></tr>
+                <tr><td><input type="checkbox" onchange="javascript:on_check(this)" checked id="chkZonasTodas" class="chkZonasTodas"> Todas <br></td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarZonas" value=1 onchange="javascript:on_check(this)" checked id="chkMinoAlto"> Miño Alto
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarZonas" value=2 onchange="javascript:on_check(this)" checked id="chkMinoBajo"> Miño bajo
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarZonas" value=3 onchange="javascript:on_check(this)" checked id="chkSilAlto"> Sil superior
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarZonas" value=4 onchange="javascript:on_check(this)" checked id="chkSilBajo"> Sil inferior
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarZonas" value=5 onchange="javascript:on_check(this)" checked id="chkCabe"> Cabe
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarZonas" value=6 onchange="javascript:on_check(this)" checked id="chkLimia"> Limia
+                </td></tr>
+            </tbody>
+        </table>
+    </div>
+ </form>

@@ -1,0 +1,28 @@
+Falta el archivo de pronosticos : 202503191019SimulationResults_FOR.xml
+Procesando archivo 202503190119SimulationResults_OBS.xml
+Ya hay datos introducidos para la fecha 2025-03-19 01:19:00 
+Error al mover el archivo ./xml/202503190119SimulationResults_OBS.xml a ./bck: Destination path './bck\202503190119SimulationResults_OBS.xml' already exists
+Procesando archivo 202503190119SimulationResults_HIST.xml
+Ya hay datos introducidos para la fecha 2025-03-19 01:19:00 
+Error al mover el archivo ./xml/202503190119SimulationResults_HIST.xml a ./bck: Destination path './bck\202503190119SimulationResults_HIST.xml' already exists
+Procesando archivo 202503190419SimulationResults_OBS.xml
+Ya hay datos introducidos para la fecha 2025-03-19 04:19:00 
+Error al mover el archivo ./xml/202503190419SimulationResults_OBS.xml a ./bck: Destination path './bck\202503190419SimulationResults_OBS.xml' already exists
+Procesando archivo 202503190419SimulationResults_HIST.xml
+Ya hay datos introducidos para la fecha 2025-03-19 04:19:00 
+Error al mover el archivo ./xml/202503190419SimulationResults_HIST.xml a ./bck: Destination path './bck\202503190419SimulationResults_HIST.xml' already exists
+Procesando archivo 202503190719SimulationResults_OBS.xml
+Ya hay datos introducidos para la fecha 2025-03-19 07:19:00 
+Error al mover el archivo ./xml/202503190719SimulationResults_OBS.xml a ./bck: Destination path './bck\202503190719SimulationResults_OBS.xml' already exists
+Procesando archivo 202503190719SimulationResults_HIST.xml
+Ya hay datos introducidos para la fecha 2025-03-19 07:19:00 
+Error al mover el archivo ./xml/202503190719SimulationResults_HIST.xml a ./bck: Destination path './bck\202503190719SimulationResults_HIST.xml' already exists
+Procesando archivo 202503191019SimulationResults_OBS.xml
+Ya hay datos introducidos para la fecha 2025-03-19 10:19:00 
+Error al mover el archivo ./xml/202503191019SimulationResults_OBS.xml a ./bck: Destination path './bck\202503191019SimulationResults_OBS.xml' already exists
+Procesando archivo 202503191019SimulationResults_HIST.xml
+Ya hay datos introducidos para la fecha 2025-03-19 10:19:00 
+Error al mover el archivo ./xml/202503191019SimulationResults_HIST.xml a ./bck: Destination path './bck\202503191019SimulationResults_HIST.xml' already exists
+Limpiando BB.DD
+1543651 filas borradas
+Proceso finalizado en el instante 20/03/2025 12:43:26

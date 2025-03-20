@@ -1,0 +1,246 @@
+{% load static %}
+	<!-- Primera tabla: esquemas y herramientas -->
+	<div id="table-container" height="2600px">
+		<table class="tabla ancho100">
+			<tbody>
+				<tr>
+					<th class="encabezado_fijos" >Esquemas</th>
+					<th class="encabezado_fijos" >Utilidades</th>
+				</tr>
+				<tr>
+					<td class="celdac">
+						{% if estacion.esquema_estacion %}
+							<a id="esquema_link" href="/{{estacion.esquema_estacion}}">
+							<img src="/{{estacion.esquema_estacion}}" style="vertical-align:middle" width="400px">
+							</a>
+						{% else %}
+							<img src="/main_app/static/main_app/img/no_esquema.png" style="vertical-align:middle" width="400px">
+						{% endif %}
+					</td>
+					<td class="celdac">
+					<ul id="enlaces_contacto">
+						<li class="enlace_contacto" style="background-image:url(/main_app/static/main_app//img/fotos.gif); ">
+							<a href="javascript:visualizacionFotos('{{estacion.estacion.le_codigo_txt}}')">Fotos</a>
+						</li>
+						<li class="enlace_contacto" style="background-image:url(/main_app/static/main_app//img/curvas.gif); ">
+							<a href="/graficas_estacion/{{estacion.estacion.le_codigo_txt}}">Curvas tendencia</a>
+						</li>
+					</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- ---------------------------------------------------------- Segunda tabla: Datos de la estacion -------------------------------------------------------------->
+		<table class="tabla m0 p0 ancho100">
+			<tbody>
+				<tr>
+					<th class="encabezado_fijos" colspan="12">Datos Fijos</th>
+				</tr>
+				<tr>
+					<th class="celdaln" rowspan="3">Código SAIH&nbsp;(ROEA):</th>
+					<td class="celdal fontsize20" rowspan="3">{{estacion.estacion.le_codigo_txt}}&nbsp;({{estacion.estacion.le_codigo_roea}})</td>
+					<th class="celdaln" colspan="5" rowspan="3">Coordenadas UTM:</th>
+					<th class="celdacn" colspan="2">Huso</th>
+					<th class="celdacn">X</th>
+					<th class="celdacn">Y</th>
+					<th class="celdacn">Z</th>
+				</tr>
+				<tr>
+					<td class="celdac" colspan="2">29</td>
+					<td class="celdac">{{estacion.estacion.le_h29_x}}</td>
+					<td class="celdac">{{estacion.estacion.le_h29_y}}</td>
+					<td class="celdac">{{estacion.estacion.le_h29_z}}</td>
+				</tr>
+				<tr>
+					<td class="celdac" colspan="2">30</td>
+					<td class="celdac">{{estacion.estacion.le_utm_x}}</td>
+					<td class="celdac">{{estacion.estacion.le_utm_y}}</td>
+					<td class="celdac">{{estacion.estacion.le_utm_z}}</td>
+				</tr>
+				<tr>
+					<td class="celdaln">Nombre:</td>
+					<td class="celdal">{{estacion.estacion.le_nombre}}</td>
+					<td class="celdaln" colspan="5">Río:</td>
+					<td class="celdal" colspan="5">{{estacion.estacion.le_rio}}</td>
+				</tr>
+				<tr>
+					<td class="celdaln">Municipio:</td>
+					<td class="celdal">{{estacion.estacion.le_municipio}}</td>
+					<td class="celdaln" colspan="5">Tipología:</td>
+					<td class="celdal" colspan="5">{{estacion.estacion.le_tipologia}}</td>
+				</tr>
+				<tr>
+					<td class="celdaln">Provincia:</td>
+					<td class="celdal">{{estacion.estacion.le_provincia}}</td>
+					<td class="celdaln" colspan="5">Tipo sensor principal:</td>
+					<td class="celdal" colspan="5">{{estacion.estacion.le_tipo_sensor}}</td>
+				</tr>
+				<tr>
+					<td class="celdaln">Superficie Cuenca en el punto:</td>
+					<td class="celdal" colspan="11">{{estacion.estacion.le_superficie}} Km²</td>
+				</tr>
+			</tbody>
+		</table>
+		<!--------------------------------------------- tabla 3 datos de la masa de agua ------------------------------>
+		{% if estacion.estacion.le_tipo_estacion != 'P' and estacion.estacion.le_tipo_estacion != 'M'  %}
+		<table class="tabla m0 p0 ancho100" >
+			<tbody>
+				<tr>
+					<td class="encabezado_fijos" colspan="4">CARACTERÍSTICAS MASA DE AGUA</td>
+				</tr>
+				<tr>
+					<td class="celdaln">Código:</td>
+					<td class="celdal">{{estacion.estacion.le_masa_codigo}}</td>
+					<td class="celdaln">Tipología:</td>
+					<td class="celdal">{{estacion.estacion.le_masa_tipo}}</td>
+				</tr>
+				<tr>
+					<td class="celdaln">Nombre:</td>
+					<td class="celdal">{{estacion.estacion.le_masa_nombre}}</td>
+					<td class="celdaln">Estado ecológico/Potencial ecológico:</td>
+					<td class="celdal">{{estacion.estacion.le_masa_est_eco}}</td>
+				</tr>
+				<tr>
+					<td class="celdaln">Categoría:</td>
+					<td class="celdal">{{estacion.estacion.le_masa_categoria}}</td>
+					<td class="celdaln">Estado químico:</td>
+					<td class="celdal">{{estacion.estacion.le_masa_est_quim}}</td>
+				</tr>
+				<tr>
+					<td class="celdaln">Naturaleza:</td>
+					<td class="celdal">{{estacion.estacion.le_masa_naturaleza}}</td>
+					<td class="celdaln">Estado global:</td>
+					<td class="celdal">{{estacion.estacion.le_masa_est_glob}}</td>
+				</tr>
+			</tbody>
+		</table>
+		{% endif  %}
+		<!-- ------------------------------------------------------- Tabla 4: Datos en tiempo real ------------------------------------------------ -->
+		{% if estacion.senales %}
+			<table class="tabla p0 ancho100">
+				<tbody>
+					<tr>
+						<th class="encabezado_fijos" colspan="7">Datos en Tiempo Real {{estacion.fecha}}</th>
+					</tr>
+					<tr>
+						<th class="celdacn3"> Descripción </th>
+						<th class="celdacn3"> Valor </th>
+						<th class="celdacn3"> Ud </th>
+						<th class="celdacn3"> Tendencia </th>
+					</tr>
+					{% for senal in estacion.senales %}
+
+						<tr>
+							<td class="celdal"><a href="#" onclick="mostrarSenal('{{senal.ls_tag_txt}}');">{{senal.ls_descripcion}}</a> </td>
+							{% if senal.valor.ls_calidad == 3 %}
+								<td class="celdac">No definido </td>
+							{% elif senal.valor.ho_calidad == 1 %}
+								<td class="celdac">No disponible </td>
+							{% else %}
+								<td class="celdac">{{senal.valor.ho_valor}} </td>
+							{% endif %}
+							<td class="celdac">{{senal.ls_unid_ing}}</td>
+							<td class="celdac"><img src="/main_app/static/main_app/img/tendencia_{{senal.ls_tendencia}}.gif",alt ="$alt", width = 15, height = 15></td>
+							<!--<td class="celdac"><a href="/graficas/{{senal.codigo}}"><img src="/main_app/static/main_app/img/grafico_barras.gif"></a></td>-->
+						</tr>
+					{% endfor %}
+
+				</tbody>
+			</table>
+			<!-- ------------------------------------------------------- Tabla 5: Datos estadisticos dia anterior ----------------------------------------------- -->
+			{% if estacion.ultimo_dia %}
+				<table class="tabla  p0 ancho100">
+					<tbody>
+						<tr>
+							<th class="encabezado_fijos" colspan="6">
+								<span >Datos Estadísticos &nbsp;Día anterior&nbsp;{{estacion.ultimo_dia}}</span>
+							</th>
+						</tr>
+						<tr>
+							<td class="celdacn3">Descripción</td>
+							<td class="celdacn3">Media Día</td>
+							<td class="celdacn3">Mínimo Día</td>
+							<td class="celdacn3">Fecha Mínimo</td>
+							<td class="celdacn3">Máximo Día</td>
+							<td class="celdacn3">Fecha Máximo</td>
+						</tr>
+						{% for senal in estacion.senales %}
+						<!-- filtramos que tengan un valor, antes filtraba valor minimo, si no ambos -->
+							{% if senal.ultimo_dia.cc_valor or senal.mes_anterior.cc_valor == 0  %}
+								<tr>
+									<td class="celdal">{{senal.ls_descripcion}}</td>
+									<td class="celdac">{{senal.ultimo_dia.cc_valor}}</td>
+									<td class="celdac">{{senal.ultimo_dia.cc_valor_min}}</td>
+									<td class="celdac">{{senal.ultimo_dia.cc_f_valor_min}}</td>
+									<td class="celdac">{{senal.ultimo_dia.cc_valor_max}}</td>
+									<td class="celdac">{{senal.ultimo_dia.cc_f_valor_min}}</td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+					</tbody>
+				</table>
+		    {% endif %}
+			<!-- ------------------------------------------------------- Tabla 6: Datos estadisticos mes antrior ------------------------------------------------ -->
+			{% if estacion.ultimo_mes %}
+				<table class="tabla  p0 ancho100">
+					<tbody>
+						<tr>
+							<th class="encabezado_fijos" colspan="6">
+								<span class="encabezado_fijos">Datos Estadísticos&nbsp;Mes anterior&nbsp;{{estacion.ultimo_mes}}</span>
+							</th>
+						</tr>
+						<tr>
+							<td class="celdacn3">Descripción</td>
+							<td class="celdacn3">Media Mes</td>
+							<td class="celdacn3">Mínimo Mes</td>
+							<td class="celdacn3">Fecha Mínimo</td>
+							<td class="celdacn3">Máximo Mes</td>
+							<td class="celdacn3">Fecha Máximo</td>
+						</tr>
+						<!-- filtramos que tengan un calor, antes filtraba valor minimo, si no ambos -->
+						{% for senal in estacion.senales %}							
+							{% if senal.mes_anterior.cc_valor or senal.mes_anterior.cc_valor == 0 %}							
+						<tr>
+							<td class="celdal">{{senal.ls_descripcion}}</td>
+							<td class="celdac">{{senal.mes_anterior.cc_valor}}</td>
+							<td class="celdac">{{senal.mes_anterior.cc_valor_min}}</td>
+							<td class="celdac">{{senal.mes_anterior.cc_f_valor_min}}</td>
+							<td class="celdac">{{senal.mes_anterior.cc_valor_max}}</td>
+							<td class="celdac">{{senal.mes_anterior.cc_f_valor_min}}</td>
+						</tr>							
+							{% endif %}							
+						{% endfor %}
+					</tbody>
+				</table>
+			{% endif %}
+			<!-- ------------------------------------------------------- Tabla 7: Datos estadisticos maximos historicos ----------------------------------------- -->
+			{% if estacion.estacion.le_tipo_estacion == 'A' or estacion.estacion.le_tipo_estacion == 'N'  %}
+			<table class="tabla  p0 ancho100">
+				<tbody>
+					<tr>
+						<td class="encabezado_fijos" colspan="6">
+							<span >Datos Estadísticos</span>
+							<span >&nbsp;Máximo histórico&nbsp;</span>
+							<span >({{estacion.fecha_inicial}} a {{estacion.fecha_actual}})</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="celdacn3" width="50%">Descripción</td>
+						<td class="celdacn3" width="25%">Máximo período</td>
+						<td class="celdacn3" width="25%">Fecha nivel máximo del período</td>
+					</tr>
+					{% for senal in estacion.senales %}
+						{% if senal.maximo %}
+						<tr>
+							<td class="celdac" text="" align="left">{{senal.ls_descripcion}}</td>
+							<td class="celdac">{{senal.maximo }} {{senal.ls_unid_ing}}</td>
+							<td class="celdac">{{senal.fecha_maximo}}</td>
+						</tr>
+						{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
+			{% endif %}
+		{% endif %}
+
+	</div>

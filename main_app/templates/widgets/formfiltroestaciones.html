@@ -1,0 +1,69 @@
+{% load static %}
+    <div id="div_selector_tipos" class="Contenedor_oscuro ancho_fijo">
+        <table class="Estructura_filtrar">
+            <tbody>
+                <tr id="Fila_titulo_filtro_tipo_estacion">
+                    <th colspan=5 >Filtrar por tipo</th>
+                    <th colspan=2><input type="checkbox" onchange="javascript:on_check(this)" checked id="chkTiposTodos" class="chkTiposTodos">Seleccionar todos </th>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" class="chkFiltrarTipos" value="A" onchange="javascript:on_check(this)" checked id="chkAforo"> Aforo
+                        <img src="{% static '/main_app/img/ico_a.png' %}">
+                    </td>
+                    <td>
+                        <input type="checkbox" class="chkFiltrarTipos" value="N" onchange="javascript:on_check(this)" checked id="chkNivel"> Nivel
+                        <img src="{% static '/main_app/img/ico_n.png' %}">
+                    </td>
+                    <td>                        
+                        <input type="checkbox" class="chkFiltrarTipos" value="P" onchange="javascript:on_check(this)" checked id="chkPluvio"> Pluvio
+                        <img src="{% static '/main_app/img/ico_p.gif' %}">
+                    </td>
+                    <td><input type="checkbox" class="chkFiltrarTipos" value="M" onchange="javascript:on_check(this)" checked id="chkMeteo"> Meteo
+                        <img src="{% static '/main_app/img/ico_m.gif' %}">
+                    </td>
+                    <td><input type="checkbox" class="chkFiltrarTipos" value="E" onchange="javascript:on_check(this)" checked id="chkEmbalse"> Embalse
+                        <img src="{% static '/main_app/img/ico_e.png' %}">
+                    </td>
+                    <td><input type="checkbox" class="chkFiltrarTipos" value="CH" onchange="javascript:on_check(this)" checked id="chkConcesion"> Concesion
+                        <img src="{% static '/main_app/img/ico_e.png' %}">
+                    </td>
+                    <td id="Selector_filtro_tipo_estacion_piezo"><input type="checkbox" class="chkFiltrarTipos" value="PZ" onchange="javascript:on_check(this)" checked id="chkPiezo"> Piezo
+                        <img src="{% static '/main_app/img/ico_pz.gif' %}">
+                    </td>
+                    <td hidden><input type="checkbox" class="chkFiltrarTipos" value="V" onchange="javascript:on_check(this)" checked id="chkVertido"> Vertido
+                        <img src="{% static '/main_app/img/ico_v.gif' %}">
+                    </td>
+                    <td hidden><input type="checkbox" class="chkFiltrarTipos" value="Q" onchange="javascript:on_check(this)" checked id="chkCalidad"> Calidad
+                        <img src="{% static '/main_app/img/ico_q.gif' %}">
+                    </td>
+                    <td><input type="checkbox" class="chkFiltrarTipos" value="R" onchange="javascript:on_check(this)" checked id="chkRiego"> Riego
+                        <img src="{% static '/main_app/img/ico_r.png' %}">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> 
+    <div id="div_selectorzonas" class="Contenedor_oscuro ancho_fijo">
+        <table class="Estructura_filtrar">
+            <tbody>
+                <tr><th colspan=4>Filtrar por zonas</th>
+                    <th colspan=2><input type="checkbox" onchange="javascript:on_check(this)" checked id="chkZonasTodas" class="chkZonasTodas">Seleccionar Todas </th>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="chkFiltrarZonas" value=1 onchange="javascript:on_check(this)" checked id="chkMinoAlto"> Miño Alto
+                    </td>
+                    <td><input type="checkbox" class="chkFiltrarZonas" value=2 onchange="javascript:on_check(this)" checked id="chkMinoBajo"> Miño bajo
+                    </td>
+                    <td><input type="checkbox" class="chkFiltrarZonas" value=3 onchange="javascript:on_check(this)" checked id="chkSilAlto"> Sil superior
+                    </td>
+                    <td><input type="checkbox" class="chkFiltrarZonas" value=4 onchange="javascript:on_check(this)" checked id="chkSilBajo"> Sil inferior
+                    </td>
+                    <td><input type="checkbox" class="chkFiltrarZonas" value=5 onchange="javascript:on_check(this)" checked id="chkCabe"> Cabe
+                    </td>
+                    <td><input type="checkbox" class="chkFiltrarZonas" value=6 onchange="javascript:on_check(this)" checked id="chkLimia"> Limia
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> 

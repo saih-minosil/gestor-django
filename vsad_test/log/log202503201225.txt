@@ -1,0 +1,91 @@
+Falta el archivo de observaciones : 202503171319SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503171319SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503171619SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503171619SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503171918SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503171918SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503171919SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503171919SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503172219SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503172219SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503180118SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503180118SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503180419SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503180419SimulationResults_HIST.xml
+Hay un hueco de mas de tres horas entre observaciones 
+Entre las 18/03/2025 01:18 y las 18/03/2025 04:19
+Falta el archivo de observaciones : 202503180719SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503180719SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503181019SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503181019SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503181319SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503181319SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503181619SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503181619SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503181919SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503181919SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503181927SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503181927SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503182219SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503182219SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503182220SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503182220SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503191319SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503191319SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503191619SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503191619SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503191919SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503191919SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503191920SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503191920SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503192220SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503192220SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503200119SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503200119SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503200120SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503200120SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503200420SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503200420SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503200719SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503200719SimulationResults_HIST.xml
+Falta el archivo de observaciones : 202503200720SimulationResults_OBS.xml
+Falta el archivo de historicos : 202503200720SimulationResults_HIST.xml
+Procesando archivo 202503190119SimulationResults_OBS.xml
+Ya hay datos introducidos para la fecha 2025-03-19 01:19:00 
+Error al mover el archivo ./xml/202503190119SimulationResults_OBS.xml a ./bck: Destination path './bck\202503190119SimulationResults_OBS.xml' already exists
+Procesando archivo 202503190119SimulationResults_HIST.xml
+Ya hay datos introducidos para la fecha 2025-03-19 01:19:00 
+Error al mover el archivo ./xml/202503190119SimulationResults_HIST.xml a ./bck: Destination path './bck\202503190119SimulationResults_HIST.xml' already exists
+Procesando archivo 202503190419SimulationResults_OBS.xml
+Ya hay datos introducidos para la fecha 2025-03-19 04:19:00 
+Error al mover el archivo ./xml/202503190419SimulationResults_OBS.xml a ./bck: Destination path './bck\202503190419SimulationResults_OBS.xml' already exists
+Procesando archivo 202503190419SimulationResults_HIST.xml
+Ya hay datos introducidos para la fecha 2025-03-19 04:19:00 
+Error al mover el archivo ./xml/202503190419SimulationResults_HIST.xml a ./bck: Destination path './bck\202503190419SimulationResults_HIST.xml' already exists
+Procesando archivo 202503190719SimulationResults_OBS.xml
+Ya hay datos introducidos para la fecha 2025-03-19 07:19:00 
+Error al mover el archivo ./xml/202503190719SimulationResults_OBS.xml a ./bck: Destination path './bck\202503190719SimulationResults_OBS.xml' already exists
+Procesando archivo 202503190719SimulationResults_HIST.xml
+Ya hay datos introducidos para la fecha 2025-03-19 07:19:00 
+Error al mover el archivo ./xml/202503190719SimulationResults_HIST.xml a ./bck: Destination path './bck\202503190719SimulationResults_HIST.xml' already exists
+Procesando archivo 202503191019SimulationResults_OBS.xml
+Ya hay datos introducidos para la fecha 2025-03-19 10:19:00 
+Error al mover el archivo ./xml/202503191019SimulationResults_OBS.xml a ./bck: Destination path './bck\202503191019SimulationResults_OBS.xml' already exists
+Procesando archivo 202503191019SimulationResults_HIST.xml
+Ya hay datos introducidos para la fecha 2025-03-19 10:19:00 
+Error al mover el archivo ./xml/202503191019SimulationResults_HIST.xml a ./bck: Destination path './bck\202503191019SimulationResults_HIST.xml' already exists
+Procesando archivo 202503200720SimulationResults_FOR.xml
+Limpiando BB.DD
+Error al mover el archivo DIR_XML/202503170119SimulationResults_FOR.xml a ./old: [Errno 2] No such file or directory: 'DIR_XML\\202503170119SimulationResults_FOR.xml'
+Error al mover el archivo DIR_XML/202503170119SimulationResults_HIST.xml a ./old: [Errno 2] No such file or directory: 'DIR_XML\\202503170119SimulationResults_HIST.xml'
+Error al mover el archivo DIR_XML/202503170119SimulationResults_OBS.xml a ./old: [Errno 2] No such file or directory: 'DIR_XML\\202503170119SimulationResults_OBS.xml'
+Error al mover el archivo DIR_XML/202503170419SimulationResults_FOR.xml a ./old: [Errno 2] No such file or directory: 'DIR_XML\\202503170419SimulationResults_FOR.xml'
+Error al mover el archivo DIR_XML/202503170419SimulationResults_HIST.xml a ./old: [Errno 2] No such file or directory: 'DIR_XML\\202503170419SimulationResults_HIST.xml'
+Error al mover el archivo DIR_XML/202503170419SimulationResults_OBS.xml a ./old: [Errno 2] No such file or directory: 'DIR_XML\\202503170419SimulationResults_OBS.xml'
+Error al mover el archivo DIR_XML/202503170719SimulationResults_FOR.xml a ./old: [Errno 2] No such file or directory: 'DIR_XML\\202503170719SimulationResults_FOR.xml'
+Error al mover el archivo DIR_XML/202503170719SimulationResults_HIST.xml a ./old: [Errno 2] No such file or directory: 'DIR_XML\\202503170719SimulationResults_HIST.xml'
+Error al mover el archivo DIR_XML/202503170719SimulationResults_OBS.xml a ./old: [Errno 2] No such file or directory: 'DIR_XML\\202503170719SimulationResults_OBS.xml'
+Error al mover el archivo DIR_XML/202503171019SimulationResults_FOR.xml a ./old: [Errno 2] No such file or directory: 'DIR_XML\\202503171019SimulationResults_FOR.xml'
+Error al mover el archivo DIR_XML/202503171019SimulationResults_HIST.xml a ./old: [Errno 2] No such file or directory: 'DIR_XML\\202503171019SimulationResults_HIST.xml'
+Error al mover el archivo DIR_XML/202503171019SimulationResults_OBS.xml a ./old: [Errno 2] No such file or directory: 'DIR_XML\\202503171019SimulationResults_OBS.xml'
+Proceso finalizado en el instante 20/03/2025 12:26:16

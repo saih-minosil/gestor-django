@@ -1,0 +1,53 @@
+
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block header %}
+<!-- LEAFLET API de mapas ucraniano -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    
+    <script src="{% static 'main_app/js/filtro_estaciones.js' %}"></script>
+    <script src="{% static 'main_app/js/lista_estaciones.js' %}"></script>
+    <script src="{% static 'main_app/js/filtro_senales.js' %}"></script>
+    <script src="{% static 'main_app/js/fichas.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'main_app/css/uPlot.min.css' %}">
+    <script src="{% static 'main_app/js/uPlot.iife.min.js' %}"></script>
+    <script src="{% static 'main_app/js/grafica.js' %}"></script>
+
+{% endblock %}
+
+{% block onload %}
+onload='cargarMapa();mostrarMarcadores(estaciones);filtrar();'
+{% endblock %}
+
+
+{% block content %}
+<div id="Contenido_principal" class="nivel0">
+    {% include 'widgets/formfiltroestaciones.html' %}
+    <div id="mapa-container" class="Contenedor_claro ancho_fijo">
+    <div id="map">
+    </div>
+    </div>
+</div>
+
+<div id="Ficha_senal" Class="Ficha ancho_fijo">
+    <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_senal');"></div>
+    <div id="Contenido_ficha_senal"></div>
+</div>
+<div id="Ficha_estacion" Class="Ficha ancho100">
+    <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_estacion');"></div>
+    <div id="Contenido_ficha_estacion"></div>
+</div>
+
+<script lang="javascript">
+/*MEter en mapa.js y meterle los parametros por json */
+var estaciones=JSON.parse("{{estaciones | escapejs}}")
+</script>
+<script src="{% static 'main_app/js/mapa.js' %}"></script> <!-- Provisional, mover al header todo-->
+{% endblock %}

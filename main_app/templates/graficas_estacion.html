@@ -1,0 +1,92 @@
+{% extends template %}
+{% load static %}
+
+{% block onload %}
+onload="pedirSenales('{{ cod_estacion }}')"
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main_app/css/uPlot.min.css' %}">
+<script src="{% static 'main_app/js/uPlot.iife.min.js' %}"></script>
+<script src="{% static 'main_app/js/ajax.js'%}"></script>
+<script src="{% static 'main_app/js/filtro_senales.js'%}"></script>
+<script src="{% static 'main_app/js/app_graficas.js'%}"></script>
+<link rel="stylesheet" href="{% static 'main_app/css/customselect.css' %}" type="text/css">
+<script src="{% static 'main_app/js/custom_select.js'%}"></script>
+<script src="{% static 'main_app/js/fichas.js'%}"></script>
+
+
+<div id="Contenido_principal" class="nivel0">
+     <form id="Crear_grafica_form">
+        <div id="Container_senales_seleccionadas">
+            <table class="tabla ancho_fijo" id="Tabla_senales_seleccionadas">
+                <tr>
+                    <th class="encabezado_fijos">
+                        Codigo señal
+                    </th>
+                    <th class="encabezado_fijos">
+                        Color
+                    </th>
+                    <th class="encabezado_fijos" colspan="2" style="width:29%">
+                        Tipo linea
+                    </th>
+                    <th class="encabezado_fijos" >
+                        Lado eje
+                    </th>
+                    <th class="encabezado_fijos" style="width:6%">
+                        Borrar
+                    </th>
+                </tr>
+            </table>
+        </div>
+        <div id="Div_botones_graficas" class="Contenedor_oscuro ancho_fijo">
+            <table>
+                <tr>
+                    <td>
+                        <label>Origen de los datos</label>
+                    </td>
+                    <td>
+                        <select id="Select_origen_datos_grafica">
+                            <option value="ip21" disabled>Tiempo real</option>
+                            <option value="DatosQuinceminutales">Quinceminutales</option>
+                            <option value="DatosTreal">Historico BRUTO</option>
+                            <option value="DatosValid">Historica SAIH</option>
+                            <option value="ConsDia">Consolidado diario</option>
+                            <option value="ConsMes">Consolidado mensual</option>
+                            <option value="ConsAnoN">Consolidado año natural</option>
+                            <option value="ConsAnoH">Consolidado año hidrologico</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label>Fecha comienzo</label>
+                    </td>
+                    <td>
+                        <input id="Input_fecha_comienzo_grafica" oninput="ajustarFechasIniFin()" type="datetime-local">
+                    </td>
+                    <td>
+                        <label>Fecha fin</label>
+                    </td>
+                    <td>
+                        <input id="Input_fecha_fin_grafica" oninput="ajustarFechasIniFin()" type="datetime-local">
+                    </td>
+                    <td>
+                        <input type="button" onclick="javascript:generarGrafica()" value="Generar grafica">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+<div id="Ficha_grafica" class="Ficha ancho_fijo"> <!-- Dejar aqui o mandar a su priopio html... -->
+    <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_grafica');"></div>
+    <div id="Div_panel_grafica" class="Contenedor_claro ancho_fijo"></div>
+    <div id="Div_panel_avisos_grafica" class="Contenedor_claro ancho_fijo" hidden>
+        <div class="Boton_cerrar" onclick="cerrarAvisosGrafica();">
+        </div>
+        <p> Avisos </p>
+        <ul id="Lista_avisos_grafica"></ul>
+    </div>
+</div>
+
+
+{% endblock %}

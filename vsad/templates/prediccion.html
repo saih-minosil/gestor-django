@@ -1,0 +1,44 @@
+{% load static %}
+
+
+
+<div id="table-container">
+<!-- ---------------------------------------------------------- Segunda tabla: Datos de la estacion -------------------------------------------------------------->
+		<table class="tabla ancho_fijo ">
+			<tbody>
+				<tr>
+					<th class="encabezado_fijos" colspan="12">Datos Fijos</th>
+				</tr>
+				<tr>
+					<th class="celdaln" >Estación :</th>
+					<td class="celdal fontsize20">{{estacion.estacionid}}</td>
+					<th class="celdaln">Código:</th>					
+                    <td class="celdal fontsize20">
+						<!-- POR AHORA NO SE PUEDE ABRIR ESTACION DESDE SEÑAL PARA EVITAR UN BUCLE QUE COMPLICA EL CODIGO DE LAS FICHAS -->
+						<!-- <a href="/estacion/{{senal.ls_estacion_txt.le_codigo_txt}}">-->
+						<!--<a href="#" onclick="mostrarEstacion('{{ senal.ls_estacion_txt.le_codigo_txt }}')">-->
+						{{estacion.codigo}}
+						<!--</a>-->
+					</td>
+				</tr>
+				<tr>
+					<th class="celdaln" >Descripcion:</th>
+					<td class="celdal fontsize20">{{estacion.extendido}}</td>
+					<th class="celdaln">Fecha de la prediccion</th>
+                    <td class="celdal fontsize20">{{fecha_prediccion}}</td>
+				</tr>
+			</tbody>
+		</table>
+</div>
+
+		<!-- Gráfica -->
+		<div id="grafica_container" class="Contenedor_claro ancho_100" >
+			
+		</div>
+		<!-- Y este tambien asegurarse de si va mejor al header y mover lo que haga falta-->
+		<!--<script lang="javascript">
+			let data = JSON.parse ("{{grafica | escapejs}}");
+			let leyenda = Array("","{{senal.ls_tipo_senal}}"+"("+"{{senal.ls_unid_ing}}"+")");
+		</script>
+	-->
+

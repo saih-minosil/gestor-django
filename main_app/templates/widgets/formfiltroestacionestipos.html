@@ -1,0 +1,41 @@
+{% load static %}
+<form id="Selector_tipos" class="Selector">
+    <div id="div_selector_tipos" class="div_selector">
+        <table>
+            <tbody>
+                <tr><th>Filtrar por tipo</th></tr>
+                <tr><td><input type="checkbox" onchange="javascript:on_check(this)" checked id="chkTiposTodos" class="chkTiposTodos"> Todos <br></td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarTipos" value="A" onchange="javascript:on_check(this)" checked id="chkAforo"> Aforo
+                    <img src="{% static '/main_app/img/ico_a.png' %}">
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarTipos" value="N" onchange="javascript:on_check(this)" checked id="chkNivel"> Nivel
+                    <img src="{% static '/main_app/img/ico_n.png' %}">
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarTipos" value="P" onchange="javascript:on_check(this)" checked id="chkPluvio"> Pluvio
+                    <img src="{% static '/main_app/img/ico_p.gif' %}">
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarTipos" value="M" onchange="javascript:on_check(this)" checked id="chkMeteo"> Meteo
+                    <img src="{% static '/main_app/img/ico_m.gif' %}">
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarTipos" value="E" onchange="javascript:on_check(this)" checked id="chkEmbalse"> Embalse
+                    <img src="{% static '/main_app/img/ico_e.png' %}">
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarTipos" value="CH" onchange="javascript:on_check(this)" checked id="chkConcesion"> Concesion
+                    <img src="{% static '/main_app/img/ico_e.png' %}">
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarTipos" value="PZ" onchange="javascript:on_check(this)" checked id="chkPiezo"> Piezo
+                    <img src="{% static '/main_app/img/ico_pz.gif' %}">
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarTipos" value="V" onchange="javascript:on_check(this)" checked id="chkVertido"> Vertido
+                    <img src="{% static '/main_app/img/ico_v.gif' %}">
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarTipos" value="Q" onchange="javascript:on_check(this)" checked id="chkCalidad"> Calidad
+                    <img src="{% static '/main_app/img/ico_q.gif' %}">
+                </td></tr>
+                <tr><td><input type="checkbox" class="chkFiltrarTipos" value="R" onchange="javascript:on_check(this)" checked id="chkRiego"> Riego
+                    <img src="{% static '/main_app/img/ico_r.png' %}">
+                </td></tr>
+            </tbody>
+        </table>
+    </div>
+ </form>

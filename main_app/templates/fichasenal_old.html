@@ -1,0 +1,37 @@
+{% load static %}
+
+<!-- no deberia pasar nada por cargar esto aqui en el medio pero asegurarse-->
+<link rel="stylesheet" href="{% static 'main_app/css/uPlot.min.css' %}">
+<script src="{% static 'main_app/js/uPlot.iife.min.js' %}"></script>
+
+<div id="table-container">
+<!-- ---------------------------------------------------------- Segunda tabla: Datos de la estacion -------------------------------------------------------------->
+		<table class="tabla ancho_fijo ">
+			<tbody>
+				<tr>
+					<th class="encabezado_fijos" colspan="12">Datos Fijos</th>
+				</tr>
+				<tr>
+					<th class="celdaln" >Código SAIH:</th>
+					<td class="celdal fontsize20">{{senal.ls_tag_txt}}</td>
+					<th class="celdaln">Estacion:</th>
+                    <td class="celdal fontsize20"><a href="/estacion/{{senal.ls_estacion_txt.le_codigo_txt}}">{{senal.ls_estacion_txt.le_nombre}}</a></td>
+				</tr>
+				<tr>
+					<th class="celdaln" >Tipo señal:</th>
+					<td class="celdal fontsize20">{{senal.ls_tipo_senal}}</td>
+					<th class="celdaln">Descripción:</th>
+                    <td class="celdal fontsize20">{{senal.ls_descripcion}}</td>
+				</tr>
+			</tbody>
+		</table></div>
+
+		<!-- Gráfica -->
+		<div id="grafica_container" class="Contenedor_claro ancho_fijo" ></div>
+		<!-- Y este tambien asegurarse de si va mejor al header y mover lo que haga falta-->
+		<script lang="javascript">
+			var data = JSON.parse ("{{grafica | escapejs}}");
+			var leyenda = Array("","{{senal.ls_tipo_senal}}"+"("+"{{senal.ls_unid_ing}}"+")");
+		</script>
+
+	    <script src="{% static 'main_app/js/grafica.js' %}"></script>

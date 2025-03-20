@@ -1,0 +1,480 @@
+/* -------------------------------- VARIABLES ----------------------------------------------*/
+:root{
+	--toolbar-height:130px;
+}
+/* -------------------------------- CABECERA -------------------------------------------*/
+
+.navlist2{
+  margin-top: 0px;
+  padding-top: 4px;
+  margin:auto;
+  width:700px;
+}
+
+
+
+#titulo{
+  font-size: 50px;
+  color: white;
+  align-content :center;
+  text-align: center;
+  display:inline-block;
+  position:absolute;
+  top:10px;
+  width:100%;  
+  left:0;
+}
+
+#titulo_inside{
+  font-size: 50px;
+  color: white;
+  align-content:center;
+  text-align: center;
+  display:inline-block;
+  position:absolute;  
+  width:290px;  
+  left:44%;
+}
+
+#cabecera{
+	height:var( --toolbar-height);
+	background-size:100%;
+	position:absolute;
+	z-index:2;
+	left:0px;
+	right:0px;
+	top:0px;
+	
+}
+
+#barra_titulo {
+	/*background-image: url('./img/cabecera.png');*/
+    height: 78px;
+}
+
+#barra_menu{
+  /*position: absolute;
+  top: 206px;
+  width: 1920px;*/
+}
+
+#navcontainer_sub1{
+  background-repeat: no;
+  height: 46px;
+}
+
+
+#navcontainer ul{
+	display:flex;
+	flex-wrap:nowrap;
+}
+#navcontainer li{
+	display: inline-block;
+	width:auto;
+	margin:10px;
+	font-size: 21px;
+}
+
+#navcontainer li a{
+	color:white;
+}
+
+
+#link_cabecera{
+	height: 100%;
+}
+
+#logo_CHMS{
+	height:74px;
+}
+
+
+/* --------------------------------------------------------------- CUERPO ---------------------------------------------------------*/
+
+body{
+	overflow:clip;
+}
+
+#cuerpo{
+	margin-top: var( --toolbar-height);
+	background-image: url('/static/main_app/img/Fondo.png');
+	overflow-y:auto;
+	z-index:1;
+	position:absolute;
+	left:0px;
+	top:0px;
+    height: calc(100% - var(--toolbar-height));
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#cuerpo_app{
+	margin-top: 0;
+	background-image: url('/static/main_app/img/Fondo.png');
+	overflow-y:auto;
+	z-index:1;
+	position:absolute;
+	left:0px;
+	top:0px;
+    height: 100%;
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#contenido{
+	position:relative;
+	left:0px;
+	top:0px;
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+
+/*---------------------------------------------    FILTRO DE ESTACIONES  ------------------------------------------------------*/
+/*
+#Div_filtros_estaciones{
+  display: inline-block;
+  position: absolute;
+  top:0px;
+  margin:12px;
+}
+
+.Selector{
+  background: linear-gradient(to bottom, #FFFFFF, #F1F1F1);
+  opacity:96%;
+  margin:20px 0px;
+
+}
+*/
+.Estructura_filtrar{
+  width:100%;
+}
+
+
+/* -------------------------------------------- LISTA SENALES -----------------------------------------------------------------*/
+
+#table_filtro_senales{
+    width:100%;
+}
+
+#tabla_filtrado_estacion{
+  width: 80%;
+  margin: 2px auto;
+}
+
+#Label_codigo_estacion{    
+    color:white;
+    border:solid 1px white;
+}
+
+/*------------------------------------- MAPAS -----------------------------------------------------*/
+
+#map { height: 560px;
+       width:1000px;
+        margin-left:auto;
+        margin-right:auto;}
+
+/*------------------------------------------ cajetines ----------------------------------------------*/
+.leaflet-popup-content{
+    width:400px !important;
+}
+
+.tabla_popup_estacion{
+    border-collapse:collapse;
+    margin:auto;
+    border: 1px solid #3768BC;
+}
+
+.marca_alarma{
+  text-align: center;
+  background-color: #ffffff;
+  padding: 2px;
+  border: 1px solid #3768BC;
+  border-collapse: collapse;
+  width:15px;
+}
+
+
+/*----------------------------------- FICHAS ESTACIONES ----------------------------------------------*/
+
+
+.enlace_contacto {
+  display: block;
+  width: 100px;
+  background-position: center;
+  background-repeat: no-repeat;
+  float: left;
+  text-decoration: none;
+  text-align: center;
+  margin: 0px 10px;
+    margin-bottom: 0px;
+  margin-bottom: 10px;
+
+}
+
+.enlace_contacto a {
+  left: 0px;
+  bottom: 13px;
+  width: 100%;
+  display: block;
+  padding-top: 120px;
+    color: #193E4A;
+  font-weight: bolder;
+  text-decoration: none;
+}
+
+#enlaces_contacto{
+    margin:auto;
+    width:300px;
+}
+
+/* ------------------------------------------- LISTA ESTACIONES -------------------------------------------------------------*/
+
+#paginador{
+    width:1000px;
+    background: linear-gradient(to bottom, #FFFFFF, #F1F1F1);
+    margin:auto;
+    padding:12px 0px;
+    text-align:center;
+}
+
+
+/* -------------------------------------------------TABLAS------------------------------------------------  FICHAS   */
+
+/*   DE Las fichas  */
+
+
+.encabezado_fijos {
+  background: linear-gradient(to bottom, #375590, #382a3a);
+  text-align: center;
+  border: 1px solid #3768BC;
+  color: #ffffff;
+  font-weight: bolder;
+  padding: 3px;
+}
+
+
+.celdac {
+  text-align: center;
+  background-color: #dbd5f947;
+  padding: 2px;
+  border-collapse: collapse;
+  padding-left:auto;
+  padding-right:auto;
+}
+.celdal {
+  text-align: left;
+  background-color: #dbd5f947;
+  padding: 2px;
+  border-collapse: collapse;
+  padding-left:auto;
+  padding-right:auto;
+}
+
+.celdaln {
+  background-color: #C4D3EE;
+  padding: 2px;
+  border: 1px solid #3768BC;
+  border-collapse: collapse;
+  font-weight: bolder;
+  text-align: left;
+}
+
+.celdacn {
+  background-color: #C4D3EE;
+  padding: 2px;
+  border: 1px solid #3768BC;
+  border-collapse: collapse;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.celdacn3{
+background-color: #C4D3EE;
+  text-align: center;
+  border: 1px solid #3768BC;
+  color: #000000;
+  font-weight: bolder;
+  padding: 3px;
+  }
+
+.table-container {
+
+    margin-top: 15px;
+    opacity:92%;
+    bottom:40px;
+    height:110%;
+}
+
+
+#tabla_estacion{
+    border-width:4px;
+}
+
+#tabla_estaciones td{
+    border:1px solid black;
+}
+
+#tabla_senales td{
+    border:1px solid black;
+}
+
+td a {
+    display:block;    
+}
+
+/* ------------------------------------------- GRAFICAS -----------------------------------------------------------    */
+
+#tabla_senales_graficas_container{
+    overflow:auto;
+    height:300px;
+    width:1000px;
+    margin: 0px auto;
+}
+
+#tabla_senales_graficas{
+    width:980px;
+}
+
+#Senales_seleccionadas_tabla{
+    width:1000px;
+}
+
+.custom_select_color{
+    width:75px;
+}
+
+.custom_select_linea{
+  width:100px;
+}
+
+.custom_select_lado{
+  width:100px;
+}
+
+
+.selector_linea_{   
+    background-color:grey;    
+}
+
+.selector_lado_{
+    background-color:grey;
+}
+
+
+
+.canvas_tipo_lineas_graficas{ /* ESPECIFICAR */
+    height:20px;
+    width:100px;
+}
+
+#Div_botones_graficas input{
+    margin: 10px 4px;
+}
+
+#Div_panel_grafica{
+    height:600px;
+    margin: 5px auto;
+    }
+
+#Div_panel_avisos_grafica{
+    margin: 15px auto;
+}
+
+grafica_container{
+  height:500px;
+}
+
+/*     -------------------------------------   CLASES GENERALES  ----------------------------------------- */
+.Boton_cerrar{
+  position: relative;
+  width: 20px;
+  height: 20px;
+  top: 25px;
+  cursor:pointer;
+  background-image: url(/static/main_app/img/btn_cerrar.png);
+  background-size: contain;
+  float:right;
+  right:4px;
+  z-index:1000;
+  }
+
+
+.Contenedor_claro{
+  background: linear-gradient(to bottom, #FFFFFF, #F0F0E0);
+  opacity:95%;
+  z-index: -1;
+  border-radius:3px;
+}    
+
+.Contenedor_oscuro{
+    background: linear-gradient(to bottom, #375590, #382a3a);
+    color:white;
+    font-weight:bold;
+    border: 1px solid #C4D3EE;
+    border-radius:4px;
+}
+
+.tabla {
+  margin: 1em;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  line-height: 22px;
+  border-collapse: collapse;
+  border-spacing: 2px;
+  background: linear-gradient(to bottom, #FFFFFF, #F1F1F1);
+  margin: 5px auto;
+}
+
+.p0 {
+  padding: 0px !important;
+}
+.m0 {
+  margin: 0px !important;
+}
+.ancho100 {
+  width: 100%;
+  margin:5px 0;
+}
+
+.ancho_fijo{
+  width:1000px;
+  margin:5px auto;
+  left: 0px;
+  right: 0px;
+}    
+
+p{
+	font-size:18px;
+	color:white;
+	margin: 5px 10px;
+}
+
+#Contenido_principal{
+  Transition: 0.5s 0s All linear;
+}
+
+.Ficha{
+  position: absolute;
+  top:-5000px;
+  Transition: 0.5s 0s All linear;
+}
+
+#Ficha_estacion{
+  top:-1000px;
+}
+
+#Ficha_senal{
+  top:-600px;
+}
+
+/* TABLAS DE LA FICHA ESTAN DESPLAZADAS NO SE PORQUE COJONES */
+/*Contenido_ficha_estacion .tabla{
+  top:-20px;
+  position: relative;
+}
+  */

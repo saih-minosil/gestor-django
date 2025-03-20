@@ -1,0 +1,65 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block onload %}
+onload="mostrarSenales();{% if estacion %} filtrarSenalesEstacion('{{estacion}}'); {% endif %}"
+{% endblock %}
+
+{% block header %}
+<script src="{% static 'main_app/js/fichas.js'%}"></script>
+<script src="{% static 'main_app/js/filtro_senales.js'%}"></script>
+<link rel="stylesheet" href="{% static 'main_app/css/uPlot.min.css' %}">
+<script src="{% static 'main_app/js/uPlot.iife.min.js' %}"></script>
+<script src="{% static 'main_app/js/grafica.js' %}"></script>
+<script src="{% static 'main_app/js/lista_estaciones.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+{% include 'widgets/formfiltrosenales.html' %}
+<div id="Contenido_principal" class="nivel0">
+    <table id="tabla_senales" class="tabla ancho_fijo">
+        <tr>
+            <th class="encabezado_fijos">
+                Codigo
+            </th>
+            <th class="encabezado_fijos">
+                Descripcion
+            </th>
+            <th class="encabezado_fijos">
+                Estacion
+            </th>
+        </tr>
+        {% for senal in senales %}
+        <tr class="fila_senal fila_senal{{senal.ls_tipo_senal_id}} fila_senal{{senal.ls_estacion_txt_id}}"
+            id="fila_{{senal.ls_tag_txt}}">
+            <td>
+                <a href="#" onclick="mostrarSenal('{{senal.ls_tag_txt}}');">
+                    {{senal.ls_tag_txt}}
+                </a>
+            </td>
+            <td>
+                <a href="#" onclick="mostrarSenal('{{senal.ls_tag_txt}}');">
+                    {{senal.ls_descripcion}}
+                </a>
+            </td>
+            <td>
+                <a href="#" onclick="mostrarEstacion('{{senal.ls_estacion_txt_id}}');">
+                    {{senal.ls_estacion_txt_id}}
+                </a>
+            </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+</div>
+<div id="Ficha_senal" Class="Ficha ancho_fijo">
+    <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_senal');"></div>
+    <div id="Contenido_ficha_senal"></div>
+</div>
+<div id="Ficha_estacion" Class="Ficha ancho100">
+    <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_estacion');"></div>
+    <div id="Contenido_ficha_estacion"></div>
+</div>
+
+
+{% endblock %}

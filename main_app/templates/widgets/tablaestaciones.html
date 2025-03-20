@@ -1,0 +1,36 @@
+{% load static %}
+<script src="{% static 'main_app/js/filtro_senales.js'%}"></script>
+<div class="table-container" id="tabla_estaciones_container">
+    <table class="tabla ancho_fijo" id="tabla_estaciones">
+      <tr>
+        <th class="encabezado_fijos">
+          Codigo
+        </th>
+        <th class="encabezado_fijos">
+          Nombre
+        </th>
+      </tr>
+        <tr class="fila_estacion fila_estacion_{{estacion.le_tipo_estacion}}">
+            <td colspan="2" class="celdac">
+                <a href="#"  onclick="javascript:filtrarSenalesEstacion('');">
+                TODAS
+                </a>
+            </td>
+        </tr>
+        {% for estacion in estaciones %}
+
+        <tr class="fila_estacion fila_estacion_{{estacion.le_tipo_estacion}}">
+          <td>
+                <a href="#"  onclick="javascript:filtrarSenalesEstacion('{{estacion.le_codigo_txt}}');">
+                {{estacion.le_codigo_txt}}
+                </a>
+              </td>
+              <td>
+                <a href="#" onclick="filtrarSenalesEstacion('{{estacion.le_codigo_txt}}');">
+                {{estacion.le_nombre}}
+                </a>
+              </td>
+          </tr>
+        {% endfor %}
+    </table>
+</div>

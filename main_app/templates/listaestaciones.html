@@ -1,0 +1,87 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block header %}
+<script src="{% static 'main_app/js/fichas.js' %}"></script>
+<script src="{% static 'main_app/js/lista_estaciones.js' %}"></script>
+<script src="{% static 'main_app/js/filtro_estaciones.js' %}"></script>
+<script src="{% static 'main_app/js/filtro_senales.js' %}"></script>
+<link rel="stylesheet" href="{% static 'main_app/css/uPlot.min.css' %}">
+<script src="{% static 'main_app/js/uPlot.iife.min.js' %}"></script>
+<script src="{% static 'main_app/js/grafica.js' %}"></script>
+{% endblock %}
+
+{% block onload %}
+onload=filtrar();
+{% endblock %}
+
+{% block content %}
+<div id="Contenido_principal" class="nivel0">
+    {% include 'widgets/formfiltroestaciones.html' %} 
+    <table id="tabla_estaciones" class="tabla ancho_fijo ">
+        <tr>
+            <th class="encabezado_fijos">
+                Codigo
+            </th>
+            <th class="encabezado_fijos">
+                Nombre
+            </th>
+            <th class="encabezado_fijos">
+                Cuenca
+            </th>
+            <th class="encabezado_fijos">
+                Provincia
+            </th>
+            <th class="encabezado_fijos">
+                Localidad
+            </th>
+            <th class="encabezado_fijos">
+                Lista de Señales
+            </th>
+        </tr>
+        {% for estacion in estaciones %}
+        <!-- darle clase a los elementos de las tablaS?-->
+        <tr class="fila_estacion fila_estacion_{{estacion.le_tipo_estacion}} fila_estacion_{{estacion.le_zona_id}}">
+            <td>
+                <a href="#" onclick="mostrarEstacion('{{ estacion.le_codigo_txt }}')">
+                    {{estacion.le_codigo_txt}}
+                </a>
+            </td>
+            <td>
+                <a href="#" onclick="mostrarEstacion('{{ estacion.le_codigo_txt }}')">
+                    {{estacion.le_nombre}}
+                </a>
+            </td>
+            <td>
+                <!-- <a href="/estacion/{{ estacion.le_codigo_txt }}"> -->
+                {{estacion.le_zona}}
+                <!-- </a> -->
+            </td>
+            <td>
+                <!--            <a href="/estacion/{{ estacion.le_codigo_txt }}">-->
+                {{estacion.le_provincia}}
+                <!--            </a>-->
+            </td>
+            <td>
+                <!--            <a href="/estacion/{{ estacion.le_codigo_txt }}">-->
+                {{estacion.le_municipio}}
+                <!--            </a>-->
+            </td>
+            <td>
+                <a href="/senales_estacion/{{ estacion.le_codigo_txt }}"> Señales de esta estación</a>
+            </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+</div>
+<div id="Ficha_estacion" Class="Ficha ancho100" >
+  <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_estacion');"></div>
+  <div id="Contenido_ficha_estacion"></div>
+</div>
+<div id="Ficha_senal" Class="Ficha ancho_fijo" >
+    <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_senal');"></div>
+    <div id="Contenido_ficha_senal"></div>
+</div>
+
+{% endblock %}
