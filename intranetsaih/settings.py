@@ -92,6 +92,9 @@ DATABASES = {
         'HOST': '10.31.156.184',
         'USER': 'django-user',
         'PASSWORD': 'CeCuSaIh2025',
+        'OPTIONS': {
+                'driver': 'ODBC Driver 18 for SQL Server',
+            },
     },
      'hist': {
         'ENGINE': 'mssql',
@@ -99,6 +102,9 @@ DATABASES = {
         'HOST': '10.31.156.184',
         'USER': 'django-user',
         'PASSWORD': 'CeCuSaIh2025',
+        'OPTIONS': {
+                'driver': 'ODBC Driver 18 for SQL Server',
+            },
     },
     'intranet': {
         'ENGINE': 'mssql',
@@ -106,6 +112,9 @@ DATABASES = {
         'HOST': '10.31.156.184',
         'USER': 'django-user',
         'PASSWORD': 'CeCuSaIh2025',
+        'OPTIONS': {
+                'driver': 'ODBC Driver 18 for SQL Server',
+            },
     },
     'web': {
         'ENGINE': 'mssql',
@@ -113,6 +122,9 @@ DATABASES = {
         'HOST': '10.31.156.178',
         'USER': 'django-user',
         'PASSWORD': 'CeCuSaIh2025',
+        'OPTIONS': {
+                'driver': 'ODBC Driver 18 for SQL Server',
+            },
     },
     'historica': {
         'ENGINE': 'mssql',
@@ -120,6 +132,9 @@ DATABASES = {
         'HOST': '10.31.156.184',
         'USER': 'django-user',
         'PASSWORD': 'CeCuSaIh2025',
+        'OPTIONS': {
+                'driver': 'ODBC Driver 18 for SQL Server',
+            },
     },
     'vsad':{
         'ENGINE': 'django.db.backends.mysql',
