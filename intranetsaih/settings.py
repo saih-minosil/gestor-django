@@ -134,6 +134,7 @@ DATABASES = {
         'PASSWORD': 'CeCuSaIh2025',
         'OPTIONS': {
                 'driver': 'ODBC Driver 18 for SQL Server',
+                'Encrypt':'False'
             },
     },
     'vsad':{
@@ -183,7 +184,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = '/home/saihminosil/webapps/gestor-django/main_app/static'
+STATIC_ROOT = '/home/saihminosil/webapps/gestor-django/intranetsaih/static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
