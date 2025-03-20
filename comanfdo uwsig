@@ -1,2 +1,4 @@
- ./uwsgi --socket 10.31.156.143:8000 --chdir /home/saihminosil/django_test/gestor-django/ --module intranetsaih.wsgi:application --env DJANGO_SETTINGS_MODULE=intranetsaih.settings --master --processes 4 --threads 2 --stats 10.31.156.143:9191
+/uwsgi --socket 10.31.156.143:8000 --chdir /home/saihminosil/django_test/gestor-django/ --buffer-size=32768 --module intranetsaih.wsgi:application --env DJANGO_SETTINGS_MODULE=intranetsaih.settings --master --processes 4 --threads 2 --stats 10.31.156.143:9191
+sudo cp mysite_sginx.conf /etc/nginx/sites-available/
+saihminosil@cachamuina:~/django_test/gestor-django$ sudo ln -s /etc/nginx/sites-available/mysite_sginx.conf /etc/nginx/sites-enabled/
 
