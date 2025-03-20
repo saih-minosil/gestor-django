@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-&w_knnp07-e#v)*(bztu1m@qh5g-*j939^6jc=!2zqfuloc6yz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['belesar','localhost','cachamuina']
+ALLOWED_HOSTS = ['belesar','localhost','cachamuina','10.31.156.143']
 
 
 # Application definition
