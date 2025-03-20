@@ -8,14 +8,6 @@
 					console.log(opts)
 					let over = u.over;
 
-					/*let tt = cursortt = document.createElement("div");
-					tt.className = "tooltip";
-					tt.textContent = "(x,y)";
-					tt.style.pointerEvents = "none";
-					tt.style.position = "absolute";
-					tt.style.background = "rgba(0,0,255,0.1)";
-					over.appendChild(tt);*/
-
 					seriestt = opts.series.map((s, i) => {
 						if (i == 0) return;	
 						let tt = document.createElement("div");
@@ -71,28 +63,14 @@
 
 					opts?.cursorMemo?.set(left, top);
 
-					// this is here to handle if initial cursor position is set
-					// not great (can be optimized by doing more enter/leave state transition tracking)
-					//	if (left > 0)
-					//		u.cursortt.style.display = null;
-
-					/*cursortt.style.left = left + "px";
-					cursortt.style.top = top + "px";
-					cursortt.textContent = "(" + u.posToVal(left, "x").toFixed(2) + ", " + u.posToVal(top, "y").toFixed(2) + ")";
-					*/
-					// can optimize further by not applying styles if idx did not change
 					tts=[]
 					seriestt.forEach((tt, i) => {
 						if (i == 0) return;
 						//if(i>=4) return;	
 						let s = u.series[i];
 						if (s.show) {
-							// this is here to handle if initial cursor position is set
-							// not great (can be optimized by doing more enter/leave state transition tracking)
-						//	if (left > 0)
-						//		tt.style.display = null;
 							let xVal,yVal;
-							if(i<5){
+							if(i<5){ //Tooltips de las series (1 al 4)
 								xVal = u.data[0][idx];
 								yVal = u.data[i][idx];
 								
@@ -109,9 +87,14 @@
 								}
 								var top = (yVal != null ? (Math.round(u.valToPos(yVal, s.scale))-tt.offsetHeight) : 9999) + "px";								
 								tts.push({"top":parseInt(top),"obj":tt,"ind":i})
-								tt.style.left = Math.round(u.valToPos(xVal, 'x')) + "px";								
+								var left = Math.round(u.valToPos(xVal, 'x'))
+								var left_limit=window.innerWidth-200-tt.offsetWidth
+								if(left>left_limit){									
+									left=left_limit			
+								}
+								tt.style.left = left+"px"
 							}
-							else{
+							else{ //"Tooltips" de las lineas de control (alertas)
 								xVal = 0;
 								yVal = u.data[i][0];
 								//tt.textContent = s.label+'(' + yVal + ' '+s.unidad+')';
