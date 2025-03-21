@@ -114,7 +114,7 @@ DATABASES = {
         'PASSWORD': 'CeCuSaIh2025',
         'OPTIONS': {
                 'driver': 'ODBC Driver 18 for SQL Server',
-                'Encrypt':'False'
+                'extra-params':"TrustServerCertificate=yes",                
             },
     },
     'web': {
