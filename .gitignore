@@ -2,3 +2,4 @@
 /vsad_test/xml/
 /vsad_test/old/
 /.idea
+*.pyc
