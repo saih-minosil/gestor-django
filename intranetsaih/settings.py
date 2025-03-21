@@ -143,8 +143,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME' : 'FEWS_FORECAST',
         'HOST' : '10.31.156.174',
-        'USER' : 'jorge',
-        'PASSWORD': '0KDU1nod__'
+        'USER' : 'vsad_new',
+        'PASSWORD': 'CeCuSaIh2025'
     }
 }
 

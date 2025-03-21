@@ -11,17 +11,17 @@ import mysql.connector
 
 #CONFIGURACION BASICA
 #CARPETAS
-DIRECTORIO_DATOS='.'
+DIRECTORIO_DATOS='/mnt/DatosVsad/Carga_modelos'
 DIR_XML=DIRECTORIO_DATOS+'/xml'
 DIR_BACK=DIRECTORIO_DATOS+'/bck'
 DIR_LOG=DIRECTORIO_DATOS+'/log'
 DIR_OLD=DIRECTORIO_DATOS+'/old'
 TIEMPO_BORRADO=datetime.timedelta(days=4)
 HOST_MYSQL="10.31.156.174"
-#USER_MYSQL="vsad_new"
+USER_MYSQL="vsad_new"
+PASSWORD_MYSQL="CeCuSaIh2025"
+#USER_MYSQL="vsad_new" #ADMIN DESDE TODAS LAS IPS; USAR EL OTRO
 #PASSWORD_MYSQL="CeCuSaIh2025"
-USER_MYSQL="jorge" #ADMIN DESDE TODAS LAS IPS; USAR EL OTRO
-PASSWORD_MYSQL="0KDU1nod__"
 
 FORMATO_FECHA_ARCHIVOS="%Y%m%d%H%M" #Para los nombres de archivo
 FORMATO_FECHA_NORMAL="%d/%m/%Y %H:%M:%S" #Formato español de fecha
@@ -52,7 +52,7 @@ def procesar_archivo(con,parser,carpeta,archivo):
         parser.parse(f)
         values=parser.getContentHandler().getValues()
         for key,serie in values.items():
-            id_serie = 'test'+key
+            id_serie = key
             fecha_pred = datetime.datetime.strptime(archivo[0:12], "%Y%m%d%H%M")
             insertar_valores(con, id_serie, serie, fecha_pred.timestamp())
     except mysql.connector.errors.IntegrityError as e:

@@ -21,9 +21,9 @@ from django.urls import path,include
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('',include('main_app.urls')),
-    path('gestor',include('gestor.urls')),
-    path('gestor_web',include('gestor_web.urls')),
+    #path('admin/', admin.site.urls),
+    #path('',include('main_app.urls')),
+    #path('gestor',include('gestor.urls')),
+    #path('gestor_web',include('gestor_web.urls')),
     path('vsad',include('vsad.urls'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
