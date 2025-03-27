@@ -2,10 +2,13 @@
 <head>
     {% load static %}
     <link rel="stylesheet" href="{% static 'main_app/css/style.css' %}" type="text/css">
-
+    <script src="{% static 'main_app/js/fichas.js'%}"></script>
+    <script src="{% static 'main_app/js/filtro_senales.js'%}"></script>
+    <link rel="stylesheet" href="{% static 'main_app/css/uPlot.min.css' %}">
+    <script src="{% static 'main_app/js/uPlot.iife.min.js' %}"></script>
+    <script src="{% static 'main_app/js/tooltips.js' %}"></script>
     <script src="{% static 'main_app/js/ajax.js' %}"></script>
     <script src="{% static 'main_app/js/global.js' %}"></script>
-    <script src="{% static 'main_app/js/prueba_fich.js' %}"></script>
     {% block header %}
     {% endblock %}
 
@@ -38,17 +41,13 @@
                 </li>
 
                 <li>
-                    <!-- <a href="#" onclick="javascript:abrirAppGraficas();" title="Graficas">Graficas</a> --> <!-- Abrir graficas en ventana aparte y sin cabecera-->
                       <a href="/graficas" title="Graficas">Graficas</a> 
                 </li>
                 <li>
                     <a href="#" onclick="javascript:extraccionDatos();" title="Consulta">Consulta</a>
                 </li>
                 <li>
-                    <a href="/gestor/" title="Gestor">Gestor</a>
-                </li>
-                <li>
-                    <a href="#" onclick="javascript:pruebaFichaje();" title="Prueba">Prueba</a>
+                    <a href="#" onclick="javascript:previsionCaudales();" title="Prevision de caudales">VSAD</a>
                 </li>
                 <li>
                     <a href="/admin/" title="Admin">Admin</a>

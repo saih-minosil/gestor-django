@@ -94,6 +94,7 @@ DATABASES = {
         'PASSWORD': 'CeCuSaIh2025',
         'OPTIONS': {
                 'driver': 'ODBC Driver 18 for SQL Server',
+                'extra_params':"TrustServerCertificate=yes", 
             },
     },
      'hist': {
@@ -104,6 +105,7 @@ DATABASES = {
         'PASSWORD': 'CeCuSaIh2025',
         'OPTIONS': {
                 'driver': 'ODBC Driver 18 for SQL Server',
+                'extra_params':"TrustServerCertificate=yes", 
             },
     },
     'intranet': {
@@ -111,9 +113,13 @@ DATABASES = {
         'NAME': 'SAIHMS_INTRANET',
         'HOST': '10.31.156.184',
         'USER': 'django-user',
+        'PORT':'1433',
         'PASSWORD': 'CeCuSaIh2025',
         'OPTIONS': {
+                #'driver': 'FreeTDS',
                 'driver': 'ODBC Driver 18 for SQL Server',
+                'extra_params':"TrustServerCertificate=yes",      #Encrypt=no;          
+                #'driver': 'ODBC Driver 17 for SQL Server',
             },
     },
     'web': {
@@ -124,6 +130,7 @@ DATABASES = {
         'PASSWORD': 'CeCuSaIh2025',
         'OPTIONS': {
                 'driver': 'ODBC Driver 18 for SQL Server',
+                'extra_params':"TrustServerCertificate=yes", 
             },
     },
     'historica': {
@@ -133,8 +140,10 @@ DATABASES = {
         'USER': 'django-user',
         'PASSWORD': 'CeCuSaIh2025',
         'OPTIONS': {
+                #'driver':'FreeTDS'
                 'driver': 'ODBC Driver 18 for SQL Server',
-                'Encrypt':'False'
+                'extra_params':"TrustServerCertificate=yes",                
+                #'driver': 'ODBC Driver 17 for SQL Server',
             },
     },
     'vsad':{

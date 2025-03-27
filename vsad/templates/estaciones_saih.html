@@ -1,0 +1,81 @@
+{% extends 'layouts/app.html' %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'vsad/css/style_saih.css' %}" type="text/css">
+<script src="{% static 'vsad/js/fichas.js' %}"></script>
+<script src="{% static 'vsad/js/lista_estaciones.js' %}"></script>
+<link rel="stylesheet" href="{% static 'vsad/css/uPlot.min.css' %}">
+<script src="{% static 'vsad/js/uPlot.iife.min.js' %}"></script>
+<script src="{% static 'vsad/js/tooltips.js' %}"></script>
+<script src="{% static 'vsad/js/grafica.js' %}"></script>
+
+{% endblock %}
+
+{% block onload %}
+
+{% endblock %}
+
+{% block content %}
+<div id="Contenido_principal" class="nivel0">
+    <table id="tabla_estaciones" class="tabla ancho_fijo ">
+        <tr>
+            <th class="encabezado_fijos">
+                Codigo
+            </th>
+            <th class="encabezado_fijos">
+                Nombre
+            </th>
+            <th class="encabezado_fijos">
+                Descripcion
+            </th>
+            <th class="encabezado_fijos">
+                Cuenca
+            </th>
+            <th class="encabezado_fijos">
+                Rio
+            </th>            
+        </tr>
+        {% for estacion in estaciones %}
+        <!-- darle clase a los elementos de las tablaS?-->
+        <tr class="fila_estacion">
+            <td>
+                <a href="#" onclick="mostrarEstacion('{{ estacion.estacion.estacionid }}')">
+                    {{estacion.estacion.estacionid}}
+                </a>
+            </td>
+            <td>
+                <a href="#" onclick="mostrarEstacion('{{ estacion.estacion.estacionid }}')">
+                    {{estacion.estacion.descripcion}}
+                </a>
+            </td>
+            <td>
+                <!-- <a href="/estacion/{{ estacion.le_codigo_txt }}"> -->
+                {{estacion.extendido}}
+                <!-- </a> -->
+            </td>
+            <td>
+                <!--            <a href="/estacion/{{ estacion.le_codigo_txt }}">-->
+                {{estacion.estacion.sistemaexplotacion}}
+                <!--            </a>-->
+            </td>
+            <td>
+                <!--            <a href="/estacion/{{ estacion.le_codigo_txt }}">-->
+                {{estacion.estacion.rio}}
+                <!--            </a>-->
+            </td>            
+        </tr>
+
+        {% endfor %}
+    </table>
+</div>
+<!--<div id="Ficha_estacion" Class="Ficha ancho100" >
+  <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_estacion');"></div>
+  <div id="Contenido_ficha_estacion"></div>
+</div>-->
+<div id="Ficha_senal" Class="Ficha ancho_100" >
+    <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_senal');"></div>
+    <div id="Contenido_ficha_senal"></div>
+</div>
+
+{% endblock %}

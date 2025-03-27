@@ -6,16 +6,9 @@ onload="pedirSenales('{{ cod_estacion }}')"
 {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'main_app/css/uPlot.min.css' %}">
-<script src="{% static 'main_app/js/uPlot.iife.min.js' %}"></script>
-<script src="{% static 'main_app/js/ajax.js'%}"></script>
-<script src="{% static 'main_app/js/filtro_senales.js'%}"></script>
 <script src="{% static 'main_app/js/app_graficas.js'%}"></script>
 <link rel="stylesheet" href="{% static 'main_app/css/customselect.css' %}" type="text/css">
 <script src="{% static 'main_app/js/custom_select.js'%}"></script>
-<script src="{% static 'main_app/js/fichas.js'%}"></script>
-
-
 <div id="Contenido_principal" class="nivel0">
      <form id="Crear_grafica_form">
         <div id="Container_senales_seleccionadas">

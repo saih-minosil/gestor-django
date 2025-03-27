@@ -1,0 +1,935 @@
+/* -------------------------------- VARIABLES ----------------------------------------------*/
+:root{
+	--toolbar-height:124px;
+}
+/* -------------------------------- CABECERA -------------------------------------------*/
+
+.navlist2{
+  margin-top: 0px;
+  padding-top: 4px;
+  margin:auto;
+  width:700px;
+}
+
+
+
+#titulo{
+  font-size: 50px;
+  color: white;
+  align-content :center;
+  text-align: center;
+  display:inline-block;
+  position:absolute;
+  width:100%;  
+  left:0;
+}
+
+#titulo_inside{
+  font-size: 32px;
+  color: rgb(0, 0, 0);
+  align-content:center;
+  text-align: left;
+  display:inline-block;
+  position:absolute;  
+  width:1000px;  
+  left:36%;
+  font-family: Helvetica;
+  font-weight: bold;
+  top:56px;
+}
+
+#titulo_derecho {
+  font-size: 32px;
+  color: rgb(0, 0, 0);
+  align-content: center;
+  text-align: center;
+  display: inline-block;
+  position: absolute;
+  width: 300px;
+  right: 0;
+  font-family: Helvetica;
+  top: 0px;
+  font-weight: bold;
+  background: rgba(255,255,255,0.5);
+  height: 128px;
+}
+
+a{
+  text-decoration: none;
+}
+
+
+#cabecera{
+  background-image: url('/static/vsad/img/header.png');
+	height:var( --toolbar-height);
+	/*background-size:100%;
+	position:absolute;
+	z-index:2;
+	left:0px;
+	right:0px;
+	top:0px;  */
+  background-repeat: no-repeat;
+  /*height: 124px;*/
+	
+}
+
+#Cabecera_prediccion {
+  font-size: 15px;
+  font-family: Verdana;
+  font-weight:bold;
+  height: 60px;
+  text-align: center;
+}
+
+#barra_titulo {
+	/*background-image: url('./img/cabecera.png');*/
+    height: 78px;
+}
+
+#barra_menu{
+  /*position: absolute;
+  top: 206px;
+  width: 1920px;*/
+}
+
+#navcontainer_sub1{
+  background-repeat: no;
+  height: 46px;
+}
+
+
+#navcontainer ul{
+	display:flex;
+	flex-wrap:nowrap;
+}
+#navcontainer li{
+	display: inline-block;
+	width:auto;
+	margin:10px;
+	font-size: 21px;
+}
+
+#navcontainer li a{
+	color:white;
+}
+
+
+#link_cabecera{
+	height: 100%;
+}
+
+#logo_CHMS{
+	height:74px;
+}
+
+
+/* --------------------------------------------------------------- CUERPO ---------------------------------------------------------*/
+
+body{
+	overflow:clip;
+  margin:8px;
+}
+
+#cuerpo{
+	margin-top: calc(8px + var( --toolbar-height));
+	/*background-image: url('/static/main_app/img/Fondo.png');*/
+	overflow-y:auto;
+	z-index:1;
+	position:absolute;
+	left:0px;
+	top:0px;
+    height: calc(100% - 8px - var(--toolbar-height));
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#cuerpo_app{
+	margin-top: 0;
+	background-image: url('/static/main_app/img/Fondo.png');
+	overflow-y:auto;
+	z-index:1;
+	position:absolute;
+	left:0px;
+	top:0px;
+    height: 100%;
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#contenido{
+	position:relative;
+	left:0px;
+	top:0px;
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#Div_Enlace_descargar_imagen{
+  margin: 10px 0px 10px 50px;
+}
+
+
+/*---------------------------------------------    FILTRO DE ESTACIONES  ------------------------------------------------------*/
+/*
+#Div_filtros_estaciones{
+  display: inline-block;
+  position: absolute;
+  top:0px;
+  margin:12px;
+}
+
+.Selector{
+  background: linear-gradient(to bottom, #FFFFFF, #F1F1F1);
+  opacity:96%;
+  margin:20px 0px;
+
+}
+*/
+.Estructura_filtrar{
+  width:100%;
+}
+
+
+/* -------------------------------------------- LISTA SENALES -----------------------------------------------------------------*/
+
+#table_filtro_senales{
+    width:100%;
+}
+
+#tabla_filtrado_estacion{
+  width: 80%;
+  margin: 2px auto;
+}
+
+#Label_codigo_estacion{    
+    color:white;
+    border:solid 1px white;
+}
+
+/*------------------------------------- MAPAS -----------------------------------------------------*/
+
+#map { height: 560px;
+       width:1000px;
+        margin-left:auto;
+        margin-right:auto;}
+
+/*------------------------------------------ cajetines ----------------------------------------------*/
+.leaflet-popup-content{
+    width:400px !important;
+}
+
+.tabla_popup_estacion{
+    border-collapse:collapse;
+    margin:auto;
+    border: 1px solid #3768BC;
+}
+
+.marca_alarma{
+  text-align: center;
+  background-color: #ffffff;
+  padding: 2px;
+  border: 1px solid #3768BC;
+  border-collapse: collapse;
+  width:15px;
+}
+
+
+/*----------------------------------- FICHAS ESTACIONES ----------------------------------------------*/
+
+
+.enlace_contacto {
+  display: block;
+  width: 100px;
+  background-position: center;
+  background-repeat: no-repeat;
+  float: left;
+  text-decoration: none;
+  text-align: center;
+  margin: 0px 10px;
+    margin-bottom: 0px;
+  margin-bottom: 10px;
+
+}
+
+.enlace_contacto a {
+  left: 0px;
+  bottom: 13px;
+  width: 100%;
+  display: block;
+  padding-top: 120px;
+    color: #193E4A;
+  font-weight: bolder;
+  text-decoration: none;
+}
+
+#enlaces_contacto{
+    margin:auto;
+    width:300px;
+}
+
+/* ------------------------------------------- LISTA ESTACIONES -------------------------------------------------------------*/
+
+#paginador{
+    width:1000px;
+    background: linear-gradient(to bottom, #FFFFFF, #F1F1F1);
+    margin:auto;
+    padding:12px 0px;
+    text-align:center;
+}
+
+
+/* -------------------------------------------------TABLAS------------------------------------------------  FICHAS   */
+
+/*   DE Las fichas  */
+
+
+.encabezado_fijos {
+  background: linear-gradient(to bottom, #375590, #382a3a);
+  text-align: center;
+  border: 1px solid #3768BC;
+  color: #ffffff;
+  font-weight: bolder;
+  padding: 3px;
+}
+
+
+.celdac {
+  text-align: center;
+  background-color: #dbd5f947;
+  padding: 2px;
+  border-collapse: collapse;
+  padding-left:auto;
+  padding-right:auto;
+}
+.celdal {
+  text-align: left;
+  background-color: #dbd5f947;
+  padding: 2px;
+  border-collapse: collapse;
+  padding-left:auto;
+  padding-right:auto;
+}
+
+.celdaln {
+  background-color: #C4D3EE;
+  padding: 2px;
+  border: 1px solid #3768BC;
+  border-collapse: collapse;
+  font-weight: bolder;
+  text-align: left;
+}
+
+.celdacn {
+  background-color: #C4D3EE;
+  padding: 2px;
+  border: 1px solid #3768BC;
+  border-collapse: collapse;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.celdacn3{
+background-color: #C4D3EE;
+  text-align: center;
+  border: 1px solid #3768BC;
+  color: #000000;
+  font-weight: bolder;
+  padding: 3px;
+  }
+
+.table-container {
+
+    margin-top: 15px;
+    /*opacity:92%;*/
+    bottom:40px;
+    height:110%;
+}
+
+.tooltip{
+    background-color:white;
+    font-size:12px;
+    border: solid 2px;
+    border-radius:3px;
+    width:220px;
+    text-align:center;
+    display:inline-block;
+    background: rgba(255,255,255,0.8) !important;
+}
+
+.tooltip p{
+  font-size:12px;
+  color:black;
+  margin:1px;
+}
+
+
+#tabla_estacion{
+    border-width:4px;
+}
+
+#tabla_estaciones td{
+    border:1px solid black;
+}
+
+#tabla_senales td{
+    border:1px solid black;
+}
+
+td a {
+    display:block;    
+}
+
+/* ------------------------------------------- GRAFICAS -----------------------------------------------------------    */
+
+#tabla_senales_graficas_container{
+    overflow:auto;
+    height:300px;
+    width:1000px;
+    margin: 0px auto;
+}
+
+#tabla_senales_graficas{
+    width:980px;
+}
+
+#Senales_seleccionadas_tabla{
+    width:1000px;
+}
+
+.custom_select_color{
+    width:75px;
+}
+
+.custom_select_linea{
+  width:100px;
+}
+
+.custom_select_lado{
+  width:100px;
+}
+
+
+.selector_linea_{   
+    background-color:grey;    
+}
+
+.selector_lado_{
+    background-color:grey;
+}
+
+
+
+.canvas_tipo_lineas_graficas{ /* ESPECIFICAR */
+    height:20px;
+    width:100px;
+}
+
+#Div_botones_graficas input{
+    margin: 10px 4px;
+}
+
+#Div_panel_grafica{
+    height:600px;
+    margin: 5px auto;
+    }
+
+#Div_panel_avisos_grafica{
+    margin: 15px auto;
+}
+
+grafica_container{
+  height:500px;
+}
+
+/*     -------------------------------------   CLASES GENERALES  ----------------------------------------- */
+.Boton_cerrar{
+  position: relative;
+  width: 20px;
+  height: 20px;
+  top: 25px;
+  cursor:pointer;
+  background-image: url(/static/main_app/img/btn_cerrar.png);
+  background-size: contain;
+  float:right;
+  right:4px;
+  z-index:1000;
+  }
+
+
+.Contenedor_claro{
+  background: white; /* linear-gradient(to bottom, #FFFFFF, #F0F0E0);*/
+  /*opacity:95%;*/
+  z-index: -1;
+  border-radius:3px;
+}    
+
+.Contenedor_oscuro{
+    background: linear-gradient(to bottom, #375590, #382a3a);
+    color:white;
+    font-weight:bold;
+    border: 1px solid #C4D3EE;
+    border-radius:4px;
+}
+
+.tabla {
+  margin: 1em;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  line-height: 22px;
+  border-collapse: collapse;
+  border-spacing: 2px;
+  background: linear-gradient(to bottom, #FFFFFF, #F1F1F1);
+  margin: 5px auto;
+}
+
+.p0 {
+  padding: 0px !important;
+}
+.m0 {
+  margin: 0px !important;
+}
+.ancho100 {
+  width: 100%;
+  margin:5px 0;
+}
+
+.ancho_fijo{
+  width:1000px;
+  margin:5px auto;
+  left: 0px;
+  right: 0px;
+}    
+
+p{
+	font-size:18px;
+	color:white;
+	margin: 5px 10px;
+}
+
+#Contenido_principal{
+  Transition: 0.5s 0s All linear;
+}
+
+.Ficha{
+  position: absolute;
+  top:-5000px;
+  Transition: 0.5s 0s All linear;
+}
+
+#Ficha_estacion{
+  top:-1000px;
+}
+
+#Ficha_senal{
+  top:-600px;
+}
+
+/* TABLAS DE LA FICHA ESTAN DESPLAZADAS NO SE PORQUE COJONES */
+/*Contenido_ficha_estacion .tabla{
+  top:-20px;
+  position: relative;
+}
+  */
+  /* NUEVO */
+
+  @media (min-width: 1400px) {
+    .two-blocks-wrapper .block-left {
+      width: 100%;
+      position: relative;
+    }
+  }
+  
+  @media (min-width: 1400px) {
+    .two-blocks-wrapper .block-left {
+      height: auto;
+    }
+  }
+  
+  .acm-cta {
+    padding: 100px 22px 20px;
+    height: auto;
+  }
+  
+  @media (min-width: 1025px) {
+    .acm-cta {
+      padding-top: 20px;
+    }
+  }
+  
+  .acm-cta .cta-heading {
+    line-height: none;
+    margin: 0 auto 0;
+    max-width: none;
+  }
+  
+  .acm-cta .cta-intro {
+    font-size: 27px;
+      color: #ffff00;
+  }
+  
+  .t3-content {
+    padding: 0;
+    max-width: none;
+  }
+  
+  table {
+    /*width: 0;*/
+    width: auto;
+  }
+  
+  th, td {
+      vertical-align: middle;
+  }
+  
+  td {
+    border: none;
+    text-align: center;
+  }
+  
+  .t3-copyright {
+    padding-top: 15px;
+  }
+  
+  #back-to-top .btn {
+    height: 40px;
+  }
+  
+  .block-right {
+      min-height: 0;
+  }
+  
+  table.structure tr td {
+    border-top: none;
+  }
+  
+  table.left-aligned tr td {
+    text-align: left;
+  }
+  
+  .module-ct > ol.breadcrumb {
+    text-align: left;	
+  }
+  
+  .input-block {
+    padding: 5px 10px;
+  }
+  .text-block {
+    padding: 6px 10px 4px 10px;
+  }
+  
+  div.main-title {
+      font-weight: bold;
+      padding: 5px 10px;
+      text-align: left;
+  }
+  
+  input.inline, select.inline {
+    border-width: 1px;
+    display: inline;
+    height: auto;
+    /*margin-top: -1px;*/
+    /*padding-bottom: 1px;
+    padding-top: 2px;*/
+    padding: 0;
+    /*width: auto;*/
+  }
+  
+  input.datepicker.inline {
+    border-width: 1px;
+    display: inline;
+    /*height: 20px;*/
+    height: auto;
+    padding: 0;
+    width: 145px;
+  }
+  
+  input[type=checkbox], input[type=radio] {
+    /*margin-bottom: 4px;*/ /* quitado para ver centrado "Zoom vertical" */
+      vertical-align: middle;
+  }
+  
+  .aviso {
+      color: #ff0000;
+      font-weight: bold;
+  }
+  
+  @media all and (-ms-high-contrast:none) {
+      .foo { color: green } /* IE10 */
+      *::-ms-backdrop, .foo { color: red } /* IE11 */
+      *::-ms-backdrop, #buscar-texto { height: 24px; }
+  }
+  
+  .header-container {
+    border-top: none;
+    border-bottom: none;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+  }
+  
+  nav {
+    float: right;
+    width: auto;
+  }
+  
+  nav.second {
+    float: left;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  nav ul li {
+    float: left;
+    /*border: 5px solid white;*/
+    padding: 5px;
+  }
+  
+  nav ul li a {
+    background: #44a2c7;
+    color: white;    
+    display: block;
+    float: none;
+    font-weight: bold;
+    margin: inherit;
+    /*padding: 14px 16px;*/
+    padding: 8px 10px;
+      font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    width: auto;
+  }
+  
+  nav.second ul li a {
+    background: #007bab;
+  }
+  
+  @media screen and (max-width: 600px) {
+    nav, nav.second {
+      float: none;
+    }
+  
+    nav ul li {
+      float: none;
+      display: block;
+    }
+  }
+  
+  #top {
+    padding: 0;
+    margin: 0;
+    background: none;
+    z-index: 9999;
+  }
+  
+  @media only screen and (min-width: 480px) {
+    nav ul li {
+      display: inline;
+    }
+  }
+  
+  @media only screen and (min-width: 480px) {
+    nav li:first-child a {
+      margin-left: 0;
+    }
+  
+    nav a:hover, nav a:visited {
+      color: white;
+    }
+  }
+  
+  .center_content {
+    background-color: inherit;
+  }
+  
+  .main {
+    padding: 0;
+  }
+  
+  @media only screen and (min-width: 1140px) {
+    .wrapper {
+      width: 1026px;
+      margin: 0 auto;
+    }
+  }
+  
+  .ui-tabs {
+    margin-top: 5px;
+  }
+  
+  ul.ui-tabs-nav {
+    margin-top: 0;
+    line-height: 2.2;
+  }
+  
+  .ui-tabs-nav.ui-widget-header .ui-state-active {
+    border: 1px solid #007bab;
+    background: white;
+  }
+  
+  .ui-widget-header .ui-state-active a {
+    color: #007bab; /* #0078ae */
+  }
+  
+  .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    border: 1px solid #448dae;
+    background: #79c9ec url("images/ui-bg_glass_75_79c9ec_1x400.png") 50% 50% repeat-x;
+    font-weight: normal;
+    color: #026890;                
+  }
+  
+  .ui-state-active .ui-icon {
+    background-image: url("images/ui-icons_e0fdff_256x240.png");
+  }
+  
+  .ui-icon {
+    margin: 3px 5px 3px 0;
+    line-height: 1;
+  }
+  
+  .ui-icon.ui-chkbox-icon {
+    margin-top: -2px;
+      margin-left: -1px;
+  }
+  
+  .ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-pages {
+    padding: 2px 10px;
+  }
+  
+  .ui-icon.fa {
+    text-indent: 0px;
+    background-image: none;
+  }
+  
+  .ui-widget.ui-inputfield {
+    height: auto;
+  }
+  
+  .ui-widget, .ui-widget.ui-inputfield {
+    /*font-size: 16px;
+    font-family: 'Karla', sans-serif;*/
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 14px; /* 12px; */
+  }
+  
+  .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-content.ui-widget-content, 
+  .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header.ui-widget-header,
+  .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer.ui-widget-header,
+  .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-header > tr.ui-widget-header, 
+  .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content,
+  .ui-panelgrid.ui-panelgrid-blank tbody > tr.ui-widget-content > td.ui-panelgrid-cell,
+  .ui-panelgrid.ui-panelgrid-blank .ui-panelgrid-footer > tr.ui-widget-footer {
+    background: none !important;
+    border: 0 none !important;
+  }  
+  
+  .ui-panelgrid.ui-panelgrid-box tbody > tr.ui-widget-content,
+  .ui-panelgrid.ui-panelgrid-box tbody > tr.ui-widget-content > td.ui-panelgrid-cell {
+    background: none !important;
+    border-top: 0 none !important;
+  } 
+  
+  legend {
+     font-size: inherit;
+     margin-bottom: 0;
+  }
+  
+  .ui-fieldset .ui-fieldset-toggler {
+    padding-right: 1.2em;
+    margin-top: 0.1em;
+  }
+  
+  .ui-button {
+    margin: 0.5em;
+  }
+  
+  select {
+    padding-left: 6px;
+  }
+  
+  a.fa {
+    font: normal normal normal 14px/1 FontAwesome;
+    color: #00a7e7;
+  }
+  
+  /* quitado porque en Notebook los dialog no se centraban y los grandes aparecían tan abajo que no se veía la parte inferior */
+  /*.ui-dialog {
+   top: 50% !important;
+  }*/
+  
+  .ui-widget-content a {
+      color: #00a7e7;
+  }
+  
+  .ui-selectonemenu-table tr td {
+    font-size: 14px; /* 12px; */
+    text-align: left;
+  }
+  
+  label {
+      margin-right: 5px;
+  }
+  
+  .ui-datatable-tablewrapper table tr th, .ui-datatable-tablewrapper table tr td {
+    font-size: 14px; /* 12px; */
+  }
+  
+  .ui-widget-content.ui-panelgrid-content, 
+  .ui-widget-header.ui-panelgrid-footer  {
+    font-size: 14px; /* 12px; */
+  }
+  
+  /* .ui-panelgrid .ui-panelgrd-content .ui-panelgrid-cell { */
+  .ui-panelgrid  tr td {
+    font-size: 14px; /* 12px; */
+  }
+  
+  .ui-widget-content.ui-dialog {
+    border: 0;
+  }
+  
+  .ui-widget-content.ui-dialog.foto .ui-dialog-content {
+    padding: 0;
+  }
+  
+  .ui-selectonemenu .ui-selectonemenu-trigger {
+      width: 25px;
+  }
+  label {
+      margin-right: 5px;
+  }
+  .block-right {
+      min-height: 0;
+  }
+  
+  #header {
+      background-color: #f0f0f0;
+      background-image: url('/vsad/resources/images/header.png');
+      background-repeat: no-repeat;
+      height: 124px;
+      /*padding-top: 25px;*/
+      text-align: center;
+      /*vertical-align: middle;*/
+  }
+  
+  #header-title {
+     font-size: 32px;
+     font-weight: bold;
+     padding-top: 45px;
+  }
+  
+  #header-side {
+      font-size: 28px;
+      font-weight: bold;
+      position: absolute;
+      right: 40px;
+      top: 50px;
+  }

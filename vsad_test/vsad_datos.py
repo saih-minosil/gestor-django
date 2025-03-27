@@ -145,17 +145,17 @@ def main():
                     f"Falta el archivo de pronosticos : {datetime.datetime.fromtimestamp(ultimo_t).strftime('%Y%m%d%H%M')}SimulationResults_FOR.xml")
             else:
                 procesar.append(pron[ultimo_t])
-        #######################################   PROCESAR ARCHIVOS ##############################################################################
-        for archivo in procesar:
-            procesar_archivo(con,parser,DIR_XML,archivo)   #PROCESA
-            mover_archivo(archivo,DIR_XML,DIR_BACK)         #Y mueve a BACK
-        logear("Limpiando BB.DD")
-        limpiar_bd(con) #Limpia antiguos de la BB.DD
-        for archivo in pron.values():                                #Los antiguos los mueve a old
-            if archivo!=pron[ultimo_t] :
-                mover_archivo(archivo,DIR_XML,DIR_OLD)
-        for archivo in antiguos:
-            mover_archivo(archivo,DIR_XML,DIR_OLD) #Ya llevna el .xml?
+            #######################################   PROCESAR ARCHIVOS ##############################################################################
+            for archivo in procesar:
+                procesar_archivo(con,parser,DIR_XML,archivo)   #PROCESA
+                mover_archivo(archivo,DIR_XML,DIR_BACK)         #Y mueve a BACK
+            logear("Limpiando BB.DD")
+            limpiar_bd(con) #Limpia antiguos de la BB.DD
+            for archivo in pron.values():                                #Los antiguos los mueve a old
+                if archivo!=pron[ultimo_t] :
+                    mover_archivo(archivo,DIR_XML,DIR_OLD)
+            for archivo in antiguos:
+                mover_archivo(archivo,DIR_XML,DIR_OLD) #Ya llevna el .xml?
     finalizar_conexion(con)
     finalizar_log()
 

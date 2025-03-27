@@ -265,12 +265,14 @@ function anadirValores(valores){
                     stroke:senalesSeleccionadasDict[senal].color,
                     width:1,
                     dash:senalesSeleccionadasDict[senal].linea,
-                    scale:infoSenales[senal]["unid_ing_id"]
+                    scale:infoSenales[senal]["unid_ing_id"],
+                    unidad:infoSenales[senal]["unid_ing_id"],
+                    tag:senal
                     }))  
                 ejes_dict[infoSenales[senal]["unid_ing_nombre"]]={
                     scale: infoSenales[senal]["unid_ing_id"],
                     side:parseInt(senalesSeleccionadasDict[senal]["lado"]),
-                    size: 40,
+                    size: 50,
                     label: infoSenales[senal]["unid_ing_id"],
                 }                      
             }
@@ -296,6 +298,7 @@ function crearGrafica(datosGrafica){
 	                    tpl=tpl.replace("{YYYY}-{MM}-{DD}","{DD}/{MM}/{YYYY}")
 	                    return uPlot.fmtDate(tpl)},
         series: series,
+        
         scales:{
             "x":{},
             "y":{}
@@ -303,6 +306,13 @@ function crearGrafica(datosGrafica){
           cursor: { drag:  { x: true, y: true } },
           axes:ejes_lista
     }; 
+    if(datosGrafica.length<5){
+        options["plugins"]= [
+            tooltipsPlugin({
+            cursorMemo,
+            }),
+        ]
+    }    
     if(uplot){
         uplot.destroy();
     }   

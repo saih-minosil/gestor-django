@@ -18,9 +18,6 @@ function crearGraficaSimple(datosRecibidos){
   senal=datosRecibidos["senal"]
   var leyenda = Array("",senal["id_senal"]+ " "+ senal["tipo_senal"] + " " + senal["unid_ing"]);
   data=datosRecibidos["grafica"]
-
-  var max=Math.max(...data[1])
-  var min=Math.min(...data[1])
   var options = {
     width: 1000,
     height: 400,
@@ -32,7 +29,11 @@ function crearGraficaSimple(datosRecibidos){
                         tpl=tpl.replace("{YYYY}-{MM}-{DD}","{DD}/{MM}/{YYYY}")
                         return uPlot.fmtDate(tpl)
     },
-
+    plugins: [
+      tooltipsPlugin({
+        cursorMemo,
+      }),
+    ],
 
     series: [
     {},
@@ -43,6 +44,8 @@ function crearGraficaSimple(datosRecibidos){
       //width: 1,
       fill: "rgba(16, 16, 255, 0.4)",
       dash: [5, 5],
+      tag: senal["id_senal"],
+      unidad:senal["unid_ing"]
     }
     ],
     scales:{

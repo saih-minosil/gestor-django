@@ -37,6 +37,7 @@
 }
 
 #cabecera{
+  background-image: url('static/main/img/Cabecera.png');
 	height:var( --toolbar-height);
 	background-size:100%;
 	position:absolute;

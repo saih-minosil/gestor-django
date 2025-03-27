@@ -122,6 +122,23 @@ def graficas_predefinidas_estacion(request,codigo_estacion_txt): #POR AHORA NO H
             cods[4]:{"codigo":cods[4],"color":"Blue","linea":[20,4,4,4],"lado":1},
             cods[5]:{"codigo":cods[5],"color":"Purple","linea":[20,4,4,4],"lado":1},            
         }   
-        
+    elif tipo_estacion=='E':
+        tipos_senales_grafica_meteo=['NEMBA','VEMBA']
+        cods=[]
+        for tipo in tipos_senales_grafica_meteo:
+            cods.append(senales.filter(ls_tipo_senal_id=tipo).first().ls_tag_txt)
+        senales_preseleccionadas={
+            cods[0]:{"codigo":cods[0],"color":"Blue","linea":[0],"lado":0},
+            cods[1]:{"codigo":cods[1],"color":"Red","linea":[0],"lado":1},            
+        }   
+    elif tipo_estacion=='CH':
+        tipos_senales_grafica_meteo=['NEMBA','VEMBA']
+        cods=[]
+        for tipo in tipos_senales_grafica_meteo:
+            cods.append(senales.filter(ls_tipo_senal_id=tipo).first().ls_tag_txt)
+        senales_preseleccionadas={
+            cods[0]:{"codigo":cods[0],"color":"Blue","linea":[0],"lado":0},
+            cods[1]:{"codigo":cods[1],"color":"Red","linea":[0],"lado":1},            
+        }       
 
     return JsonResponse(senales_preseleccionadas)    

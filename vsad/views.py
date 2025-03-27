@@ -20,4 +20,12 @@ def estaciones(request):
     #        tipo_estacion=estacion.estacionid[0]
     #    estacion.tipo_estacion=tipo_estacion
     print(estaciones)
-    return render(request,'estaciones.html',{"estaciones":estaciones})    
+    return render(request,'estaciones_saih.html',{"estaciones":estaciones})    
+
+def estacion_antigua(request,codigo_estacion_txt):
+    print("estacion antigua")
+    estacion=InfoEstacion.objects.get(estacionid=codigo_estacion_txt)
+    historica=VariableForecast.objects.filter(estacion_id=codigo_estacion_txt).first()
+    forecast=historica.variableforecast
+    fecha_ultima_prediccion=FewsSeries.objects.filter(seriesid=forecast).aggregate(Max('fechaforecast'))['fechaforecast__max']
+    return render(request, 'prediccion.html', {"estacion": estacion,"historica":historica,"fecha_prediccion":fecha_ultima_prediccion}) 

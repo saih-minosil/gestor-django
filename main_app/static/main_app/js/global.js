@@ -40,6 +40,13 @@
 		window.open(url, "extraccion", "scrollbars=1, width=835, height=830");
 	}
 
+	/*---------------------------------------------------------------------------------------------------------*/
+	function previsionCaudales(){
+	/*---------------------------------------------------------------------------------------------------------*/
+		url = "/vsad";
+		window.open(url, "extraccion", "scrollbars=1, width="+screen.availWidth+", height=830");
+	}
+
 
   function range(start, stop, step) {
     var a = [start], b = start;

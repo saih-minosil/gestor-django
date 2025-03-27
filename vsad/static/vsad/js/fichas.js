@@ -5,7 +5,7 @@ function abrirFicha(Nombre){
     ocultar=document.getElementsByClassName("nivel"+nivel)
     console.log(ocultar)
     if(ocultar && ocultar[0]){        
-        ocultar[0].style.opacity="25%"
+        ocultar[0].style.opacity="1%"
     }
     nivel=nivel+10;
     ficha.style.opacity="100%" 
@@ -25,6 +25,6 @@ function cerrarFicha(Nombre){
     nivel=nivel-10;
     fichasEnsenar=document.getElementsByClassName("nivel"+nivel)
     if(fichasEnsenar && fichasEnsenar[0]){
-        fichasEnsenar[0].style.opacity="95%"
+        fichasEnsenar[0].style.opacity="100%"
     }
 }

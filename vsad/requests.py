@@ -22,14 +22,11 @@ def grafica_estacion(request,codigo_estacion_txt):
     dict_senal['alerta']=datos_senal.alarmaalto
     dict_senal['unidad']=datos_senal.unidad
     dict_senal['tipo']=codigo_estacion_txt[0]
-    fecha_inicial=datetime.now()-timedelta(days=3)
-    #fecha_dentro_siete_dias=datetime.now()+timedelta(days=2)
-    #filter(ho_tag_txt=senal['ls_tag_txt']).filter(ho_calidad__in=calidades_buenas_treal).aggregate(Max('ho_fecha_hora'))['ho_fecha_hora__max']
-    fecha_ultima_prediccion=FewsSeries.objects.filter(seriesid=forecast).aggregate(Max('fechaforecast'))['fechaforecast__max']
-    #fecha_primera_prediccion=FewsSeries.objects.filter(seriesid=forecast,fechaforecast__lte=fecha_inicial).aggregate(Max('fechaforecast'))['fechaforecast__max']
+    fecha_inicial=datetime.now()-timedelta(days=3)    
+    fecha_ultima_prediccion=FewsSeries.objects.filter(seriesid=forecast).aggregate(Max('fechaforecast'))['fechaforecast__max']    
     valores_observada=FewsSeries.objects.filter(seriesid=observada,fecha__gte=fecha_inicial)
     valores_historica=FewsSeries.objects.filter(seriesid=historica,fecha__gte=fecha_inicial)    
-    valores_forecast=FewsSeries.objects.filter(seriesid=forecast,fechaforecast=fecha_ultima_prediccion,)
+    valores_forecast=FewsSeries.objects.filter(seriesid=forecast,fechaforecast=fecha_ultima_prediccion,fecha__gte=fecha_inicial)
     valores_obs_dict={}
     valores_obs_aport_dict={}
     valores_hist_dict={}

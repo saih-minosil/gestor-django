@@ -6,10 +6,6 @@ onload="mostrarSenales();{% if estacion %} filtrarSenalesEstacion('{{estacion}}'
 {% endblock %}
 
 {% block header %}
-<script src="{% static 'main_app/js/fichas.js'%}"></script>
-<script src="{% static 'main_app/js/filtro_senales.js'%}"></script>
-<link rel="stylesheet" href="{% static 'main_app/css/uPlot.min.css' %}">
-<script src="{% static 'main_app/js/uPlot.iife.min.js' %}"></script>
 <script src="{% static 'main_app/js/grafica.js' %}"></script>
 <script src="{% static 'main_app/js/lista_estaciones.js' %}"></script>
 {% endblock %}

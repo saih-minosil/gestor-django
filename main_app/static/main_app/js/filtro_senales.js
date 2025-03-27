@@ -5,22 +5,26 @@ texto_busqueda="";
 function abrirFiltroPorEstacion(){
         document.getElementById("Filtrado_por_estacion").hidden=false;
         document.getElementById("filtro_senales").hidden=true;
-        document.getElementById("tabla_senales_container").hidden=true;
-        tabla_senales=document.getElementById("tabla_senales_graficas_container");
-        if(tabla_senales){ //SOLO PARA PAGINA DE GRAFICAS
-            document.getElementById("tabla_senales_graficas_container").hidden=true;
+        tabla_senales=document.getElementById("tabla_senales");
+        if(tabla_senales==null){
+            tabla_senales=document.getElementById("tabla_senales_graficas_container");
         }
+        //if(tabla_senales){ 
+            tabla_senales.hidden=true;
+        //}
         buscarEstaciones();
         }
 
 function cerrarFiltroPorEstacion(){
         document.getElementById("Filtrado_por_estacion").hidden=true;
         document.getElementById("filtro_senales").hidden=false;
-        document.getElementById("tabla_senales_container").hidden=false;
-        tabla_senales=document.getElementById("tabla_senales_graficas_container");
-        if(tabla_senales){ //SOLO PARA PAGINA DE GRAFICAS
-            document.getElementById("tabla_senales_graficas_container").hidden=false;
+        tabla_senales=document.getElementById("tabla_senales")
+        if(tabla_senales==null){
+            tabla_senales=document.getElementById("tabla_senales_graficas_container");
         }
+        //if(tabla_senales){ //SOLO PARA PAGINA DE GRAFICAS
+        tabla_senales.hidden=false;
+        //}
 }
 
 function buscarEstaciones(){

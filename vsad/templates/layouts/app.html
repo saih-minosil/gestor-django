@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <head>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'vsad/css/style.css' %}" type="text/css">
+    
 
     <script src="{% static 'vsad/js/ajax.js' %}"></script>
     {% block header %}
@@ -10,13 +10,16 @@
 </head>
 <body {% block onload %}
     {% endblock %}>
-<div id="cabecera" style="background-image: url({%static 'main_app/img/Cabecera.png' %});">
+<div id="cabecera">
     <div id="barra_titulo">
-        <a href="https://www.chminosil.es/es/"><img id="logo_CHMS" src="{% static 'main_app/img/LogoOriginal.jpg' %}"
-                                                    alt="Confederacion Hidrografica Miño - Sil"></a>
+        <!--<a href="https://www.chminosil.es/es/"><img id="logo_CHMS" src="{% static 'main_app/img/LogoOriginal.jpg' %}"
+                                                    alt="Confederacion Hidrografica Miño - Sil"></a>-->
         <div id="titulo">
             <div id="titulo_inside">
-                Saih Miño Sil
+                PREVISION DE CAUDALES
+            </div>
+            <div id="titulo_derecho">
+                SAIH <br> MIÑO SIL
             </div>
         </div>
 
