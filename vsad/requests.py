@@ -29,7 +29,7 @@ def grafica_estacion(request,codigo_estacion_txt):
     #fecha_primera_prediccion=FewsSeries.objects.filter(seriesid=forecast,fechaforecast__lte=fecha_inicial).aggregate(Max('fechaforecast'))['fechaforecast__max']
     valores_observada=FewsSeries.objects.filter(seriesid=observada,fecha__gte=fecha_inicial)
     valores_historica=FewsSeries.objects.filter(seriesid=historica,fecha__gte=fecha_inicial)    
-    valores_forecast=FewsSeries.objects.filter(seriesid=forecast,fechaforecast=fecha_ultima_prediccion,)
+    valores_forecast=FewsSeries.objects.filter(seriesid=forecast,fechaforecast=fecha_ultima_prediccion,fecha__gte=fecha_inicial)
     valores_obs_dict={}
     valores_obs_aport_dict={}
     valores_hist_dict={}

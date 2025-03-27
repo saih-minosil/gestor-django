@@ -177,7 +177,7 @@
 			
 		function dateformat(d){
 			date=new Date(d*1000)
-			cadena=date.getDate()+"-"+date.getMonth()+ " "+ date.getHours()+":"+date.getMinutes();
+			cadena=date.getDate()+"-"+(date.getMonth()+1)+ " "+ date.getHours()+":"+date.getMinutes();
 			return(cadena)
 		}
 		
