@@ -7,6 +7,11 @@ function mostrarEstacion(codigo_estacion){
       });
 }
 
+function mostrarFichaEstacion(e){
+    mostrarGrafica(e.target.value)
+}
+
+
 function mostrarGrafica(codigo_estacion){
     solicitudGraficaSimple(codigo_estacion);    
 }

@@ -169,8 +169,14 @@ body{
 
 #Div_Enlace_descargar_imagen{
   margin: 10px 0px 10px 50px;
+  display:inline-block;
+  width:280px;
 }
 
+#div_selector_estaciones{
+  width:200px;
+  display:inline-block;
+}
 
 /*---------------------------------------------    FILTRO DE ESTACIONES  ------------------------------------------------------*/
 /*

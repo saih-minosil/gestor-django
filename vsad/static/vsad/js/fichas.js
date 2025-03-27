@@ -4,9 +4,9 @@ function abrirFicha(Nombre){
     var ficha=document.getElementById(Nombre)    
     ocultar=document.getElementsByClassName("nivel"+nivel)
     console.log(ocultar)
-    if(ocultar && ocultar[0]){        
+    /*if(ocultar && ocultar[0]){        
         ocultar[0].style.opacity="1%"
-    }
+    }*/
     nivel=nivel+10;
     ficha.style.opacity="100%" 
     ficha.style.top="0px";

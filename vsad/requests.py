@@ -1,4 +1,4 @@
-from .models import VariableForecast,FewsSeries,InfoVariable
+from .models import VariableForecast,FewsSeries,InfoVariable,InfoEstacion
 from django.db.models import Max,Min
 from datetime import timedelta,datetime
 from django.http import JsonResponse
@@ -7,9 +7,8 @@ from itertools import chain
 
 
 def grafica_estacion(request,codigo_estacion_txt):
-    datos_estacion=VariableForecast.objects.filter(estacion_id=codigo_estacion_txt).first()
-    
-
+    datos_estacion=VariableForecast.objects.filter(estacion_id=codigo_estacion_txt).first()    
+    estacion=InfoEstacion.objects.filter(estacionid=codigo_estacion_txt).values('estacionid','extendido')[0]
     observada=datos_estacion.variableobservada
     observada_aportacion=datos_estacion.estacion_id+"_I.obs"
     historica=datos_estacion.estacion_id + "_Discharge"
@@ -62,4 +61,4 @@ def grafica_estacion(request,codigo_estacion_txt):
         if valores_obs_aport_dict:
             lista_valores_obs_aport.append(float("{:.3f}".format(valores_obs_aport_dict[t])) if t in valores_obs_aport_dict else None)
     grafica=[lista_etiquetas,lista_valores_obs,lista_valores_obs_aport,lista_valores_hist,lista_valores_forecast]
-    return JsonResponse({"senal":dict_senal,"grafica":grafica})
+    return JsonResponse({"estacion":estacion,"senal":dict_senal,"grafica":grafica,"fecha_prediccion":fecha_ultima_prediccion})

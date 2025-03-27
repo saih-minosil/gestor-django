@@ -22,9 +22,11 @@ function crearGraficaSimple(datosRecibidos){
   //var leyenda = Array("",senal["id_senal"]+ " "+ senal["tipo_senal"] + " " + senal["unid_ing"]);
   data=datosRecibidos["grafica"]  
   senal=datosRecibidos["senal"]
+  estacion=datosRecibidos["estacion"]
+  fecha_prediccion=datosRecibidos["fecha_prediccion"]
+  document.getElementById("codigo_estacion").innerText=estacion.estacionid
+  document.getElementById("Cabecera_prediccion").innerText="Gráfica de "+estacion.extendido+"("+estacion.estacionid+") - Predicción de "+fecha_prediccion
   num_datos=data[0].length
-  
-
 
   var options = {
     width: window.innerWidth-200,
@@ -125,12 +127,14 @@ if(senal["alerta"]!=-777){
     unidad:'m3/s'
     }) 
   } 
-
+  if(uplot){
+    uplot.destroy();
+  }
   uplot = new uPlot(options, data, document.getElementById("grafica_container"));
   let ctx=uplot.ctx;
   dibujarAlertas(ctx,senal)
   console.log(uplot);
-  abrirFicha("Ficha_senal")
+  //abrirFicha("Ficha_senal")
 }
 
 function dibujarAlertas(ctx,senal){

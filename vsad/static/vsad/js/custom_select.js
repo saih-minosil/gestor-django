@@ -17,6 +17,20 @@ function updateCustomSelect(element){
     /* Create a new DIV that will contain the option list: */
     b = document.createElement("DIV");
     b.setAttribute("class", "select-items select-hide");
+    /* CREATE SEARH BOX */
+    s = document.createElement("DIV");
+    s.ind="Div_buscar_estacion";
+    si=document.createElement("Input");
+    lupa=document.createElement("img");
+    lupa.src="/static/vsad/img/Lupa.png"
+    //lupa.style.width="24px";
+    //lupa.style.height="24px";
+    si.type="Text";
+    s.appendChild(si);
+    s.appendChild(lupa);
+    si.addEventListener("input", filtrarEstaciones);
+    //si.oninput=filtrarEstaciones
+    b.appendChild(s)
     for (j = 0; j < ll; j++) {
         /* For each option in the original select element, create a new DIV that will act as an option item: */
         c = document.createElement("DIV");
@@ -25,10 +39,9 @@ function updateCustomSelect(element){
         c.data=e.value;
         c.style.color=e.style.color;
         c.className=c.className+" "+ e.className+"_";
+        c.addEventListener("click", e.onclick);
         c.addEventListener("click", function(e) {
             /* When an item is clicked, update the original select box, and the selected item: */
-//            console.log("Event shot: click on option: ")
-//            console.log(e)
             var y, i, k, s, h, sl, yl;
             s = this.parentNode.parentNode.getElementsByTagName("select")[0];
             sl = s.length;
@@ -47,8 +60,9 @@ function updateCustomSelect(element){
                     this.setAttribute("class", "same-as-selected");
                     break;
                 }
-            }
-            h.click();
+            }    
+            h.style.color="black"        
+            h.click();            
         });
         b.appendChild(c);
 
@@ -60,6 +74,7 @@ function updateCustomSelect(element){
         e.stopPropagation();
         closeAllSelect(this);
         this.nextSibling.classList.toggle("select-hide");
+        si.focus();
         
     });
     return a;
@@ -87,4 +102,5 @@ function closeAllSelect(elmnt) {
 
 /* If the user clicks anywhere outside the select box,
 then close all select boxes: */
+
 document.addEventListener("click", closeAllSelect);
