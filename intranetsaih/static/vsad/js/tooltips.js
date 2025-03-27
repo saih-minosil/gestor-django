@@ -4,8 +4,7 @@
 				let seriestt;
 
 				function init(u, opts, data) {
-					console.log("Options: ")
-					console.log(opts)
+
 					let over = u.over;
 
 					seriestt = opts.series.map((s, i) => {
@@ -21,7 +20,7 @@
 						over.appendChild(tt);
 						return tt;
 					});
-					console.log(seriestt);
+
 
 					function hideTips() {
 						//cursortt.style.display = "none";
@@ -76,14 +75,15 @@
 								
 								datetime=dateformat(xVal)
 								if(yVal || yVal==0){																	
-									tt.innerHTML = datetime + "<br>" + s.label+ " :" + yVal + " " + s.unidad;
+									//tt.innerHTML = datetime + "<br>" + s.label+ " :" + yVal + " " + s.unidad;
+									//tt.innerHTML = datetime + "\n" + s.label+ " :" + yVal + " " + s.unidad;
+									tt.innerHTML = "<p>" + datetime + "</p><p>" + s.label+ " :" + yVal + " " + s.unidad+ "</p>";
 									if(tt.style.display=="none"){
 										tt.style.display = "block";
-										console.log("Mostrando el tooltip "+i)
+
 									}
 								}else{
 									tt.style.display = "none";
-									console.log("Escondiendo el tooltip "+i)
 								}
 								var top = (yVal != null ? (Math.round(u.valToPos(yVal, s.scale))-tt.offsetHeight) : 9999) + "px";								
 								tts.push({"top":parseInt(top),"obj":tt,"ind":i})
@@ -103,8 +103,6 @@
 								if(i==5 || i==6){//Comrpbar si los tooltips de activacio,, prealerta y alerta se sobreponen (seran 5 y 6 con embalses)
 									var ttn=tt.nextElementSibling //ttn es el siguiente									
 									if(parseFloat(tt.style.top)>parseFloat(ttn.style.top) && parseFloat(tt.style.top)<parseFloat(ttn.style.top) + ttn.offsetHeight){
-										console.log(i+1+ " esta delante de " + i)
-										console.log(ttn)
 										tt.style.left=parseFloat(ttn.style.left)+(ttn.offsetWidth)+"px"
 									}
 										//tt.style.top=(parseFloat(tt1.style.top)-tt1.offsetHeight)+"px"
@@ -118,30 +116,23 @@
 							
 						}
 					});
-					console.log(seriestt)
 					tts.sort((a, b) => a.top - b.top); //ordenar por la Y
 					var height=tts[0].obj.offsetHeight
-					console.log(tts)
-					console.log(height)
+
 					seriestt[tts[0].ind].style.top=tts[0].top+"px"
 					seriestt[tts[1].ind].style.top=tts[1].top+"px"
 					seriestt[tts[2].ind].style.top=tts[2].top+"px"
 					if(tts[1].top>tts[0].top-height && tts[1].top<tts[0].top+height){ //si el segundo tapa al primero
 						var tp = tts[0].top+height
-						console.log(tts[1].ind)
 						seriestt[tts[1].ind].style.top=tp+"px"	//se posiciona debajo del primero
 						tts[1].top=tp
-						console.log("2 tapa")
-						console.log(tts[0].top)
-						console.log(tts[1].top)
-						console.log(tp)
+
 					}
 					if((tts[2].top>tts[0].top-height && tts[2].top<tts[0].top+height)
 					  ||(tts[2].top>tts[1].top-height && tts[2].top<tts[1].top+height)){ //si el tercero tapa acualquiera de los dos
 						var tp = tts[1].top+height
 						seriestt[tts[2].ind].style.top=tp+"px"
 						tts[2].top=tp
-						console.log("3 tapa")
 					}
 				}
 
@@ -151,7 +142,7 @@
 						setCursor,
 						setScale: [
 							(u, key) => {
-								console.log('setScale', key);
+								console.log('setScale',u, key);
 							}
 						],
 						setSeries: [
@@ -177,7 +168,7 @@
 			
 		function dateformat(d){
 			date=new Date(d*1000)
-			cadena=date.getDate()+"-"+(date.getMonth()+1)+ " "+ date.getHours()+":"+date.getMinutes();
+			cadena=date.getDate()+ "-" +(date.getMonth()+1)+ " "+ date.getHours()+":"+date.getMinutes();
 			return(cadena)
 		}
 		

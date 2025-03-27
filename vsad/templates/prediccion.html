@@ -4,7 +4,7 @@
 
 <div id="table-container">
 <!-- ---------------------------------------------------------- Segunda tabla: Datos de la estacion -------------------------------------------------------------->
-		<table class="tabla ancho_fijo ">
+		<!--<table class="tabla ancho_fijo ">
 			<tbody>
 				<tr>
 					<th class="encabezado_fijos" colspan="12">Datos Fijos</th>
@@ -16,9 +16,9 @@
                     <td class="celdal fontsize20">
 						<!-- POR AHORA NO SE PUEDE ABRIR ESTACION DESDE SEÑAL PARA EVITAR UN BUCLE QUE COMPLICA EL CODIGO DE LAS FICHAS -->
 						<!-- <a href="/estacion/{{senal.ls_estacion_txt.le_codigo_txt}}">-->
-						<!--<a href="#" onclick="mostrarEstacion('{{ senal.ls_estacion_txt.le_codigo_txt }}')">-->
+						<!--<a href="#" onclick="mostrarEstacion('{{ senal.ls_estacion_txt.le_codigo_txt }}')">
 						{{estacion.codigo}}
-						<!--</a>-->
+						<!--</a>
 					</td>
 				</tr>
 				<tr>
@@ -28,7 +28,15 @@
                     <td class="celdal fontsize20">{{fecha_prediccion}}</td>
 				</tr>
 			</tbody>
-		</table>
+		</table> -->
+		<div id="codigo_estacion" hidden>{{estacion.estacionid}}</div>
+		
+		<div id="Div_Enlace_descargar_imagen">
+			<a href=# onclick="downloadImage()">
+				<b>GUARDAR GRÁFICA</b>, en formato <b>PNG</b>
+			</a>
+		</div>	
+		<div id="Cabecera_prediccion" hidden>Gráfica de {{estacion.extendido}}({{estacion.estacionid}}) - Predicción de {{fecha_prediccion}}</div>
 </div>
 
 		<!-- Gráfica -->
