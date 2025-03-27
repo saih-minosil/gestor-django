@@ -44,3 +44,34 @@
         }
         mostrar()
     }
+
+  
+
+
+function filtrarEstaciones(e){       
+    var texto_busqueda=e.target.value
+    var todas=document.getElementsByClassName("option_estacion_");
+    console.log(todas)
+    for (cada of todas){
+        cada.hidden=true;
+    }
+    visibles_busqueda=Array()
+    if(texto_busqueda){
+        for (cada of todas){
+            //buscar en el contenido
+            buscarEn=cada.innerText.toLowerCase();            
+            if (buscarEn.includes(texto_busqueda.toLowerCase())){
+                visibles_busqueda.push(cada)
+            }
+        }
+    }else{
+        visibles_busqueda=Array.from(todas);
+    }
+    console.log(visibles_busqueda)
+    for (visible of visibles_busqueda){    
+        if (visibles_busqueda.includes(visible)){
+                visible.hidden=false;
+        }
+    }
+    
+}

@@ -2,10 +2,12 @@
 {% load static %}
 
 {% block header %}
+<title> PREVISION DE CAUDALES </title>
 <link rel="stylesheet" href="{% static 'vsad/css/style_saih.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'vsad/css/customselect.css' %}" type="text/css">
 <script src="{% static 'vsad/js/fichas.js' %}"></script>
 <script src="{% static 'vsad/js/lista_estaciones.js' %}"></script>
+<script src="{% static 'vsad/js/filtro_estaciones.js' %}"></script>
 <link rel="stylesheet" href="{% static 'vsad/css/uPlot.min.css' %}">
 <script src="{% static 'vsad/js/uPlot.iife.min.js' %}"></script>
 <script src="{% static 'vsad/js/tooltips.js' %}"></script>
@@ -16,77 +18,34 @@
 {% endblock %}
 
 {% block onload %}
-<!--onload=updateCustomSelect(document.getElementById("div_selector_estaciones"))-->
+onload=updateCustomSelect(document.getElementById("div_selector_estaciones"))
 {% endblock %}
 
 {% block content %}
 <div id="Contenido_principal" class="nivel0">
-    <!-- <div id="div_selector_estaciones" class="custom-select">
-        <select id="selector_estaciones">				
+    <div id="codigo_estacion" hidden>{{estacion.estacionid}}</div>					
+	<div id="Cabecera_prediccion" hidden>Gráfica de {{estacion.extendido}}({{estacion.estacionid}}) - Predicción de {{fecha_prediccion}}</div>
+    Estacion: 
+    <div id="div_selector_estaciones" class="custom-select">
+        
+        <select id="selector_estaciones" onchange=mostrarEstacion>				
+
             {% for estacion in estaciones %}
-                <option value={{estacion.estacion.estacionid}}>{{estacion.estacion.estacionid}} {{estacion.estacion.descripcion}}</option>       
+
+                <option class="option_estacion" onclick=mostrarGrafica('{{ estacion.estacion.estacionid }}') value={{estacion.estacion.estacionid}}>{{estacion.estacion.estacionid}} {{estacion.estacion.descripcion}}</option>       
             {% endfor %}
         </select>	
-    </div> -->
+    </div>
+    <div id="Div_Enlace_descargar_imagen">
+        <a href=# onclick="downloadImage()">
+            <b>GUARDAR GRÁFICA</b>, en formato <b>PNG</b>
+        </a>
+    </div>
+		
 
-    <table id="tabla_estaciones" class="tabla ancho_fijo ">
-        <tr>
-            <th class="encabezado_fijos">
-                Codigo
-            </th>
-            <th class="encabezado_fijos">
-                Nombre
-            </th>
-            <th class="encabezado_fijos">
-                Descripcion
-            </th>
-            <th class="encabezado_fijos">
-                Cuenca
-            </th>
-            <th class="encabezado_fijos">
-                Rio
-            </th>            
-        </tr>
-        {% for estacion in estaciones %}
-        <!-- darle clase a los elementos de las tablaS?-->
-        <tr class="fila_estacion">
-            <td>
-                <a href="#" onclick="mostrarEstacion('{{ estacion.estacion.estacionid }}')">
-                    {{estacion.estacion.estacionid}}
-                </a>
-            </td>
-            <td>
-                <a href="#" onclick="mostrarEstacion('{{ estacion.estacion.estacionid }}')">
-                    {{estacion.estacion.descripcion}}
-                </a>
-            </td>
-            <td>
-                <!-- <a href="/estacion/{{ estacion.le_codigo_txt }}"> -->
-                {{estacion.extendido}}
-                <!-- </a> -->
-            </td>
-            <td>
-                <!--            <a href="/estacion/{{ estacion.le_codigo_txt }}">-->
-                {{estacion.estacion.sistemaexplotacion}}
-                <!--            </a>-->
-            </td>
-            <td>
-                <!--            <a href="/estacion/{{ estacion.le_codigo_txt }}">-->
-                {{estacion.estacion.rio}}
-                <!--            </a>-->
-            </td>            
-        </tr>
+<div id="grafica_container" class="Contenedor_claro ancho_100" >	
+</div>
+</div>
 
-        {% endfor %}
-    </table>
-</div>
-<!--<div id="Ficha_estacion" Class="Ficha ancho100" >
-  <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_estacion');"></div>
-  <div id="Contenido_ficha_estacion"></div>
-</div>-->
-<div id="Ficha_senal" Class="Ficha ancho_100" >
-    <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_senal');"></div>
-    <div id="Contenido_ficha_senal"></div>
-</div>
 
 {% endblock %}
