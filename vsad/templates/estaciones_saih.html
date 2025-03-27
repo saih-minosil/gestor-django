@@ -3,21 +3,32 @@
 
 {% block header %}
 <link rel="stylesheet" href="{% static 'vsad/css/style_saih.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'vsad/css/customselect.css' %}" type="text/css">
 <script src="{% static 'vsad/js/fichas.js' %}"></script>
 <script src="{% static 'vsad/js/lista_estaciones.js' %}"></script>
 <link rel="stylesheet" href="{% static 'vsad/css/uPlot.min.css' %}">
 <script src="{% static 'vsad/js/uPlot.iife.min.js' %}"></script>
 <script src="{% static 'vsad/js/tooltips.js' %}"></script>
 <script src="{% static 'vsad/js/grafica.js' %}"></script>
+<script src="{% static 'vsad/js/custom_select.js' %}"></script>
+
 
 {% endblock %}
 
 {% block onload %}
-
+<!--onload=updateCustomSelect(document.getElementById("div_selector_estaciones"))-->
 {% endblock %}
 
 {% block content %}
 <div id="Contenido_principal" class="nivel0">
+    <!-- <div id="div_selector_estaciones" class="custom-select">
+        <select id="selector_estaciones">				
+            {% for estacion in estaciones %}
+                <option value={{estacion.estacion.estacionid}}>{{estacion.estacion.estacionid}} {{estacion.estacion.descripcion}}</option>       
+            {% endfor %}
+        </select>	
+    </div> -->
+
     <table id="tabla_estaciones" class="tabla ancho_fijo ">
         <tr>
             <th class="encabezado_fijos">
