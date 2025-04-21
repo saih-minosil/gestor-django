@@ -7,19 +7,11 @@ from itertools import chain
 from zoneinfo import ZoneInfo
 #result_list = list(chain(page_list, article_list, post_list))
 
-calcular_ts("2025-04-21 13:35:00")  
 
 def calcular_ts(fecha):
-    print(datetime.strptime(fecha,'%Y-%m-%d %H:%M:%S'))
-    print(datetime.strptime(fecha,'%Y-%m-%d %H:%M:%S').tzinfo)
     fecha_dt=datetime.strptime(fecha,'%Y-%m-%d %H:%M:%S')
     fecha_utc=fecha_dt.replace(tzinfo=timezone.utc)
     fecha_tz=fecha_dt.replace(tzinfo=ZoneInfo("Europe/Madrid"))
-    print(fecha_dt)
-    print(fecha_utc)
-    print(fecha_tz)
-    print(datetime.timestamp(fecha_utc))
-    print(datetime.timestamp(fecha_tz))
     return datetime.timestamp(fecha_tz)
 
 
