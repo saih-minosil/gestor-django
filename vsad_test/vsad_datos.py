@@ -9,6 +9,9 @@ import xml.sax
 import shutil
 import mysql.connector
 
+class UnprocesedException(Exception):
+    pass
+
 #CONFIGURACION BASICA
 #CARPETAS
 DIRECTORIO_DATOS='/mnt/DatosVsad/Carga_modelos'
@@ -59,8 +62,10 @@ def procesar_archivo(con,parser,carpeta,archivo):
         logear(f"Ya hay datos introducidos para la fecha {datetime.datetime.strptime(archivo[0:12],'%Y%m%d%H%M')} ")
     except mysql.connector.errors.Error as e:
         logear(f"Error al Escrbir en la base de datos {e} ")
+        raise UnprocesedException('Unprocessed','Unprocessed')
     except Exception as e:
         logear(f"Error al procesar el archivo {archivo}: {e} ")
+        raise UnprocesedException('Unprocessed','Unprocessed')
     finally:
         parser.getContentHandler().reset()
         f.close()
@@ -156,8 +161,11 @@ def main():
             #######################################   PROCESAR ARCHIVOS ##############################################################################
             print(procesar)
             for archivo in procesar:
-                procesar_archivo(con,parser,DIR_XML,archivo)   #PROCESA
-                mover_archivo(archivo,DIR_XML,DIR_BACK)         #Y mueve a BACK
+                try:
+                    procesar_archivo(con,parser,DIR_XML,archivo)   #PROCESA
+                    mover_archivo(archivo,DIR_XML,DIR_BACK)         #Y mueve a BACK
+                except UnprocesedException as e:
+                    pass    
             logear("Limpiando BB.DD")
             limpiar_bd(con) #Limpia antiguos de la BB.DD
             for archivo in pron.values():                                #Los antiguos los mueve a old
