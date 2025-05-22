@@ -1,0 +1,254 @@
+#main_div{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background: linear-gradient(rgb(232, 230, 214),rgb(229, 232, 214));
+    height:100%;
+}
+
+.col{
+    background:transparent;
+    margin:0px auto;
+}
+
+.col div{
+    display:block;
+}
+
+
+
+@media screen and (max-width: 1500px) {
+    #col_1{
+      width: 100%;
+    }
+
+    table{
+        width:720px;
+    }
+
+    #div_tareas{
+        background-size:860px 750px;
+    }
+
+    td{
+        font-size: 24px;
+        font-weight: bolder;
+    }
+
+    th{
+        font-size: 24px;
+        font-weight: bolder;
+    }
+
+    #col2{
+        margin-top: 10px;
+    }
+  }
+
+  @media screen and (min-width: 1500px) {
+    #col_1{
+      width: 620px;
+    }
+
+    table{
+        width:540px;
+    }
+
+    #div_tareas{
+        background-size:620px 540px;
+    }
+
+    #col2{
+        margin-top: 230px;
+    }
+  }  
+
+#col2{
+    background-image:url("img/laptop.avif");
+    width:900px;
+    min-height:650px;
+    background-size: contain;
+    background-repeat:no-repeat;
+    background-position:0px 30px;
+}
+
+#boton_fichar{    
+        margin: 2px auto;
+        left: 0px;
+        right: 0px;
+        text-align: center;
+        width: 250px;
+        height:230px;
+        display: block;
+        border-radius:  10px;
+        /*border:  solid 2px red;*/
+        font-size:24px;
+        font-weight: 900;
+               
+       
+}
+
+#reloj_fichar{
+    background-image:url('img/reloj.gif');
+    background-size: contain;     
+    display: block;
+    height:200px;
+    transition: all 0.5s ease;
+    /*animation:none;
+    animation-iteration-count: infinite;*/
+}
+
+#reloj_fichar:hover {    
+    /*animation: zoom_in 0.5s;
+    animation-iteration-count: 1;*/
+    transform:scale(1.15);
+}
+  
+  @keyframes zoom_in {
+    0% { transform: scale(1,1); }    
+    100% { transform: scale(1.15,1.15); }
+  }
+
+  @keyframes zoom_out {
+    0% { transform: scale(1.15,1.15); }    
+    100% { transform: scale(1,1); }
+  }
+
+#div_fichar{
+    padding:12px;
+}
+
+#div_tareas{
+    background-image: url('img/notepad.png');
+    background-position: center;
+    background-repeat:no-repeat;
+    /*background-size: 620px 540px ;*/
+    padding: 20px 0px 20px 0px;
+}
+
+#div_accesos{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 34px 81px 0px 79px;
+}
+
+
+
+#div_accesos div{
+    flex-grow:0;
+    width:calc(21% - 22px);
+    height:70px;
+    text-align:center;
+    background-color:rgba(225, 249, 252, 0.95);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius:12px;
+    margin:12px 14px;
+    font-size:22px;
+    font-weight: 900;
+    border: outset 1px;
+    padding:12px 10px;
+    transition: all 0.2s ease;
+}
+
+#div_accesos div a{
+    display:block;
+    height:100%;
+    width:100%;
+}
+
+#div_accesos div:hover {
+    transform:scale(1.15);
+}
+ /* BOTONES ACCESOS */
+ /*
+#correo_chms{
+    background-image:url("img/chms.jpg");
+}
+#correo_tragsa{
+    background-image:url("img/tragsa.jpg");
+}
+#correo_gmail{
+    background-image:url("img/gmail.png");
+}
+#correo_proton{
+    background-image:url("img/proton.png");
+}
+*/
+#div_entretenimiento{
+    display: flex;
+    flex-wrap: wrap;
+    padding-left:60px;
+    padding-right:64px;
+}
+
+
+#div_entretenimiento div{
+    flex-grow:1;
+    /*width:calc(29% - 22px);*/
+    /*height:70px;*/
+    text-align:center;
+    height:30px;
+    background-color:rgba(221, 227, 228, 0.95);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius:6px;
+    margin:12px 4%;
+    font-size:15px;
+    font-weight: 500;
+    border: outset 1px;
+    padding:10px 6px;
+    transition: all 0.2s ease;
+}
+
+#div_entretenimiento div a{
+    display:block;
+    height:100%;
+    width:100%;
+}
+
+#div_entretenimiento div:hover{
+    transform:scale(1.15);
+}
+
+
+#boton_spotify{
+    background-image:url("img/spotify.png");
+}
+#boton_soundcloud{
+    background-image:url("img/soundcloud.png");
+}
+#boton_ivoox{
+    background-image:url("img/ivoox.png");
+}
+#boton_youtube{
+    background-image:url("img/youtube.png");
+}
+
+
+
+table{
+    margin:40px auto;
+    /*width:540px;*/
+    opacity:99%;
+    padding-left:45px;
+}
+
+tr{
+
+}
+
+td{
+    /*border:solid 1px white;*/
+    border-collapse:0px;
+    /*background-color:white;*/
+    padding:4px 10px;
+    border-bottom:solid 1px black;
+}
+
+
+th{
+    padding:5px 10px;
+}

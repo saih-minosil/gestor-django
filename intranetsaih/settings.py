@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
 import pyodbc
 from .dbrouter import DbRouter
 
@@ -35,7 +34,8 @@ ALLOWED_HOSTS = ['belesar','localhost','cachamuina','10.31.156.143']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'corsheaders',
+    'django.contrib.admin.apps.SimpleAdminConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -43,13 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main_app',
     'gestor',
-    'vsad'
-
+    'vsad',
+    
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -62,7 +63,7 @@ ROOT_URLCONF = 'intranetsaih.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'intranetsaih/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -74,6 +75,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CORS_ALLOWED_ORIGINS=['http://belesar:5173']
 
 WSGI_APPLICATION = 'intranetsaih.wsgi.application'
 
@@ -180,7 +183,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
 
 TIME_ZONE = 'CET'
 
@@ -193,7 +196,8 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = '/home/saihminosil/webapps/gestor-django/intranetsaih/static'
+#STATIC_ROOT = '/home/saihminosil/webapps/gestor-django/intranetsaih/static'
+STATICFILES_DIRS = ['/home/saihminosil/webapps/gestor-django/intranetsaih/static/']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

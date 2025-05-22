@@ -812,7 +812,8 @@ class ListaSenalesAnalogicasUmbrales(models.Model):
 
 
 class ListaSenalesCalculadas(models.Model):
-    lsc_tag = models.IntegerField(db_column='LSC_TAG', primary_key=True)  # Field name made lowercase. The composite primary key (LSC_TAG, LSC_FECHA_INICIO) found, that is not supported. The first column is selected.
+    pk=models.CompositePrimaryKey('lsc_tag','lsc_fecha_inicio')
+    lsc_tag = models.ForeignKey(ListaSenales,on_delete=models.DO_NOTHING,db_column='LSC_TAG')  # Field name made lowercase. The composite primary key (LSC_TAG, LSC_FECHA_INICIO) found, that is not supported. The first column is selected.
     lsc_fecha_inicio = models.DateTimeField(db_column='LSC_FECHA_INICIO')  # Field name made lowercase.
     lsc_fecha_fin = models.DateTimeField(db_column='LSC_FECHA_FIN', blank=True, null=True)  # Field name made lowercase.
     lsc_version = models.CharField(db_column='LSC_VERSION', max_length=50, blank=True, null=True)  # Field name made lowercase.
@@ -820,6 +821,7 @@ class ListaSenalesCalculadas(models.Model):
     lsc_tipo_calculo = models.SmallIntegerField(db_column='LSC_TIPO_CALCULO', blank=True, null=True)  # Field name made lowercase.
     lsc_tag_campo = models.IntegerField(db_column='LSC_TAG_CAMPO', blank=True, null=True)  # Field name made lowercase.
     lsc_tag_campo_2 = models.IntegerField(db_column='LSC_TAG_CAMPO_2', blank=True, null=True)  # Field name made lowercase.
+    ''' NO SE USAN POR AHORA
     lsc_tabla = models.CharField(db_column='LSC_TABLA', max_length=12, blank=True, null=True)  # Field name made lowercase.
     lsc_cota_min_formula = models.DecimalField(db_column='LSC_COTA_MIN_FORMULA', max_digits=34, decimal_places=30, blank=True, null=True)  # Field name made lowercase.
     lsc_coef0 = models.DecimalField(db_column='LSC_COEF0', max_digits=34, decimal_places=30, blank=True, null=True)  # Field name made lowercase.
@@ -830,7 +832,8 @@ class ListaSenalesCalculadas(models.Model):
     lsc_coef5 = models.DecimalField(db_column='LSC_COEF5', max_digits=34, decimal_places=30, blank=True, null=True)  # Field name made lowercase.
     lsc_coef6 = models.DecimalField(db_column='LSC_COEF6', max_digits=34, decimal_places=30, blank=True, null=True)  # Field name made lowercase.
     lsc_coef7 = models.DecimalField(db_column='LSC_COEF7', max_digits=34, decimal_places=30, blank=True, null=True)  # Field name made lowercase.
-
+    '''
+    
     class Meta:
         managed = False
         db_table = 'LISTA_SENALES_CALCULADAS'
@@ -870,6 +873,7 @@ class ListaSenalesDigitales(models.Model):
 
 
 class ListaSenalesLimitevariables(models.Model):
+    
     lsl_tag = models.IntegerField(db_column='LSL_TAG', primary_key=True)  # Field name made lowercase. The composite primary key (LSL_TAG, LSL_ALARMA, LSL_DIA, LSL_MES) found, that is not supported. The first column is selected.
     lsl_alarma = models.CharField(db_column='LSL_ALARMA', max_length=4)  # Field name made lowercase.
     lsl_dia = models.SmallIntegerField(db_column='LSL_DIA')  # Field name made lowercase.

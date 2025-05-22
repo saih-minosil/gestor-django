@@ -100,7 +100,10 @@ onload="onload()"
                         <input id="Input_fecha_fin_grafica" oninput="ajustarFechasIniFin()" type="datetime-local">
                     </td>
                     <td>
-                        <input type="button" onclick="javascript:generarGrafica()" value="Generar grafica">
+                        <input type="button" onclick="javascript:generarGrafica()" value="Gráfica">
+                    </td>
+                    <td>
+                        <input type="button" onclick="javascript:generarCSV()" value="CSV">
                     </td>
                 </tr>
             </table>
@@ -110,6 +113,14 @@ onload="onload()"
 <div id="Ficha_grafica" class="Ficha ancho_fijo"> <!-- Dejar aqui o mandar a su priopio html... -->
     <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_grafica');"></div>
     <div id="Div_panel_grafica" class="Contenedor_claro ancho_fijo"></div>
+    <div id="div_tabla" class="Contenedor_claro ancho_fijo">
+        <table class="tabla ancho_estrecho" id="tabla_valores_grafica" >
+            <!--<tr>
+                <th class="celdacn">Fecha</th>
+                <th class="celdacn">Valor</th>
+            </tr>-->
+        </table>	
+    </div>
     <div id="Div_panel_avisos_grafica" class="Contenedor_claro ancho_fijo" hidden>
         <div class="Boton_cerrar" onclick="cerrarAvisosGrafica();">
         </div>

@@ -64,10 +64,8 @@ function actualizarListaSenalesGrafica(){
     var newTable = document.createElement("TABLE");
     newTable.className="tabla ancho_fijo";
     newTable.id="Tabla_senales_seleccionadas"
-    newTable.appendChild(header);
-    console.log(senalesSeleccionadasDict)
-    for(senal in senalesSeleccionadasDict){
-        console.log(senal)
+    newTable.appendChild(header);    
+    for(senal in senalesSeleccionadasDict){        
         var fila = newTable.insertRow(-1);
         // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
         var celda1 = fila.insertCell(0);
@@ -126,13 +124,12 @@ function selectorLinea(codigo,value,celda_canvas){
     var newSelect = document.createElement("SELECT");
     newSelect.id='selector_linea_'+codigo
     newSelect.className='selector_linea'
-    console.log(value.toString())
     for (linea in lineas){
         newOption=document.createElement("option");
         newOption.value=lineas[linea];
         //newOption.style.color=color;
         newOption.innerHTML=linea;
-        console.log(lineas[linea])        
+   
         if(lineas[linea]=="["+value.toString()+"]"){
             newOption.selected="selected";
         }
@@ -203,6 +200,9 @@ function asignarLado(input,codigo_senal){
 }
 
 /////////////////////////////////  PARTE DE GENERACION DE LA GRAFICA ////////////////////////////////////////////
+let colores_calidades_treal={"-6":"red","-3":"orange","-1":"white","1":"white","2":"yellow","3":"gray","5":"pink","6":"cyan",7:"white",8:"white"}
+
+let tzDate=data => uPlot.tzDate(new Date(data * 1e3), 'CET')
 
 let datosGrafica=[],uplot,datosSenales={},etiquetas=[],longitud_total=0;recibidas=0;numsenales=0;avisos="";infoSenales={};ejes_dict={};ejes_lista=[];
 
@@ -217,6 +217,7 @@ function generarGrafica() {
         valores=[];        
         datosSenales={};
         infoSenales={};
+        calidades={};
         longitud_total=0;
         num_senales=0;
         recibidas=0;
@@ -226,11 +227,14 @@ function generarGrafica() {
         ejes_lista=[{}];
         for (codigo in senalesSeleccionadasDict){
             num_senales++;
-            async_json_call("/datos_senal/"+origen+","+codigo+","+fecha_ini+","+fecha_fin,valores,anadirValores,"Error en la peticion de datos");        
+            async_json_call("/datos_senal/"+origen+","+codigo+","+fecha_ini+","+fecha_fin+",0",valores,anadirValores,"Error en la peticion de datos");        
             }
         //Animacion "Espere a que carguen los datos de la BD"        
     }
 }
+
+
+
 
 function anadirValores(valores){    
     if(!valores["etiquetas"] || valores["etiquetas"].length==0){                  //SI NO TIENE VALORES
@@ -248,18 +252,19 @@ function anadirValores(valores){
         }        
         datosSenales[valores["senal"]["id_senal"]]=valores["valores"]
         infoSenales[valores["senal"]["id_senal"]]=valores["senal"]
+        calidades[valores["senal"]["id_senal"]]=valores["calidades"]
         longitud_total+=valores["valores"].length
     }
     recibidas++;
-    console.log(datosSenales)
-    console.log(etiquetas)
     //Comprobas si se ha recibido todo
     if(recibidas>=num_senales){ //Si ya se han recibido todas        
         if(longitud_total){ //Si hay al menos una señal
             datosGrafica=[etiquetas];
+            calidadesGrafica=[("")]
             series=[{}];
             for(senal in datosSenales){ //PARA CADA SEÑAL
                 datosGrafica.push(datosSenales[senal]) //DATOS
+                calidadesGrafica.push(calidades[senal])
                 series.push(({show:true,                //METADATOS (titulo, color, linea)
                     label:senal + " - " + infoSenales[senal]["descripcion"] +" (" + infoSenales[senal]["unid_ing_id"] +")",
                     stroke:senalesSeleccionadasDict[senal].color,
@@ -279,7 +284,8 @@ function anadirValores(valores){
             for(eje in ejes_dict){
                 ejes_lista.push(ejes_dict[eje])
             }
-            crearGrafica(datosGrafica);
+            crearGrafica(datosGrafica,calidadesGrafica);
+            
         }else{
             alert("No se ha obtenido ningun dato");
         }
@@ -290,7 +296,7 @@ function crearGrafica(datosGrafica){
     var options = {
 	    width: 1000,
 	    height: 500,
-	    tzDate:data => uPlot.tzDate(new Date(data * 1e3), 'CET'),
+	    tzDate,
 	    fmtDate: tpl => {
 	                    tpl=tpl.replace("{M}/{D}","{D}/{MM}")
 	                    tpl=tpl.replace("{h}{aa}","{H}:00")
@@ -317,21 +323,99 @@ function crearGrafica(datosGrafica){
         uplot.destroy();
     }   
     uplot = new uPlot(options, datosGrafica, document.getElementById("Div_panel_grafica"));
+    crearTabla(datosGrafica,calidadesGrafica,options);
     abrirFicha("Ficha_grafica");
-    console.log(avisos)
-    console.log(options)
     if(avisos.length){
         document.getElementById("Lista_avisos_grafica").innerHTML=avisos;
         document.getElementById("Div_panel_avisos_grafica").hidden=false;
     }  
 }
+
+function crearTabla(datosRecibidos,calidades,options){
+    console.log(datosRecibidos)
+    tabla=document.getElementById("tabla_valores_grafica")
+    tabla.innerHTML = "";
+    var cabecera=tabla.insertRow(-1);
+    celdas_cabecera=Array();
+    celdas_cabecera.push(cabecera.insertCell(0));
+    celdas_cabecera[0].innerHTML="Fecha y hora"
+    for(j=1;j<datosRecibidos.length;j++){
+        console.log(j)
+        celdas_cabecera.push(cabecera.insertCell(j));
+        console.log(cabecera)
+        celdas_cabecera[j].innerHTML=options.series[j].tag;        
+      }
+    for(i=0;i<datosRecibidos[0].length;i++){
+      var fila=tabla.insertRow(-1);
+      let cells=Array();
+      cells.push(fila.insertCell(0));
+      cells[0].innerHTML=tzDate(datosRecibidos[0][i]).toLocaleString();
+      for(j=1;j<datosRecibidos.length;j++){
+        cells.push(fila.insertCell(j));
+        cells[j].innerHTML=datosRecibidos[j][i];
+        cells[j].style.backgroundColor=colores_calidades_treal[calidades[j][i]] //SOLO VALE ^PARA TREAL; HAY QUE CAMBIARLO PARA CONSOLIDADOS!!
+      }
+    }
+  
+}
+
+function generarCSV() {
+    fecha_ini=document.getElementById("Input_fecha_comienzo_grafica").value
+    fecha_fin=document.getElementById("Input_fecha_fin_grafica").value
+    if(Date.parse(fecha_ini) > Date.parse(fecha_fin)){
+        alert("La fecha inicial debe ser anterior a la fecha final" ) //ESTO NO PUEDE PASAR
+    }else{
+        origen=document.getElementById("Select_origen_datos_grafica").value
+        valores=[];        
+        datosCSV=[["Codigo","Instante","Valor","Calidad"]];
+        longitud_total=0;
+        num_senales=0;
+        recibidas=0;
+        for (codigo in senalesSeleccionadasDict){
+            num_senales++;
+            //window.location="/datos_senal_csv/"+origen+","+codigo+","+fecha_ini+","+fecha_fin
+            async_json_call("/datos_senal_csv/"+origen+","+codigo+","+fecha_ini+","+fecha_fin+",0",valores,anadirCSV,"Error en la peticion de datos");        
+            }
+        //Animacion "Espere a que carguen los datos de la BD"        
+    }
+}
+
+
+
+function anadirCSV(valores){    
+    if(!valores || valores.length==0){                  //SI NO TIENE VALORES
+        alert("No hay valores para la senal "+valores["cod_senal"]+"!")
+        //avisos=avisos.concat("<li>La señal "+ valores["senal"]["id_senal"]+ " no tiene datos para el origen y las fechas indicadas</li>")
+    }else{        
+        longitud_total+=valores["filas"].length
+    }
+    datosCSV=datosCSV.concat(valores["filas"])
+    recibidas++;
+    //Comprobas si se ha recibido todo
+    if(recibidas>=num_senales){ //Si ya se han recibido todas        
+        if(longitud_total){ //Si hay al menos una linea
+            console.log(datosCSV)
+            let csvContent = "data:text/csv;charset=utf-8," + datosCSV.map(e => e.join(";")).join("\n");  
+            var encodedUri = encodeURI(csvContent);
+            filename = window.prompt("Introduzca el nombre del archivo a generar (sin extensión)", "Datos")+".csv";
+            //window.open(encodedUri)
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", filename);
+            document.body.appendChild(link); // Required for FF
+            link.click(); // This will download the data file named "my_data.csv".            
+        }else{
+            alert("No se ha obtenido ningun dato");
+        }
+    }
+}
+
 /*
 function abrirGrafica(){       
     document.getElementById("tabla_senales_container").hidden=true;
     document.getElementById("filtro_senales").hidden=true;  
     document.getElementById("Div_panel_grafica").hidden=false;
     if(avisos.length){
-        console.log(avisos)
         document.getElementById("Lista_avisos_grafica").innerHTML=avisos;
         document.getElementById("Div_panel_avisos_grafica").hidden=false;
     }  

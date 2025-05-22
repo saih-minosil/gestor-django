@@ -18,12 +18,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path,include
+from gestor.admin import gestor_admin_site
+from .admin import auth_admin_site
+from django.contrib.auth import views as auth_views
 
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
+urlpatterns = [    
+    path('gestor/', gestor_admin_site.urls, name="gestor"),  
+    path('admin/', auth_admin_site.urls, name="auth"),  
     path('',include('main_app.urls')),
-    path('gestor',include('gestor.urls')),
-    path('gestor_web',include('gestor_web.urls')),
     path('vsad',include('vsad.urls'))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

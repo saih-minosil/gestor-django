@@ -1,11 +1,7 @@
 
 			function tooltipsPlugin(opts) {
-				let cursortt;
 				let seriestt;
-
 				function init(u, opts, data) {
-					console.log("Options: ")
-					console.log(opts)
 					let over = u.over;
 
 					seriestt = opts.series.map((s, i) => {
@@ -15,16 +11,13 @@
 						tt.textContent = "Tooltip!";
 						tt.style.pointerEvents = "none";
 						tt.style.position = "absolute";
-						//tt.style.background = "rgba(0,0,0,0.1)";
 						tt.style.color = "rgb(0,0,0)";
 						tt.style.borderColor = s.stroke;
 						over.appendChild(tt);
 						return tt;
 					});
-					console.log(seriestt);
 
 					function hideTips() {
-						//cursortt.style.display = "none";
 						seriestt.forEach((tt, i) => {
 							if (i == 0 || i>=5) return;
 							tt.style.display = "none";
@@ -32,10 +25,8 @@
 					}
 
 					function showTips() {
-						//cursortt.style.display = null;
 						seriestt.forEach((tt, i) => {
 							if (i == 0) return;
-
 							let s = u.series[i];
 							tt.style.display = s.show ? null : "none";
 						});
@@ -66,26 +57,22 @@
 					tts=[]
 					seriestt.forEach((tt, i) => {
 						if (i == 0) return;
-						//if(i>=4) return;	
 						let s = u.series[i];
 						if (s.show) {
 							let xVal,yVal;
 							if(i<4){ //Tooltips de las series (1 al 4)
 								xVal = u.data[0][idx];
-								yVal = u.data[i][idx];
-								
+								yVal = u.data[i][idx];								
 								datetime=dateformat(xVal)
-								if(yVal || yVal==0){																	
+								var top = (yVal != null ? (Math.round(u.valToPos(yVal, s.scale))-tt.offsetHeight) : 9999) + "px";								
+								if((yVal || yVal==0) && parseFloat(top) < 540){																	
 									tt.innerHTML = datetime + "<br>" + s.tag+ " :" + yVal + " " + s.unidad;
 									if(tt.style.display=="none"){
-										tt.style.display = "block";
-										console.log("Mostrando el tooltip "+i)
+										tt.style.display = "block";									
 									}
 								}else{
-									tt.style.display = "none";
-									console.log("Escondiendo el tooltip "+i)
-								}
-								var top = (yVal != null ? (Math.round(u.valToPos(yVal, s.scale))-tt.offsetHeight) : 9999) + "px";								
+									tt.style.display = "none";									
+								}								
 								tts.push({"top":parseInt(top),"obj":tt,"ind":i})
 								var left = Math.round(u.valToPos(xVal, 'x'))
 								var left_limit=window.innerWidth-200-tt.offsetWidth
@@ -95,12 +82,9 @@
 								tt.style.left = left+"px"
 							}
 						}
-					});
-					console.log(seriestt)
+					});					
 					tts.sort((a, b) => a.top - b.top); //ordenar por la Y
 					var height=tts[0].obj.offsetHeight
-					console.log(tts)
-					console.log(height)
 					if(tts[0])
 						seriestt[tts[0].ind].style.top=tts[0].top+"px"
 					if(tts[1])
@@ -112,13 +96,8 @@
 					if(tts[1]){
 						if(tts[1].top>tts[0].top-height && tts[1].top<tts[0].top+height){ //si el segundo tapa al primero
 							var tp = tts[0].top+height
-							console.log(tts[1].ind)
 							seriestt[tts[1].ind].style.top=tp+"px"	//se posiciona debajo del primero
 							tts[1].top=tp
-							console.log("2 tapa")
-							console.log(tts[0].top)
-							console.log(tts[1].top)
-							console.log(tp)
 						}
 					}
 					if(tts[2]){
@@ -128,7 +107,6 @@
 								var tp = tts[1].top+height
 								seriestt[tts[2].ind].style.top=tp+"px"
 								tts[2].top=tp
-								console.log("3 tapa")
 							}
 						}
 					}
@@ -140,12 +118,12 @@
 						setCursor,
 						setScale: [
 							(u, key) => {
-								console.log('setScale', key);
+								//console.log('setScale', key);
 							}
 						],
 						setSeries: [
 							(u, idx) => {
-								console.log('setSeries', idx);
+								//console.log('setSeries', idx);
 							}
 						],
 					},
@@ -166,7 +144,7 @@
 			
 		function dateformat(d){
 			date=new Date(d*1000)
-			cadena=date.getDate()+"-"+date.getMonth()+ " "+ date.getHours()+":"+date.getMinutes();
+			cadena=date.getDate()+"-"+(date.getMonth()+1)+ " "+ date.getHours()+":"+date.getMinutes();
 			return(cadena)
 		}
 		

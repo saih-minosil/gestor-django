@@ -12,6 +12,5 @@ def estaciones(request):
     #    else:    
     #        tipo_estacion=estacion.estacionid[0]
     #    estacion.tipo_estacion=tipo_estacion
-    print(estaciones)
     return render(request,'estaciones_saih.html',{"estaciones":estaciones})    
 

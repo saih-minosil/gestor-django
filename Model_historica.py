@@ -11305,7 +11305,7 @@ class ListaSenales(models.Model):
 
 
 class ListaSenalesCalculadas(models.Model):
-    pk = models.CompositePrimaryKey('LSC_TAG', 'LSC_FECHA_INICIO')
+    pk = models.CompositePrimaryKey('lsc_tag', 'lsc_fecha_inicio')
     lsc_tag = models.IntegerField(db_column='LSC_TAG')  # Field name made lowercase.
     lsc_fecha_inicio = models.DateTimeField(db_column='LSC_FECHA_INICIO')  # Field name made lowercase.
     lsc_fecha_fin = models.DateTimeField(db_column='LSC_FECHA_FIN', blank=True, null=True)  # Field name made lowercase.
@@ -11332,7 +11332,7 @@ class ListaSenalesCalculadas(models.Model):
 
 
 class ListaSenalesLimitevariables(models.Model):
-    pk = models.CompositePrimaryKey('LSL_TAG', 'LSL_ALARMA', 'LSL_DIA', 'LSL_MES')
+    pk = models.CompositePrimaryKey('lsl_tag', 'lsl_alarma', 'lsl_dia', 'lsl_mes')
     lsl_tag = models.IntegerField(db_column='LSL_TAG')  # Field name made lowercase.
     lsl_alarma = models.CharField(db_column='LSL_ALARMA', max_length=4)  # Field name made lowercase.
     lsl_dia = models.SmallIntegerField(db_column='LSL_DIA')  # Field name made lowercase.

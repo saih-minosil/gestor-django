@@ -27,12 +27,16 @@ urlpatterns = [
     path('estaciones_tabla/<str:tipo>,<int:zona>',views.estaciones_filtrar),
     path('senal/<str:tag_txt>',views.senal),
     path('senales',views.senales),
+    path('lista_senales',requests.lista_senales),
     path('senales_estacion/<str:codigo_estacion_txt>',views.senales_de_una_estacion),
     path('grafica_simple/<str:cod_senal>',requests.grafica_simple),
     path('graficas_app',views.graficas_app),
     path('graficas',views.graficas),
     path('graficas_estacion/<str:codigo_estacion_txt>',views.graficas_de_una_estacion),
-    path('datos_senal/<str:origen>,<str:tag_txt>,<str:fecha_ini>,<str:fecha_fin>',requests.datos_senal),
-    path('info_senales_grafica/<str:codigo_estacion_txt>',requests.graficas_predefinidas_estacion)
+    path('datos_senal/<str:origen>,<str:tag_txt>,<str:fecha_ini>,<str:fecha_fin>,<int:es_tabla>',requests.datos_senal),
+    #path('datos_senal_csv/<str:origen>,<str:tag_txt>,<str:fecha_ini>,<str:fecha_fin>',requests.csv_senal), PARA UNA SOLA SEÑAL
+    path('datos_senal_csv/<str:origen>,<str:tag_txt>,<str:fecha_ini>,<str:fecha_fin>',requests.datos_senal_csv), #PARA UNA SOLA SEÑAL
+    path('info_senales_grafica/<str:codigo_estacion_txt>',requests.graficas_predefinidas_estacion),
+    path('modificar_bd',requests.modificar_bd)
 
 ]

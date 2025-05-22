@@ -55,8 +55,10 @@ function updateCustomSelect(element){
                     y = this.parentNode.getElementsByClassName("same-as-selected");
                     yl = y.length;
                     for (k = 0; k < yl; k++) {
-                        y[k].removeAttribute("class");
+                        //y[k].removeAttribute("class");
+                        y[k].className="option_estacion_";
                     }
+
                     this.setAttribute("class", "same-as-selected");
                     break;
                 }

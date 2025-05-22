@@ -41,8 +41,7 @@ async function async_json_call(url,dataobject,funcion,errormsg) {
     req.onload = function() {
       if (req.status == 200) {
         resolve(req.response);
-      } else {
-        console.error(errormsg)
+      } else {        
         reject(req.response);
       }
     };
@@ -50,10 +49,10 @@ async function async_json_call(url,dataobject,funcion,errormsg) {
   });
   try {
       json=await myPromise
-      console.log(json)
+      
       dataobject= JSON.parse(json);
     } catch (e) {
-    console.error(e);
+    
     }
     funcion(dataobject);
   }

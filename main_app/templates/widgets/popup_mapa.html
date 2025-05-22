@@ -4,6 +4,9 @@
           <td class="celdacn" style="background-color:{{estacion.color}};" colspan="4">
             <a href='#' onclick="mostrarEstacion('{{estacion.codigo}}')"> {{estacion.codigo}} : {{estacion.nombre}}</a>
           </td>
+          {% if estacion.porcentaje %}
+            <td class="celdacn" style="background:linear-gradient(to top, blue {{estacion.porcentaje}}%, white 0%); width:10px;" rowspan="{{estacion.num_senales}}"></td>
+          {% endif %}  
         </tr>
       {% for senal in senales %}
         <tr>

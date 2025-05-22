@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main_app/css/style.css' %}" type="text/css">
+    <script src="{% static 'main_app/js/fichas.js'%}"></script>
+    <script src="{% static 'main_app/js/filtro_senales.js'%}"></script>
+    <link rel="stylesheet" href="{% static 'main_app/css/uPlot.min.css' %}">
+    <script src="{% static 'main_app/js/uPlot.iife.min.js' %}"></script>
+    <script src="{% static 'main_app/js/tooltips.js' %}"></script>
+    <script src="{% static 'main_app/js/ajax.js' %}"></script>
+    <script src="{% static 'main_app/js/global.js' %}"></script>
+    {% block header %}
+    {% endblock %}
+
+</head>
+<body {% block onload %}
+    {% endblock %}>
+<div id="cabecera" style="background-image: url({%static 'main_app/img/Cabecera.png' %});">
+    <div id="barra_titulo">
+        <a href="https://www.chminosil.es/es/"><img id="logo_CHMS" src="{% static 'main_app/img/LogoOriginal.jpg' %}"
+                                                    alt="Confederacion Hidrografica Miño - Sil"></a>
+        <div id="titulo">
+            <div id="titulo_inside">
+                Saih Miño Sil
+            </div>
+        </div>
+
+    </div>
+    {% include "./menu.html" %}
+</div>
+<div id="cuerpo">
+    <div id="contenido">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+</body>

@@ -8,7 +8,7 @@
   margin-top: 0px;
   padding-top: 4px;
   margin:auto;
-  width:700px;
+  width:964px;
 }
 
 
@@ -76,6 +76,8 @@
 }
 
 #navcontainer li a{
+  text-decoration: none;
+  font-weight:bold;
 	color:white;
 }
 
@@ -93,12 +95,14 @@
 
 body{
 	overflow:clip;
+  font-family:"Segoe UI";
 }
 
 #cuerpo{
 	margin-top: var( --toolbar-height);
 	background-image: url('/static/main_app/img/Fondo.png');
-	overflow-y:auto;
+  background-size: cover;
+ 	overflow-y:auto;
 	z-index:1;
 	position:absolute;
 	left:0px;
@@ -376,16 +380,31 @@ td a {
 }
 
 #Div_panel_grafica{
-    height:600px;
-    margin: 5px auto;
-    }
+  height: 600px;
+  margin: 20px auto;
+  /*top: 10px;
+  position: absolute;*/
+}
 
 #Div_panel_avisos_grafica{
     margin: 15px auto;
 }
 
-grafica_container{
+#grafica_container{
   height:500px;
+}
+
+#botones_grafica{
+  height:50px;  
+}
+
+#botones_grafica select,#botones_grafica input{
+  margin: 15px 14% 0px 14%;
+  width: 200px;
+}
+
+#tabla_valores_grafica td{
+  border: 1px solid black;
 }
 
 /*     -------------------------------------   CLASES GENERALES  ----------------------------------------- */
@@ -447,6 +466,15 @@ grafica_container{
   left: 0px;
   right: 0px;
 }    
+
+.ancho_estrecho{
+  width:500px;
+  margin:5px auto;
+  left: 0px;
+  right: 0px;
+}    
+
+
 
 p{
 	font-size:18px;

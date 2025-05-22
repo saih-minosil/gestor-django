@@ -3,23 +3,28 @@ let nivel=0;
 function abrirFicha(Nombre){           
     var ficha=document.getElementById(Nombre)    
     ocultar=document.getElementsByClassName("nivel"+nivel)
-    console.log(ocultar)
     if(ocultar && ocultar[0]){        
-        ocultar[0].style.opacity="25%"
+        ocultar[0].style.opacity="5%"
     }
     nivel=nivel+10;
     ficha.style.opacity="95%" 
     ficha.style.top="-20px";
-    document.getElementById(Nombre).style.zIndex=nivel
-    document.getElementById(Nombre).className=document.getElementById(Nombre).className+" nivel"+nivel    
+    var ancho=""
+    if(ficha.className.includes("ancho100"))
+        ancho="ancho100"
+    else
+        ancho="ancho_fijo"
+    ficha.style.zIndex=nivel
+    ficha.className="Ficha " +ancho +" nivel"+nivel    
+
 }
 
-function cerrarFicha(Nombre){    
-    //document.getElementById("Contenido_principal").hidden=false;
-    ficha=document.getElementById(Nombre)
-    altura=ficha.clientHeight;
-    //ficha.hidden=true;      
+function cerrarFicha(Nombre){        
+    ficha=document.getElementById(Nombre)    
+    altura=ficha.offsetHeight;
+    console.log(altura);    
     ficha.style.top=String(-altura-400)+"px";
+    console.log(String(-altura-400)+"px")
     ficha.className.replace("nivel"+nivel,'');
     //ficha.className="Ficha";
     nivel=nivel-10;

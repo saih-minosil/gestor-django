@@ -30,14 +30,23 @@
 		</table>
 </div>
 
-		<!-- Gráfica -->
-		<div id="grafica_container" class="Contenedor_claro ancho_fijo" >
-			
-		</div>
-		<!-- Y este tambien asegurarse de si va mejor al header y mover lo que haga falta-->
-		<!--<script lang="javascript">
-			let data = JSON.parse ("{{grafica | escapejs}}");
-			let leyenda = Array("","{{senal.ls_tipo_senal}}"+"("+"{{senal.ls_unid_ing}}"+")");
-		</script>
-	-->
+<!-- Gráfica -->
+<div id="grafica_container" class="Contenedor_claro ancho_fijo" >
+	
+</div>
+<!--<div id="botones_grafica" class="Contenedor_claro ancho_fijo">
+	<select >
+		<option value='quinceminutales'>Quinceminutales </option>
+		<option value='quinceminutales'>Horarios </option>
+	</select>
+	<input type='button' value='Ver tabla' onclick='verTabla();'></input>
+</div>-->
+<div id="div_tabla" class="Contenedor_claro ancho_estrecho">
+	<table class="tabla ancho_estrecho" id="tabla_valores_grafica" >
+		<tr>
+			<th class="celdacn">Fecha</th>
+			<th class="celdacn">Valor</th>
+		</tr>
+	</table>	
+</div>
 

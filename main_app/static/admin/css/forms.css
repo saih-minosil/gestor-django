@@ -11,6 +11,7 @@
 
 .form-row img, .form-row input {
     vertical-align: middle;
+    max-width: 200px;
 }
 
 .form-row label input[type="checkbox"] {

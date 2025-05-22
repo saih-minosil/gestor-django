@@ -1,0 +1,35 @@
+/* -------------------------------- VARIABLES ----------------------------------------------*/
+:root{
+	--toolbar-height:50px;
+}
+
+
+#header{
+    background-image: url(/static/main_app/img/Cabecera.png);
+	height:var( --toolbar-height);
+	background-size:100%;
+	position:absolute;
+	z-index:2;
+	left:0px;
+	right:0px;
+	top:0px;
+}
+
+#nav-sidebar{
+    top:calc(var(--toolbar-height) + 20px);
+}
+
+#toggle-nav-sidebar{
+    top:calc(var(--toolbar-height) + 20px);
+}
+
+.main > .content {
+    margin-top:10px;
+    background-image: url('/static/main_app/img/Fondo.png');
+    color:white;
+}
+
+.content h1{
+    font-weight:bolder;
+
+}

@@ -1,9 +1,17 @@
+from intranetsaih.settings import TIME_ZONE
 from .models import VariableForecast,FewsSeries,InfoVariable,InfoEstacion
 from django.db.models import Max,Min
-from datetime import timedelta,datetime
+from datetime import timedelta,datetime,timezone
 from django.http import JsonResponse
 from itertools import chain
 #result_list = list(chain(page_list, article_list, post_list))
+
+def calcular_ts(fecha):
+    #print(datetime.strptime(fecha,'%Y-%m-%d %H:%M:%S'))
+    #print(datetime.strptime(fecha,'%Y-%m-%d %H:%M:%S').tzinfo)
+    fecha_dt=datetime.strptime(fecha,'%Y-%m-%d %H:%M:%S')
+    fecha_tz=fecha_dt.replace(tzinfo=timezone.utc)
+    return datetime.timestamp(fecha_tz)
 
 
 def grafica_estacion(request,codigo_estacion_txt):
@@ -32,14 +40,14 @@ def grafica_estacion(request,codigo_estacion_txt):
     valores_forecast_dict={}
     timestamps_dict={}
     for valor_obs in valores_observada:
-        valores_obs_dict[datetime.timestamp(datetime.strptime(valor_obs.fecha,'%Y-%m-%d %H:%M:%S'))]=valor_obs.valor
-        timestamps_dict[datetime.timestamp(datetime.strptime(valor_obs.fecha,'%Y-%m-%d %H:%M:%S'))]=1
+        valores_obs_dict[calcular_ts(valor_obs.fecha)]=valor_obs.valor
+        timestamps_dict[calcular_ts(valor_obs.fecha)]=1
     for valor_hist in valores_historica:
-        valores_hist_dict[datetime.timestamp(datetime.strptime(valor_hist.fecha,'%Y-%m-%d %H:%M:%S'))]=valor_hist.valor
-        timestamps_dict[datetime.timestamp(datetime.strptime(valor_hist.fecha,'%Y-%m-%d %H:%M:%S'))]=1
+        valores_hist_dict[calcular_ts(valor_hist.fecha)]=valor_hist.valor
+        timestamps_dict[calcular_ts(valor_hist.fecha)]=1
     for valor_forecast in valores_forecast:
-        valores_forecast_dict[datetime.timestamp(datetime.strptime(valor_forecast.fecha,'%Y-%m-%d %H:%M:%S'))]=valor_forecast.valor
-        timestamps_dict[datetime.timestamp(datetime.strptime(valor_forecast.fecha,'%Y-%m-%d %H:%M:%S'))]=1
+        valores_forecast_dict[calcular_ts(valor_forecast.fecha)]=valor_forecast.valor
+        timestamps_dict[calcular_ts(valor_forecast.fecha)]=1
     ################ EXTRA PARA EMBALSES ############################################################################
     if codigo_estacion_txt[0]=='E': #Si es embalse obtiene las aportaciones
         valores_observada_aportacion=FewsSeries.objects.filter(seriesid=observada_aportacion,fecha__gte=fecha_inicial)

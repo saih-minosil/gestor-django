@@ -1,4 +1,0 @@
-mover.hola no es un nombre valido, será ignorado
-mover.repetido no es un nombre valido, será ignorado
-xml2 no es un nombre valido, será ignorado
-No se han encontrado archivos

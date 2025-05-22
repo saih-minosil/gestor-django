@@ -73,6 +73,10 @@ onload="pedirSenales('{{ cod_estacion }}')"
 <div id="Ficha_grafica" class="Ficha ancho_fijo"> <!-- Dejar aqui o mandar a su priopio html... -->
     <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_grafica');"></div>
     <div id="Div_panel_grafica" class="Contenedor_claro ancho_fijo"></div>
+    <div id="div_tabla" class="Contenedor_claro ancho_fijo">
+        <table class="tabla ancho_estrecho" id="tabla_valores_grafica" >
+        </table>	
+    </div>
     <div id="Div_panel_avisos_grafica" class="Contenedor_claro ancho_fijo" hidden>
         <div class="Boton_cerrar" onclick="cerrarAvisosGrafica();">
         </div>

@@ -38,7 +38,7 @@ onload=filtrar();
         </tr>
         {% for estacion in estaciones %}
         <!-- darle clase a los elementos de las tablaS?-->
-        <tr class="fila_estacion fila_estacion_{{estacion.le_tipo_estacion}} fila_estacion_{{estacion.le_zona_id}}">
+        <tr class="fila_estacion fila_estacion_{{estacion.le_tipo_estacion_id}} fila_estacion_{{estacion.le_zona_id}}">
             <td>
                 <a href="#" onclick="mostrarEstacion('{{ estacion.le_codigo_txt }}')">
                     {{estacion.le_codigo_txt}}
