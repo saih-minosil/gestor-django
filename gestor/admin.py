@@ -2,8 +2,9 @@ from django.contrib import admin
 from .models import  ListaSenales,ListaEstaciones,ListaRemotas,ListaRemotasTarjetas,ListaSenalesAnalogicas,ListaSenalesDigitales,ListaRemotasConf,Rios
 from .models import Poblaciones,ListaSenalesDigdobles,TiposSenales, UnidadesIngenieria,ListaSenalesLimitevariables,ListaSenalesCalculadas
 from .models import ListaOrdenes
-from main_app import models_comun,models_intranet,models_hist
+from main_app import models_comun,models_intranet,models_hist,models_microcom,models_web
 from django import forms
+from django.forms.models import ModelForm
 # Register your models here.
 from datetime import datetime
 from django.db.models import Max
@@ -30,12 +31,18 @@ class GestorAdminSite(admin.AdminSite):
             "Estaciones": 0,
             "Remotas": 1,
             "Señales":2,
-            "Ordenes":3,
-            "Poblaciones": 4,
-            "Rios":5,
-            "Tipos de señal":6,
-            "Unidades de medida":7,            
-            "FormatosDigitales":9
+            "Señales analógicas":3,
+            "Ordenes":4,
+            "Estaciones microcoom":10,
+            "Señales microcoom":11,
+            "Ecuaciones":12,
+            "Acciones":13,
+            "Anotaciones":14,
+            "Relaciones acción-estación":15,
+            "Unidades":16,
+            "Variables":17,
+            "Datos señales":18,
+            "Relaciones entre resultados":19
         }
         app_dict = self._build_app_dict(request)       
         app_list = sorted(app_dict.values(), key=lambda x: x['name'].lower())
@@ -64,8 +71,12 @@ def traspaso_a_intranet(modeladmin, request,queryset):
         if class_name == "ListaSenales":
             newobj=models_intranet.ListaSenales_I()
             lsa_obj=ListaSenalesAnalogicas.objects.get(lsa_tag=obj.ls_tag)
-            estacion=models_intranet.ListaEstaciones_I.objects.get(le_codigo_txt=obj.ls_remota.lr_estacion.le_codigo_txt)
-            newobj.from_gestor(obj,lsa_obj,estacion)    
+            estacion=models_intranet.ListaEstaciones_I.objects.filter(le_codigo_txt=obj.ls_remota.lr_estacion.le_codigo_txt)
+            if estacion:
+                newobj.from_gestor(obj,lsa_obj,estacion[0])
+            else:        
+                messages.error(request, f"Error actualizando {obj} : {obj.ls_remota.lr_estacion.le_codigo_txt} no está incluido en la BB.DD INTRANET") #Uno por cada, mejorable
+                return
         elif class_name == "ListaEstaciones":
             newobj=models_intranet.ListaEstaciones_I()
             newobj.from_gestor(obj=obj)            
@@ -85,6 +96,129 @@ def traspaso_a_intranet(modeladmin, request,queryset):
         finally:
             messages.info(request, f"Se intenta actualizar algo :{obj} ") #Uno por cada, mejorable
 
+
+@admin.action(description="Traspasar a la Web")
+def traspaso_a_web(modeladmin, request,queryset):
+    for obj in queryset:   
+        class_name=obj.__class__.__name__
+        
+        if class_name == "ListaSenales":
+            newobj=models_web.ListaSenales_W()
+            lsa_obj=ListaSenalesAnalogicas.objects.get(lsa_tag=obj.ls_tag)
+            estacion=models_web.ListaEstaciones_W.objects.filter(le_codigo_txt=obj.ls_remota.lr_estacion.le_codigo_txt)
+            if estacion:
+                newobj.from_gestor(obj,lsa_obj,estacion[0])
+            else:        
+                messages.error(request, f"Error actualizando {obj} : {obj.ls_remota.lr_estacion.le_codigo_txt} no está incluido en la BB.DD WEB") #Uno por cada, mejorable
+                return
+        elif class_name == "ListaEstaciones":
+            newobj=models_web.ListaEstaciones_W()
+            newobj.from_gestor(obj=obj)            
+        elif class_name == "ListaRemotas":
+            newobj=models_web.ListaEstacionesRemotas_W()
+        #    newobj.from_gestor(obj)
+        else:       
+            class_ = getattr(models_web, class_name) 
+            newobj=class_()                     
+            models_web.copy_object(orig=obj,dest=newobj)        
+        try:
+            newobj.save()
+            messages.success(request, f"{obj} actualizado ") #Uno por cada, mejorable
+        except Exception as e:
+            print(e.__class__)    
+            messages.error(request, f"Error actualizando {obj} : {e}") #Uno por cada, mejorable
+        finally:
+            messages.info(request, f"Se intenta actualizar algo :{obj} ") #Uno por cada, mejorable
+
+
+@admin.action(description="Traspasar a MariaDB")            
+def traspaso_a_mariadb(modeladmin,request,queryset):
+    for obj in queryset:   
+        class_name=obj.__class__.__name__
+        
+        if class_name == "ListaSenales":
+            #Nuevo Result
+            tag=models_microcom.Annotations.objects.filter(annotationtext=obj.ls_tag_txt)
+            if not tag: #Si no tiene tag es como si no estuviera
+                tag=models_microcom.Annotations()
+                tag.set_tag(obj.ls_tag_txt)
+                tag.save()
+                #Creamos el result y el ResultAnnotation
+                feature_action=models_microcom.Featureactions()
+                feature_action.from_gestor(obj)
+                feature_action.save()
+                
+                result=models_microcom.Results()
+                #result.from_gestor(obj)
+                result.featureactionid=feature_action
+                result.save()
+                ra=models_microcom.Resultannotations()
+                ra.from_annotation(tag,result)
+                ra.save()
+                #Creamos el tsr
+                tsr=models_microcom.Timeseriesresults()
+                tsr.resultid=result
+                #tsr.from_result(result)
+                tsr.save()
+                #Creamos el featureaction y el action(incluido en el featureaction)
+                messages.success(request, f"{obj} añadido ") #Uno por cada, mejorable        
+            else: #YA existe el tag, pero no sabemos si existe el result
+                tag=tag[0]         
+                     
+                ra=models_microcom.Resultannotations.objects.filter(annotationid=tag.annotationid)
+                if ra:#Si que hay ra,tiene que haber result
+                    result=models_microcom.Results.objects.filter(resultid=ra[0].resultid_id)
+                    ra=ra[0]
+                    result=result[0]
+                    feature_action=models_microcom.Featureactions.objects.filter(featureactionid=result.featureactionid_id)[0]
+                    tsr=models_microcom.Timeseriesresults.objects.filter(resultid=result)#[0]
+                    action=models_microcom.Actions.objects.filter(actionid=feature_action.actionid_id)[0]
+                    messages.success(request, f"{obj} actualizado ") #Uno por cada, mejorable        
+                else: #No existe el RA, luego no hay result asociado
+                    feature_action=models_microcom.Featureactions()
+                    feature_action.from_gestor(obj)
+                    feature_action.save()
+                    result=models_microcom.Results()
+                    result.featureactionid=feature_action
+                    result.save()
+                    ra=models_microcom.Resultannotations()
+                    ra.from_annotation(tag,result)
+                    ra.save()
+                    tsr=models_microcom.Timeseriesresults()
+                    tsr.resultid=result
+                    #tsr.from_gestor(obj)
+                    tsr.save()                
+                    messages.success(request, f"{obj} añadido ") #Uno por cada, mejorable        
+           
+            #New Action
+            #New TimeSeriesResult
+            #etc
+            #newobj=models_web.ListaSenales_W()
+            #lsa_obj=ListaSenalesAnalogicas.objects.get(lsa_tag=obj.ls_tag)
+            #estacion=models_web.ListaEstaciones_I.objects.get(le_codigo_txt=obj.ls_remota.lr_estacion.le_codigo_txt)
+            #newobj.from_gestor(obj,lsa_obj,estacion)   
+        elif class_name == "ListaEstaciones":
+            samplingfeature=models_microcom.Samplingfeatures.objects.filter(samplingfeaturecode=obj.le_codigo_txt)
+            if not samplingfeature:
+                samplingfeature=models_microcom.Samplingfeatures()
+            else:
+                samplingfeature=samplingfeature[0]    
+            samplingfeature.from_gestor(obj)
+            #id=newsamplingfeature.samplingfeatureid
+            samplingfeature.save()
+            site=models_microcom.Sites.objects.filter(samplingfeatureid=samplingfeature.samplingfeatureid)
+            if not site:
+                site=models_microcom.Sites()
+            else:
+                site=site[0]
+            site.from_gestor(obj)
+            site.samplingfeatureid=samplingfeature
+            site.save()
+
+            
+
+
+
 @admin.action(description="Borrar de la Intranet")
 def borrar_de_intranet(modeladmin, request,queryset):
     for obj in queryset:   
@@ -98,6 +232,22 @@ def borrar_de_intranet(modeladmin, request,queryset):
         except Exception as e:
             print(e.__class__)    
             messages.error(request, f"Error borrando {obj} : {e}") #Uno por cada, mejorable
+
+
+@admin.action(description="Borrar de la Web")
+def borrar_de_web(modeladmin, request,queryset):
+    for obj in queryset:   
+        class_ = getattr(models_web, obj.__class__.__name__+"_W") 
+        try:
+            newobj=class_.objects.get(pk=obj.pk)       
+            newobj.delete()
+            messages.success(request, f"{obj} borrado")    #Uno por cada, mejorable
+        except ObjectDoesNotExist as e:            
+            messages.error(request, f"Error borrando {obj} : el objecto no existe") #Uno por cada,mejorable       
+        except Exception as e:
+            print(e.__class__)    
+            messages.error(request, f"Error borrando {obj} : {e}") #Uno por cada, mejorable
+
 
 @admin.action(description="Borrar de la Historica")
 def borrar_de_historica(modeladmin, request,queryset):
@@ -196,7 +346,7 @@ class ListaRemotasTarjetasInlineAdmin(admin.TabularInline):
     form=TarjetasForm
 
 
-class ListaSenalesInlineAdmin(admin.StackedInline):
+class ListaSenalesInlineAdminRemota(admin.StackedInline):
     model=ListaSenales
     extra=0
     empty_value_display = "-"
@@ -213,6 +363,22 @@ class ListaOrdenesInlineAdmin(admin.StackedInline):
     fields=[()]
     
 ################################################# INLINES PARA SEÑALES ##########################################################################
+class ListaSenalesInlineAdmin(admin.StackedInline):
+    extra=0
+    model=ListaSenales
+    empty_value_display = "-"
+    readonly_fields = ["ls_tag"]
+    fieldsets=[("Datos Globales",
+        {
+            "fields" : [("ls_tag_txt"),("ls_tipo_senal","ls_descripcion","ls_origen","ls_naturaleza"),("ls_fews","ls_conf_scada","ls_conf_remota","ls_conf_historia","ls_ver_intranet","ls_ver_web","ls_ver_pda","ls_marca_cons")]
+        }
+    ),(
+        "Datos generales",
+        {
+            "fields" : [("ls_remota"),("ls_clase_senal","ls_tipo_alarma","ls_fuente"),("ls_factor_manual","ls_columna","ls_orden"),("ls_min_grafico","ls_max_grafico","ls_tiempo_grafico")]
+        }
+    )]
+
 class ListaSenalesAnalogicasInlineAdmin(admin.StackedInline):    
     extra=0
     model=ListaSenalesAnalogicas
@@ -222,7 +388,7 @@ class ListaSenalesAnalogicasInlineAdmin(admin.StackedInline):
         ("Formato de Valores",
             {                
                 "fields" : [("lsa_unid_ing","lsa_digitos_enteros"),
-                            ("lsa_digitos_decimales","lsa_tipo_almacenamiento"),
+                            ("lsa_digitos_decimales"),#,"lsa_tipo_almacenamiento"),
                 ]
             }
         ),
@@ -345,6 +511,64 @@ class ListaRemotasInlineAdmin(admin.StackedInline):
         return formset
 
 
+############################################################################################################################################
+#                                                                Inlines para señales microcom
+############################################################################################################################################
+
+class AlwaysChangedModelForm(ModelForm):
+    def has_changed(self):
+        """ Should returns True if data differs from initial. 
+        By always returning true even unchanged inlines will get validated and saved."""
+        return True
+
+class TimeSeriesResultsInlineAdmin(admin.StackedInline):
+    model=models_microcom.Timeseriesresults
+    extra=0
+    fields=[("aggregationstatisticcv","intendedtimespacing")] 
+    form=AlwaysChangedModelForm
+
+class ActionsInlineAdmin(admin.StackedInline):
+    model=models_microcom.Actions
+    extra=0
+    fields=[("actionid","actiontypecv","actiondescription"),]
+
+class FeatureActionsInlineAdmin(admin.StackedInline):
+    model=models_microcom.Featureactions
+    extra=0
+    fields=[("featureactionid","samplingfeatureid","actionid"),]    
+
+class ResultAnnotationsInlineAdmin(admin.StackedInline):
+    model=models_microcom.Resultannotations
+    extra=0
+    fields=[("bridgeid","resultid","annotationid"),]
+
+class AnnotationsInlineAdmin(admin.StackedInline):
+    model=models_microcom.Annotations
+    extra=0
+    fields=[("annotationid","annotationtypecv","annotationdescription"),]
+
+class ResultDerivationEquationsInlineAdmin(admin.StackedInline):
+    model=models_microcom.Resultderivationequations
+    extra=0
+    fields=[("resultid","derivationequationid"),]    
+
+class SitesInlineAdmin(admin.StackedInline):
+    model=models_microcom.Sites
+    extra=0
+    fields=[("latitude","longitude"),]
+
+'''
+class ResultsInlineAdmin(admin.StackedInline):
+    model=models_microcom.Results
+    extra=0
+    fields=[("resultid","variableid","unitsid"),]
+'''
+'''
+class RelatedResultsInlineAdmin(admin.StackedInline):
+    model=models_microcom.Relatedresults
+    extra=0
+    fields=[("relationid","resultid","relationshiptypecv","relatedresultid","versioncode","relatedresultsequencenumber"),]
+'''
 '''
 ############################################################################################################################################
                                                                     Admins
@@ -369,13 +593,13 @@ class ListaSenalesAdmin(admin.ModelAdmin):
     list_filter=["ls_naturaleza"] 
     show_facets = admin.ShowFacets.ALWAYS
     search_fields = ["ls_tag_txt","ls_descripcion"]   
-    actions = [traspaso_a_intranet,traspaso_a_historica]
+    actions = [traspaso_a_intranet,traspaso_a_historica, traspaso_a_web]
     
     @admin.display(ordering="ls_remota__lr_estacion")
     def estacion(self,obj):
         return obj.ls_remota.lr_estacion
 
-    
+    #TODO Si es nueva....¿que de la opcion a crear el que sea?
     def get_inlines(self,request, obj=None):    
         inlines=[]
         if obj==None:
@@ -404,12 +628,77 @@ class ListaSenalesAdmin(admin.ModelAdmin):
             obj.ls_recid=max(ultimo_recid_hist,ultimo_recid_gest) +1
         super().save_model(request, obj, form, change)
 
-    actions = [traspaso_a_intranet,traspaso_a_historica,borrar_de_intranet,borrar_de_historica]        
+    actions = [traspaso_a_intranet,traspaso_a_historica,borrar_de_intranet,borrar_de_historica,traspaso_a_web,borrar_de_web,traspaso_a_mariadb]        
 
     #def save_related(self,request, form, formsets, change):
     #    super().save_related(request, form, formsets, change)   
     #    print(form.instance)
 
+class ListaSenalesAnalogicasAdmin(admin.ModelAdmin):
+    empty_value_display = "-"
+    readonly_fields = ["lsa_tag"]
+
+    fieldsets=[        
+        ("Formato de Valores",
+            {                
+                "fields" : [("lsa_unid_ing","lsa_digitos_enteros"),
+                            ("lsa_digitos_decimales"),#,"lsa_tipo_almacenamiento"),
+                ]
+            }
+        ),
+        ("Valores para coherencia y validacion",
+            {
+                "fields":[ ("lsa_minimo","lsa_maximo"),]
+            }
+        ),
+        ("Limites de Nivel",
+            {
+                "fields":[  ("lsa_lim_tv"),]
+            }
+        ),
+        ("Alarmas",
+            {
+                "fields":[  ("lsa_lim_alto_alto_alto","lsa_gravedad_aaa","lsa_ver_intranet_aaa","lsa_ver_web_aaa","lsa_ver_pda_aaa"),
+                            ("lsa_lim_alto_alto","lsa_gravedad_aa","lsa_ver_intranet_aa","lsa_ver_web_aa","lsa_ver_pda_aa"),
+                            ("lsa_lim_alto","lsa_gravedad_a","lsa_ver_intranet_a","lsa_ver_web_a","lsa_ver_pda_a"),
+                            ("lsa_lim_bajo","lsa_gravedad_b"),
+                            ("lsa_lim_bajo_bajo","lsa_gravedad_bb"),
+                            ("lsa_valor_histeresis"),
+                          ]
+            }
+        ),
+        ("Limites rampa",
+            {
+                "fields":[  ("lsa_lim_neg_rampa","lsa_gravedad_rn"),
+                            ("lsa_lim_pos_rampa","lsa_gravedad_rp"),
+                            ("lsa_lim_rampa_histeresis")
+                          ]
+            }
+        ),
+    ]
+
+    '''
+    fieldsets=[("Datos Globales",
+        {
+            "fields" : [("ls_tag_txt"),("ls_tipo_senal","ls_descripcion","ls_origen","ls_naturaleza"),("ls_fews","ls_conf_scada","ls_conf_remota","ls_conf_historia","ls_ver_intranet","ls_ver_web","ls_ver_pda","ls_marca_cons")]
+        }
+    ),(
+        "Datos generales",
+        {
+            "fields" : [("ls_remota"),("ls_clase_senal","ls_tipo_alarma","ls_fuente"),("ls_factor_manual","ls_columna","ls_orden"),("ls_min_grafico","ls_max_grafico","ls_tiempo_grafico")]
+        }
+    )]
+    '''
+    list_display=["lsa_tag__ls_tag_txt","lsa_tag__ls_descripcion","lsa_tag__ls_remota__lr_estacion"]
+    show_facets = admin.ShowFacets.ALWAYS
+    search_fields = ["lsa_tag__ls_tag_txt","lsa_tag__ls_descripcion"]   
+    actions = [traspaso_a_intranet,traspaso_a_historica, traspaso_a_web]
+    
+    @admin.display(ordering="lsa_tag__ls_remota__lr_estacion")
+    def estacion(self,obj):
+        return obj.lsa_tag.ls_remota.lr_estacion
+
+    #actions = [traspaso_a_intranet,traspaso_a_historica,borrar_de_intranet,borrar_de_historica,traspaso_a_web,borrar_de_web,traspaso_a_mariadb]        
 
 
 class ListaRemotasAdmin(admin.ModelAdmin):
@@ -437,8 +726,8 @@ class ListaRemotasAdmin(admin.ModelAdmin):
         }
     )]
     list_display=["lr_codigo_txt","lr_nombre","tipo","estacion"]
-    inlines=[ListaRemotasConfsInlineAdmin,ListaRemotasTarjetasInlineAdmin,ListaSenalesInlineAdmin,ListaOrdenesInlineAdmin]
-    actions = [traspaso_a_intranet,traspaso_a_historica,borrar_de_intranet,borrar_de_historica]
+    inlines=[ListaRemotasConfsInlineAdmin,ListaRemotasTarjetasInlineAdmin,ListaSenalesInlineAdminRemota,ListaOrdenesInlineAdmin]
+    actions = [traspaso_a_intranet,traspaso_a_historica,borrar_de_intranet,borrar_de_historica,traspaso_a_web,borrar_de_web]
 
     def save_model(self, request, obj, form, change):        
         if change:
@@ -498,7 +787,7 @@ class ListaEstacionesAdmin(admin.ModelAdmin):
     search_fields = ["le_codigo_txt","le_nombre",]    
     inlines=[ListaRemotasInlineAdmin]
     show_facets = admin.ShowFacets.ALWAYS
-    actions = [traspaso_a_intranet,traspaso_a_historica,borrar_de_intranet,borrar_de_historica]
+    actions = [traspaso_a_intranet,traspaso_a_historica,borrar_de_intranet,borrar_de_historica,traspaso_a_web,borrar_de_web,traspaso_a_mariadb]
 
     def get_fieldsets(self,request,obj=None):        
         #if obj==None:
@@ -660,6 +949,109 @@ class PoblacionesAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
+class EstacionesMicrocomAdmin(admin.ModelAdmin):
+    list_display=["samplingfeatureid","samplingfeaturecode","samplingfeaturename","samplingfeaturedescription","elevation_m"]   
+    list_editable=["samplingfeaturecode","samplingfeaturename","samplingfeaturedescription","elevation_m"]  
+    inlines=[SitesInlineAdmin,FeatureActionsInlineAdmin] 
+    fieldsets=[("Datos Globales",
+        {
+            "fields" : [("samplingfeaturecode","samplingfeaturename","samplingfeaturedescription","elevation_m")]
+        }
+    )]
+
+
+class SenalesMicrocomAdmin(admin.ModelAdmin):
+    list_display=["resultid","result_tag","variableid","unitsid"]
+    inlines=[TimeSeriesResultsInlineAdmin,ResultAnnotationsInlineAdmin,ResultDerivationEquationsInlineAdmin]
+    fieldsets=[("Datos Globales",
+        {
+            "fields" : [("variableid","unitsid","featureactionid","sampledmediumcv"),]
+        }
+    )]
+    def result_tag(self, obj):
+        return obj
+
+#class ActionsAdmin(admin.ModelAdmin:)
+
+class EcuacionesAdmin(admin.ModelAdmin):
+    list_display=["derivationequationid","derivationequation"]
+    list_editable=["derivationequation"]
+
+class AccionesAdmin(admin.ModelAdmin):
+    list_display=["actionid","result_tag","actiontypecv","methodid"]
+    list_editable=["actiontypecv","methodid"]
+    fieldsets=[("Datos Globales",
+        {
+            "fields" : [("actiontypecv","methodid")]
+        }
+    )]  
+    def result_tag(self, obj):
+        return obj
+    
+
+class FeatureActAdmin(admin.ModelAdmin):
+    list_display=["featureactionid","result_tag","samplingfeatureid","actionid"]
+    fieldsets=[("Datos Globales",
+        {
+            "fields" : [("samplingfeatureid","actionid")]
+        }
+    )]
+
+    def result_tag(self,obj):
+        result=models_microcom.Results.objects.filter(featureactionid=obj.featureactionid)
+        if(result):
+            tags=models_microcom.Resultannotations.objects.filter(resultid=result[0].resultid)
+            for tag in tags:
+                anno=models_microcom.Annotations.objects.filter(annotationid=tag.annotationid_id)[0]
+                if anno.annotationcode=='Tag':
+                    return f"{anno.annotationtext}"
+            return f"{obj.featureactionid}"
+        return ""
+
+
+
+class AnotacionesAdmin(admin.ModelAdmin):
+    list_display=["annotationid","annotationcode","annotationtext"]  
+    fieldsets=[("Datos Globales",
+        {
+            "fields" : [("annotationcode","annotationtext","annotationtypecv")]
+        }
+    )]  
+
+class TimeSeriesResultsAdmin(admin.ModelAdmin):
+    list_display=["resultid","xlocation","ylocation","zlocation"]
+    fieldsets=[("Datos Globales",
+        {
+            "fields" : [("xlocation","ylocation","zlocation")]
+        }
+    )]   
+
+class VariablesAdmin(admin.ModelAdmin):
+    list_display=["variableid","variablecode","variabledefinition","variablenamecv","variabletypecv"]
+    list_editable=["variablecode","variabledefinition","variablenamecv","variabletypecv"]
+    fieldsets=[("Datos Globales",
+        {
+            "fields" : [("variablecode","variablenamecv"),("variabletypecv","variabledefinition")]
+        }
+    )]
+
+class UnidadesAdmin(admin.ModelAdmin):
+    list_display=["unitsid","unitstypecv","unitsabbreviation","unitsname"]
+    list_editable=["unitstypecv","unitsabbreviation","unitsname"]
+    fieldsets=[("Datos Globales",
+        {
+            "fields" : [("unitstypecv","unitsabbreviation","unitsname")]
+        }
+    )]
+
+class RelatedResultsAdmin(admin.ModelAdmin):
+    list_display=["relationid","resultid","relationshiptypecv","relatedresultid","versioncode","relatedresultsequencenumber"]
+    fieldsets=[("Datos Globales",
+        {
+            "fields" : [("resultid","relationshiptypecv","relatedresultid","versioncode","relatedresultsequencenumber")]
+        }
+    )]
+
 '''
 admin.site.register(ListaEstaciones,ListaEstacionesAdmin)
 admin.site.register(ListaSenales,ListaSenalesAdmin)
@@ -676,8 +1068,25 @@ admin.site.register(UnidadesIngenieria,UnidadesIngenieriaAdmin)
 #Campos principales
 gestor_admin_site.register(ListaEstaciones,ListaEstacionesAdmin)
 gestor_admin_site.register(ListaSenales,ListaSenalesAdmin)
+#gestor_admin_site.register(ListaSenalesAnalogicas,ListaSenalesAnalogicasAdmin)
 gestor_admin_site.register(ListaRemotas,ListaRemotasAdmin)
 gestor_admin_site.register(ListaOrdenes,ListaOrdenesAdmin)
+
+gestor_admin_site.register(models_microcom.Samplingfeatures,EstacionesMicrocomAdmin)
+gestor_admin_site.register(models_microcom.Results,SenalesMicrocomAdmin)
+gestor_admin_site.register(models_microcom.Derivationequations,EcuacionesAdmin)
+gestor_admin_site.register(models_microcom.Actions,AccionesAdmin)
+gestor_admin_site.register(models_microcom.Annotations,AnotacionesAdmin)
+gestor_admin_site.register(models_microcom.Featureactions,FeatureActAdmin)
+gestor_admin_site.register(models_microcom.Variables,VariablesAdmin)
+gestor_admin_site.register(models_microcom.Units,UnidadesAdmin)
+gestor_admin_site.register(models_microcom.Timeseriesresults,TimeSeriesResultsAdmin)
+gestor_admin_site.register(models_microcom.Relatedresults,RelatedResultsAdmin)
+
+
+
+
+
 #gestor_admin_site.register(auth_views.UserModel)
 #Otros
 #####INTRANET + HISTORICA

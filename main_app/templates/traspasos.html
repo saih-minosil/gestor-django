@@ -1,0 +1,87 @@
+xml
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block header %}
+    <title>Traspaso de datos</title>
+    <script>
+function setDateRange() {
+    console.log("Lets set date range")
+    const today = new Date();
+    const endDate = today.toISOString().slice(0,16);  // YYYY-MM-DD format
+    const startDate = new Date(today.getTime() - (3 * 24 * 60 * 60 * 1000));
+    const startDateStr = startDate.toISOString().slice(0,16);
+    console.log(endDate)
+    console.log(document.getElementById('id_end_date').value)
+    console.log(startDateStr)
+    console.log(document.getElementById('id_start_date'))
+    console.log(document.getElementById('id_start_date').value)
+    document.getElementById('id_end_date').value = endDate;
+    document.getElementById('id_start_date').value = startDateStr;
+}
+
+function validateForm(event) {
+    const startDate = new Date(document.getElementById('id_start_date').value);
+    const endDate = new Date(document.getElementById('id_end_date').value);
+    const source1 = document.getElementById('id_source_1').value;
+    const source2 = document.getElementById('id_source_2').value;
+    
+    // Check dates: start should not be after end
+    if (startDate > endDate) {
+        alert('La fecha de inicio no puede ser posterior a la fecha de fin.');
+        event.preventDefault();
+        return false;
+    }
+    
+    // Check sources: source1 should not equal source2
+    if (source1 === source2 && source1 !== '') {
+        alert('Origen y destino no pueden ser iguales.');
+        event.preventDefault();
+        return false;
+    }
+    
+    return true;
+}
+</script>
+{% endblock %}
+
+{% block onload %}onload='setDateRange()'{% endblock %}
+
+{% block content %}
+<div class="Contenedor_oscuro report-form-container">
+    <h2>Traspaso de datos</h2>
+    
+    <form method="POST" class="report-form" onsubmit="return validateForm()" action="{% url 'activar_traspaso' %}">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="{{ form.start_date.id_for_label }}">Fecha Inicio:</label>
+                {{ form.start_date }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.end_date.id_for_label }}">Fecha Fin:</label>
+                {{ form.end_date }}
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="{{ form.station.id_for_label }}">Estación:</label>
+                {{ form.station }}
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="{{ form.source_1.id_for_label }}">Origen:</label>
+                {{ form.source_1 }}
+            </div>
+            <div class="form-group">
+                <label for="{{ form.source_2.id_for_label }}">Destino:</label>
+                {{ form.source_2 }}
+            </div>
+        </div>
+        
+        <button type="submit" class="btn-submit">Generar Reporte</button>
+    </form>
+</div>
+{% endblock %}

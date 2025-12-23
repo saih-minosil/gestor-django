@@ -2,9 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Max,Min
 from django.template.loader import get_template
+
 from .models_intranet import ListaEstaciones_I, ListaSenales_I,DatosHorarios,DatosQuinceminutales,TiposSenales
 from .models_hist import ListaSenales_H,ConsMes_H, ConsDia_H
+from .models_microcom import Samplingfeatures,Sites,Results,Featureactions,Resultannotations,Annotations,Resultderivationequations
 from .constants import calidades_buenas_treal,calidades_buenas_consolidado,calidades_buenas_consolidado_diario
+from .forms import FormTraspaso
 from utm import conversion
 from datetime import datetime,timedelta
 import os
@@ -15,7 +18,7 @@ from pytz import timezone
 
 colores_estados={1:'#C4D3EE',8:'#ff0000',4:'#333333'}
 colores_alarmas={"BAJO BAJO":"#a07755" ,"BAJO":"#ff00ff","NORMAL":"#00ff00","ALTO":"#ffff00","ALTO ALTO":"ff7700","ALTO ALTO ALTO":"#ff0000"}
-nombres_iconos_alarmas={"BAJO BAJO":"Alerta" ,"BAJO":"Alerta","NORMAL":"","ALTO":"Activacion","ALTO ALTO":"Prealerta","ALTO ALTO ALTO":"Alerta"} #TODO BAJO BAJO EN ALERTA DE PRUEBA
+nombres_iconos_alarmas={"BAJO BAJO":"MuyBajo" ,"BAJO":"Bajo","NORMAL":"","ALTO":"Activacion","ALTO ALTO":"Prealerta","ALTO ALTO ALTO":"Alerta"} #TODO BAJO BAJO EN ALERTA DE PRUEBA
 tz = pytz.timezone('Europe/London')
 ANTIGUEDAD_MAXIMA_SENAL_PIEZOS_CONCESIONES = 4 #DIAS
 ANTIGUEDAD_MAXIMA_SENAL_RESTO = 6 #HORAS
@@ -81,7 +84,7 @@ class CuadroEstacion():
 
 def mapa(request):
     lista_estaciones = []
-    dict_iconos= {"A":"iconoAforo", "N":"iconoNivel", "P":"iconoPluvio", "M":"iconoMeteo", "E":"iconoEmbalse","CH":"iconoEmbalse","V":"iconoVertido","Q":"iconoCalidad", "R":"iconoRiego", "PZ":"iconoPiezo"}
+    dict_iconos= {"A":"iconoAforo", "N":"iconoNivel", "P":"iconoPluvio", "M":"iconoMeteo", "E":"iconoEmbalse","CH":"iconoEmbalse","V":"iconoVertido","Q":"iconoCalidad", "R":"iconoRiego", "PZ":"iconoPiezo", "S":"iconoNivel"}
     estaciones = ListaEstaciones_I.objects.all().values('le_codigo_txt', 'le_utm_x', 'le_utm_y','le_tipo_estacion','le_nombre')
     for estacion in estaciones:
         codigo = estacion['le_codigo_txt']
@@ -91,8 +94,9 @@ def mapa(request):
             tipo=estacion['le_tipo_estacion']
             cuadro_estacion=""            
             icono=dict_iconos[tipo]
+            hay_alarma=False 
             if tipo=='A' or tipo=='N': 
-                hay_alarma=False             #Nivel y aforo cambian de Icono si estan en alerta
+                #Nivel y aforo cambian de Icono si estan en alerta
                 tipos_senales = ['NRIO', 'QRIO']
                 senales=ListaSenales_I.objects.filter(ls_estacion_txt=codigo).filter(ls_tipo_senal__in=tipos_senales).values('ls_tag_txt','ls_alarma')
                 for senal in senales:
@@ -202,13 +206,13 @@ def estacion(request,codigo_estacion_txt):
                     print("Estadisticos totales")
                     print(senal['ls_tipo_senal'])
                     senal['maximo'] = ConsMes_H.objects.filter(cc_idsenal=senal['ls_recid']).aggregate(Max('cc_valor_max'))['cc_valor_max__max']
-                    senal['fecha_maximo'] = ConsMes_H.objects.filter(cc_idsenal=senal['ls_recid'],cc_valor_max=senal['maximo']).first().cc_f_valor_max
-                    fecha_inicial = max(fecha_inicial , ConsMes_H.objects.filter(cc_idsenal=senal['ls_recid']).aggregate(Min('cc_fecha'))['cc_fecha__min']) #Cargar desde tabla de minimos
-                    senal['maximo']=formato.format(senal['maximo']) if senal['maximo'] else ""
-                    if(senal['fecha_maximo']):
-                        senal['fecha_maximo']=senal['fecha_maximo'].strftime("%d/%m/%Y %H:%M")
-                    print(senal['maximo'])
-                    print(senal['fecha_maximo'])
+                    if senal['maximo']:
+                        senal['fecha_maximo'] = ConsMes_H.objects.filter(cc_idsenal=senal['ls_recid'],cc_valor_max=senal['maximo']).first().cc_f_valor_max
+                        fecha_inicial = max(fecha_inicial , ConsMes_H.objects.filter(cc_idsenal=senal['ls_recid']).aggregate(Min('cc_fecha'))['cc_fecha__min']) #Cargar desde tabla de minimos
+                        senal['maximo']=formato.format(senal['maximo']) if senal['maximo'] else ""
+                        if(senal['fecha_maximo']):
+                            senal['fecha_maximo']=senal['fecha_maximo'].strftime("%d/%m/%Y %H:%M")
+            
             #-----------------------------------------------Formato fechas globales -------------------------------------------------------
             if fecha_ultimo_valor : fecha_ultimo_valor = fecha_ultimo_valor.strftime("%d/%m/%Y %H:%M")
             if fecha_ultimo_dia : fecha_ultimo_dia = fecha_ultimo_dia.strftime("%d/%m/%Y")
@@ -254,5 +258,32 @@ def graficas_app(request):
     tipos_senales = TiposSenales.objects.all().filter(ts_grupo_web__isnull=False).order_by('ts_orden')
     return render(request, 'graficas.html',{"senales" : senales, "tipos": tipos_senales, "template": "layouts/application.html"})
 
+def estaciones_microcom(request):
+    sitios=Sites.objects.values('samplingfeatureid__samplingfeaturecode','samplingfeatureid__samplingfeaturename','latitude','longitude','samplingfeatureid__elevation_m','samplingfeatureid__samplingfeaturedescription',  'samplingfeatureid__samplingfeatureid')
+    #estaciones=Samplingfeatures.objects.values('samplingfeatureid')
+    print(sitios)
+    return render(request, 'estaciones_microcom.html',{"estaciones":sitios})
+
+def senales_microcom(request,codigo_estacion_txt):
+    #senales=Results.objects.all().filter(featureactionid__samplingfeatureid__samplingfeaturecode= codigo_estacion_txt)
+    senales=Resultannotations.objects.all().select_related('resultid','annotationid')\
+          .filter(resultid__featureactionid__samplingfeatureid__samplingfeaturecode= codigo_estacion_txt)\
+          .filter(annotationid__annotationcode='TAG')\
+          .order_by('resultid')
+    resultderivationequations=Resultderivationequations.objects.all().select_related('resultid','derivationequationid')          
+    for senal in senales:
+        equation=resultderivationequations.filter(resultid=senal.resultid)
+        if(equation):
+            equation_data=json.loads(equation[0].derivationequationid.derivationequation)
+            senal.deriveq=equation_data
+    return render(request, 'senales_microcom.html',{"senales":senales})
 
 
+def aplicacion_traspasos(request):
+    form = FormTraspaso(request.GET or None)
+    if form.is_valid():
+        start = form.cleaned_data["start_date"]
+        end = form.cleaned_data["end_date"]
+        station = form.cleaned_data["station"]
+        # do something with the data
+    return render(request, "traspasos.html", {"form": form})        

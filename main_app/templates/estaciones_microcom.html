@@ -1,0 +1,100 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block header %}
+<script src="{% static 'main_app/js/grafica.js' %}"></script>
+<!--<script src="{% static 'main_app/js/lista_estaciones.js' %}"></script>
+<script src="{% static 'main_app/js/filtro_estaciones.js' %}"></script> -->
+
+{% endblock %}
+
+{% block onload %}
+onload=filtrar();
+{% endblock %}
+
+{% block content %}
+<div id="Contenido_principal" class="nivel0">
+    <!-- {% include 'widgets/formfiltroestaciones.html' %} -->
+    <table id="tabla_estaciones" class="tabla ancho_fijo ">
+        <tr>
+            <th class="encabezado_fijos">
+                Codigo
+            </th>
+            <th class="encabezado_fijos">
+                Nombre
+            </th>
+            <th class="encabezado_fijos">
+                Longitud
+            </th>
+            <th class="encabezado_fijos">
+                Latitud
+            </th>
+            <th class="encabezado_fijos">
+                Elevacion
+            </th>
+            <th class="encabezado_fijos">
+                Descripcion
+            </th>
+            <th class="encabezado_fijos">
+                Numero Result
+            </th>
+            <th class="encabezado_fijos">
+                Lista de Señales
+            </th>
+        </tr>
+        {% for estacion in estaciones %}
+        <!-- darle clase a los elementos de las tablaS?-->
+        <tr><!-- class="fila_estacion fila_estacion_{{estacion.le_tipo_estacion_id}} fila_estacion_{{estacion.le_zona_id}}">-->
+            <td>
+                <a href="#" onclick="mostrarEstacion('{{estacion.samplingfeatureid__samplingfeaturecode}}')">
+                    {{estacion.samplingfeatureid__samplingfeaturecode}}
+                </a>
+            </td>
+            <td>
+                <a href="#" onclick="mostrarEstacion('{{ estacion.samplingfeatureid__samplingfeaturecode }}')">
+                    {{estacion.samplingfeatureid__samplingfeaturename}}
+                </a>
+            </td>
+            <td>
+                <!-- <a href="/estacion/{{ estacion.le_codigo_txt }}"> -->
+                {{estacion.longitude}}
+                <!-- </a> -->
+            </td>
+            <td>
+                <!-- <a href="/estacion/{{ estacion.le_codigo_txt }}"> -->
+                {{estacion.latitude}}
+                <!-- </a> -->
+            </td>
+            <td>
+                <!-- <a href="/estacion/{{ estacion.le_codigo_txt }}"> -->
+                {{estacion.samplingfeatureid__elevation_m}}
+                <!-- </a> -->
+            </td>
+            <td>
+                <!--            <a href="/estacion/{{ estacion.le_codigo_txt }}">-->
+                {{estacion.samplingfeatureid__samplingfeaturedescription}}
+                <!--            </a>-->
+            </td>
+            <td>
+                <!--            <a href="/estacion/{{ estacion.le_codigo_txt }}">-->
+                {{estacion.samplingfeatureid__samplingfeatureid}}
+                <!--            </a>-->
+            </td>
+            <td>
+                <a href="/senales_microcom/{{ estacion.samplingfeatureid__samplingfeaturecode }}"> Señales de esta estación</a>
+            </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+</div>
+<div id="Ficha_estacion" Class="Ficha ancho100" >
+  <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_estacion');"></div>
+  <div id="Contenido_ficha_estacion"></div>
+</div>
+<div id="Ficha_senal" Class="Ficha ancho_fijo" >
+    <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_senal');"></div>
+    <div id="Contenido_ficha_senal"></div>
+</div>
+
+{% endblock %}

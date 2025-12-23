@@ -131,23 +131,15 @@ def grafica_simple(request,cod_senal):
 def graficas_predefinidas_estacion(request,codigo_estacion_txt): #POR AHORA NO HAY TIPO ( TIPO ES PARA DISTINGUIR CALIDAD DE HIDROLOGIA )    
 
     senales = ListaSenales_I.objects.all().filter(ls_estacion_txt_id=codigo_estacion_txt)
-    print(senales)
     senales_preseleccionadas={}
     tipo_estacion=senales[0].ls_estacion_txt.le_tipo_estacion_id
     tipos_senales = TiposSenales.objects.all().filter(ts_grupo_web__isnull=False).order_by('ts_orden')
-    print(tipos_senales)
-    print(tipos_senales[0].__dict__)
-    print(senales[0].ls_tipo_senal_id)
-    print(senales[0].ls_tipo_senal)
-    print(tipo_estacion)
     if tipo_estacion=='A' or tipo_estacion=='N': #Hidrologia
         cods=[senales.filter(ls_tipo_senal_id="NRIO").first().ls_tag_txt,senales.filter(ls_tipo_senal_id="QRIO").first().ls_tag_txt]
-        print(cods)
         senales_preseleccionadas={
             cods[0]:{"codigo":cods[0],"color":"Blue","linea":[20,5],"lado":0},
             cods[1]:{"codigo":cods[1],"color":"Purple","linea":[4,4],"lado":1},
         }
-        print(senales_preseleccionadas)
     elif tipo_estacion=='P':
         cods=[senales.filter(ls_tipo_senal_id="PCINC").first().ls_tag_txt,senales.filter(ls_tipo_senal_id="PADIA").first().ls_tag_txt]
         senales_preseleccionadas={
@@ -221,8 +213,6 @@ def lista_senales(request):
 @csrf_exempt
 def modificar_bd(request):        
     senal=request.POST["select_senal"]
-    print("REQUEST POST DICT: ")
-    print(request.POST)
     keys=list(filter(lambda x: x.endswith("_valor"),request.POST.keys()))
     fecha_ini=datetime.strptime(request.POST["fecha_ini"], "%Y-%m-%dT%H:%M")
     fecha_fin = datetime.strptime(request.POST["fecha_fin"], "%Y-%m-%dT%H:%M")
@@ -230,29 +220,76 @@ def modificar_bd(request):
     datetimes=list(map(lambda x: datetime.fromtimestamp(int(x)),timestamps))
     id_senal=ListaSenales_I.objects.filter(ls_tag_txt=senal).first().ls_recid
     
-    tabla=get_tabla(fecha_ini,fecha_fin,"DatosValid")
-    values = tabla.objects.filter(cc_idsenal=id_senal,cc_fecha__in=datetimes)
-    datos=[]
+    tabla_valid=get_tabla(fecha_ini,fecha_fin,"DatosValid")
+    values_valid = tabla_valid.objects.filter(cc_idsenal=id_senal,cc_fecha__in=datetimes)
+    datos_valid=[]
+    
+    tabla_treal=get_tabla(fecha_ini,fecha_fin,"DatosTreal")
+    values_treal = tabla_treal.objects.filter(cc_idsenal=id_senal,cc_fecha__in=datetimes)
+    datos_treal=[]
+
+    values_quinceminutales=DatosQuinceminutales.objects.filter(ho_tag_txt=senal,ho_fecha_hora__in=datetimes)    
+    datos_quinceminutales=[]
+
+    values_horarios=DatosHorarios.objects.filter(ho_tag_txt=senal,ho_fecha_hora__in=datetimes)    
+    datos_horarios=[]
+
+    values_horarios_web=DatosHorarios_Web.objects.filter(ho_tag_txt=senal,ho_fecha_hora__in=datetimes)    
+    datos_horarios_web=[]
+
+    values_quinceminutales_web=DatosQuinceminutales_Web.objects.filter(ho_tag_txt=senal,ho_fecha_hora__in=datetimes)    
+    datos_quinceminutales_web=[]
+
     for ts in timestamps:
         dt=datetime.fromtimestamp(int(ts))
         valor=request.POST[ts+"_valor"]
-        calidad=request.POST[ts+"_calidad"]
-        print(f"{dt} : {valor} Q {calidad}")
-        dato=values.get(cc_fecha=dt)
-        #if not dato:
-        #    dato=DatosValid(cc_idsenal=id_senal,cc_fecha=dt)
-        dato.cc_valor=valor
-        dato.cc_calidad=calidad
-        print(dato)
-        datos.append(dato)
-    print(values)
-    with transaction.atomic():
-        for dato in datos:
-            print(dato)
-            print(f"{dato.cc_fecha} : {dato.cc_valor} Q {dato.cc_calidad}")
-        dato.save()
-    
+        calidad=request.POST[ts+"_calidad"]    
+        #Datos Valid    
+        dato_valid=values_valid.get(cc_fecha=dt)
+        dato_valid.cc_valor=valor
+        dato_valid.cc_calidad=calidad        
+        datos_valid.append(dato_valid)    
+        #Datos TReal
+        dato_treal=values_treal.get(cc_fecha=dt)
+        dato_treal.cc_valor=valor
+        dato_treal.cc_calidad=calidad        
+        datos_treal.append(dato_treal)    
+        #Datos Quinceminutales
+        dato_quinceminutales=values_quinceminutales.get(ho_fecha_hora=dt)
+        dato_quinceminutales.ho_valor_horario=valor
+        dato_quinceminutales.ho_calidad=calidad        
+        datos_quinceminutales.append(dato_quinceminutales)
+        #Datos Horarios
+        dato_horario=values_horarios.get(ho_fecha_hora=dt)
+        dato_horario.ho_valor_horario=valor
+        dato_horario.ho_calidad=calidad        
+        datos_horarios.append(dato_horario)
+        #Datos Horarios Web
+        dato_horario_web=values_horarios_web.get(ho_fecha_hora=dt)
+        dato_horario_web.ho_valor_horario=valor
+        dato_horario_web.ho_calidad=calidad        
+        datos_horarios_web.append(dato_horario_web)
+        #Datos Quinceminutales Web
+        dato_quinceminutales_web=values_quinceminutales_web.get(ho_fecha_hora=dt)
+        dato_quinceminutales_web.ho_valor_horario=valor
+        dato_quinceminutales_web.ho_calidad=calidad        
+        datos_quinceminutales_web.append(dato_quinceminutales_web)
 
+    with transaction.atomic():
+        for dato in datos_valid:
+            dato.save()
+        for dato in datos_treal:
+            dato.save()    
+    with transaction.atomic():        
+        for dato in datos_quinceminutales:
+            dato.save()
+        for dato in datos_horarios:
+            dato.save()
+    with transaction.atomic():        
+        for dato in datos_quinceminutales_web:
+            dato.save()
+        for dato in datos_horarios_web:
+            dato.save()
         
-    return JsonResponse({"status":"ok","message":"Datos modificados correctamente","num_updates":len(datos)})
+    return JsonResponse({"status":"ok","message":"Datos modificados correctamente","num_updates":len(datos_valid)})
         

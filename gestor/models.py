@@ -939,6 +939,22 @@ class NaturalezaSenales(models.Model):
     def __str__(self):
         return str(self.ns_nombre)   
 
+#Tipos estaciones... no se que le pasa
+class TiposEstaciones(models.Model):
+    te_codigo = models.CharField(db_column='TE_CODIGO', primary_key=True, max_length=2)  # Field name made lowercase.
+    te_descripcion = models.CharField(db_column='TE_DESCRIPCION', max_length=32, blank=True, null=True)  # Field name made lowercase.
+    te_falta = models.DateTimeField(db_column='TE_FALTA', blank=True, null=True, editable=False)  # Field name made lowercase.
+    te_fmodif = models.DateTimeField(db_column='TE_FMODIF', blank=True, null=True, editable=False)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'TIPOS_ESTACIONES'
+
+    def __str__(self):
+        return str(self.te_descripcion)
+
+
+
 '''
 
 class ListaZonas(models.Model):
@@ -985,8 +1001,8 @@ class FactoresConversionRemota(models.Model):
 
 '''
 
-'''
 
+'''
 class TiposAlmacenamiento(models.Model):
     ta_codigo = models.CharField(db_column='TA_CODIGO', max_length=5,primary_key=True)  # Field name made lowercase.
     ta_descripcion = models.CharField(db_column='TA_DESCRIPCION', max_length=50, blank=True, null=True)  # Field name made lowercase.
@@ -1001,7 +1017,6 @@ class TiposAlmacenamiento(models.Model):
 
     def __str__(self):
         return str(self.ta_descripcion)    
-
 
 class TiposAreas(models.Model):
     ta_codigo = models.CharField(db_column='TA_CODIGO', max_length=3)  # Field name made lowercase.
@@ -1062,18 +1077,6 @@ class TiposEquipos(models.Model):
         db_table = 'TIPOS_EQUIPOS'
 
 
-class TiposEstaciones(models.Model):
-    te_codigo = models.CharField(db_column='TE_CODIGO', primary_key=True, max_length=2)  # Field name made lowercase.
-    te_descripcion = models.CharField(db_column='TE_DESCRIPCION', max_length=32, blank=True, null=True)  # Field name made lowercase.
-    te_falta = models.DateTimeField(db_column='TE_FALTA', blank=True, null=True, editable=False)  # Field name made lowercase.
-    te_fmodif = models.DateTimeField(db_column='TE_FMODIF', blank=True, null=True, editable=False)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'TIPOS_ESTACIONES'
-
-    def __str__(self):
-        return str(self.te_descripcion)
 
 
 class TiposFuentes(models.Model):

@@ -238,7 +238,8 @@ function generarGrafica() {
 
 function anadirValores(valores){    
     if(!valores["etiquetas"] || valores["etiquetas"].length==0){                  //SI NO TIENE VALORES
-        avisos=avisos.concat("<li>La señal "+ valores["senal"]["id_senal"]+ " no tiene datos para el origen y las fechas indicadas</li>")
+        avisos=avisos.concat("<li>La señal "+ valores["senal"]+ " no tiene datos para el origen y las fechas indicadas</li>")
+        //avisos=avisos.concat("<li>La señal "+ valores["senal"]["id_senal"]+ " no tiene datos para el origen y las fechas indicadas</li>")
     }else{
         if(!etiquetas){ //undefined? o null? o que? empty?  //SI AUN NO HABIA ETIQUETAS O ERAN UNDEFINED (Primera señal con datos)
             etiquetas=valores["etiquetas"] //rellena etiquetas

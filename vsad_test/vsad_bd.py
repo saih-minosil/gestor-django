@@ -27,6 +27,18 @@ def insertar_valores(con,serie,values,fecha_pred_ts): #serie es el nombre exacto
         #print(mycursor.rowcount, "record inserted.")
     con.commit()
 
+def insertar_actualizar_valores(con,serie,values,fecha_pred_ts): #serie es el nombre exacto de la serie (P.E A001.Qobs A001.Iobs, A001_Discharge) values es un diccionaro timestamp-valor
+    fecha_pred = datetime.datetime.fromtimestamp(fecha_pred_ts).strftime(FORMATO_FECHA_MYSQL)
+    mycursor = con.cursor()
+    sql_str = "INSERT INTO FEWS_FORECAST.FewsSeries (SeriesID,Fecha,Valor,Marcador,FechaForecast) VALUES (%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE Valor = %s;"
+    valores=[]
+    for ts,value in values.items() :
+        datestr=datetime.datetime.fromtimestamp(int(ts)).strftime(FORMATO_FECHA_MYSQL)
+        valores.append((serie,datestr,value,0,fecha_pred,value))        
+    mycursor.executemany(sql_str,valores)
+        #print(mycursor.rowcount, "record inserted.")
+    con.commit()    
+
 def borrar_valores(con, delta): #Borra todos los valores con mas antiguedad que delta
     mycursor = con.cursor()
     sql_str = "DELETE FROM FEWS_FORECAST.FewsSeries WHERE Fecha < %s;"

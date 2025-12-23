@@ -54,7 +54,7 @@ def procesar_archivo(con,parser,carpeta,archivo):
         for key,serie in values.items():
             id_serie = 'test'+key
             fecha_pred = datetime.datetime.strptime(archivo[0:12], "%Y%m%d%H%M")
-            insertar_valores(con, id_serie, serie, fecha_pred.timestamp())
+            insertar_actualizar_valores(con, id_serie, serie, fecha_pred.timestamp())
     except mysql.connector.errors.IntegrityError as e:
         logear(f"Ya hay datos introducidos para la fecha {datetime.datetime.strptime(archivo[0:12],'%Y%m%d%H%M')} ")
     except mysql.connector.errors.Error as e:
@@ -72,8 +72,12 @@ def mover_archivo(archivo,origen, destino):
         logear(f"Error al mover el archivo {origen}/{archivo} a {destino}: {e}")
 
 def limpiar_bd(con):
-    filas_borradas=borrar_valores(con,TIEMPO_BORRADO)
-    logear(f"{filas_borradas} filas borradas")
+    try:
+        filas_borradas=borrar_valores(con,TIEMPO_BORRADO)
+        logear(f"{filas_borradas} filas borradas")
+    except Exception as e:
+        logear(f"Error al borrar valores antiguos: {e}")
+    
 
 
 

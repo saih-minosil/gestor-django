@@ -17,6 +17,8 @@ class DbRouter:
     tablas_datos_historicos=["CONS_ANO_N","CONS_ANO_H"] #,"DATOS_TREAL","DATOS_VALID" se compruebamn por startswith para incluir las mensuales ya nuales (consulta rapida)
 
     def db_for_read(self, model, **hints):
+        
+
         if model._meta.app_label in self.default_app_labels: #MAIN BBDD(Users, messages, etc)
             return "default"
         elif model._meta.app_label in self.vsad_app_labels: #VSAD APP
@@ -36,9 +38,18 @@ class DbRouter:
             #if model._meta.db_table in self.tablas_datos_historicos or model._meta.db_table.startswith("DATOS_T") or model._meta.db_table.startswith("DATOS_V") or model._meta.db_table.endswith("_H"):
                 print("Leyendo BBDD historica")
                 return "historica"
-            else:
+            elif model.__module__ == "main_app.models_intranet":
                 print("Leyendo BBDD intranet")
                 return "intranet"
+            elif model.__module__ == "main_app.models_web":
+                print("Leyendo BBDD web")
+                return "web"    
+            elif model.__module__ == "main_app.models_microcom":
+                #print("Leyendo BBDD MICROCOM")
+                return "microcom"    
+            elif model.__module__ == "main_app.models_comun":
+                #print("Leyendo BBDD MICROCOM")
+                return "gestor"       
 
     def db_for_write(self, model, **hints):
         if model._meta.app_label in self.default_app_labels: #USERS,MESSAGES,ETC (SYSTEM)
@@ -54,6 +65,10 @@ class DbRouter:
                 return "historica"
             elif model.__module__ == "main_app.models_web":  #GESTOR ESCRIBIENDO EN WEB
                 return "web"
+            elif model.__module__ == "main_app.models_microcom":
+                print("Escribiendo BBDD MICROCOM")
+                return "microcom"    
+
             else:                                        #GESTOR ESCRIBIENDO EN INTRANET
                 return "intranet"                      
         return None

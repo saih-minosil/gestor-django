@@ -1,0 +1,93 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block onload %}
+onload="mostrarSenales();{% if estacion %} filtrarSenalesEstacion('{{estacion}}'); {% endif %}"
+{% endblock %}
+
+{% block header %}
+<script src="{% static 'main_app/js/grafica.js' %}"></script>
+<script src="{% static 'main_app/js/lista_estaciones.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<!--{% include 'widgets/formfiltrosenales.html' %}-->
+<div id="Contenido_principal" class="nivel0">
+    <table id="tabla_senales" class="tabla ancho_fijo">
+        <tr>
+            <th class="encabezado_fijos">
+                Tag
+            </th>
+            <th class="encabezado_fijos">
+                Tipo
+            </th>
+            <th class="encabezado_fijos">
+                Unidad
+            </th>
+            <th class="encabezado_fijos">
+                ResultID
+            </th>
+            <th class="encabezado_fijos">
+                Estacion
+            </th>
+            <th class="encabezado_fijos">
+                Obtención
+            </th>
+        </tr>
+        {% for senal in senales %}
+        <!-- class="fila_senal fila_senal{{senal.ls_tipo_senal_id}} fila_senal{{senal.ls_estacion_txt_id}}" -->
+        <tr id="fila_{{senal.resultid}}"> 
+            <td>
+                <a href="#" onclick="mostrarSenal('{{senal.resultid_id}}');">
+                    {{senal.annotationid.annotationtext}}
+                </a>
+            </td>
+            <td>
+                <a href="#" onclick="mostrarSenal('{{senal.resultid_id}}');">
+                    {{senal.resultid.variableid.variablecode}}
+                </a>
+            </td>
+            <td>
+                <a href="#" onclick="mostrarSenal('{{senal.resultid_id}}');">
+                    {{senal.resultid.unitsid.unitsabbreviation}}
+                </a>
+            </td>
+            <td>
+                <a href="#" onclick="mostrarSenal('{{senal.resultid_id}}');">
+                    {{senal.resultid_id}}
+                </a>
+            </td>
+            <td>
+                <a href="#" onclick="mostrarEstacion('{{senal.resultid.featureactionid.samplingfeatureid.samplingfeaturecode}}');">
+                    {{senal.resultid.featureactionid.samplingfeatureid.samplingfeaturecode}}
+                </a>
+            </td>
+            {% if senal.deriveq %}
+                <td>
+                    <a href="#" onclick="mostrarSenal('{{senal.resultid_id}}');">
+                        Calculada({{senal.deriveq.method}}({{senal.deriveq.sourceresults}}))
+                    </a>
+                </td>
+            {% else %}
+                <td>
+                    <a href="#" onclick="mostrarSenal('{{senal.resultid_id}}');">
+                        Observada
+                    </a>
+                </td>
+            {% endif %}
+        </tr>
+
+        {% endfor %}
+    </table>
+</div>
+<div id="Ficha_senal" Class="Ficha ancho_fijo">
+    <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_senal');"></div>
+    <div id="Contenido_ficha_senal"></div>
+</div>
+<div id="Ficha_estacion" Class="Ficha ancho100">
+    <div class="Boton_cerrar" onclick="cerrarFicha('Ficha_estacion');"></div>
+    <div id="Contenido_ficha_estacion"></div>
+</div>
+
+
+{% endblock %}

@@ -37,6 +37,9 @@ urlpatterns = [
     #path('datos_senal_csv/<str:origen>,<str:tag_txt>,<str:fecha_ini>,<str:fecha_fin>',requests.csv_senal), PARA UNA SOLA SEÑAL
     path('datos_senal_csv/<str:origen>,<str:tag_txt>,<str:fecha_ini>,<str:fecha_fin>',requests.datos_senal_csv), #PARA UNA SOLA SEÑAL
     path('info_senales_grafica/<str:codigo_estacion_txt>',requests.graficas_predefinidas_estacion),
-    path('modificar_bd',requests.modificar_bd)
+    path('modificar_bd',requests.modificar_bd),
+    path('estaciones_microcom',views.estaciones_microcom),
+    path('senales_microcom/<str:codigo_estacion_txt>',views.senales_microcom),
+    path('traspasos',views.aplicacion_traspasos),
 
 ]

@@ -162,7 +162,7 @@ class ListaEstaciones_I(models.Model):
         db_table = 'LISTA_ESTACIONES'
 
     def __str__(self):
-        return str(self.le_nombre)  
+        return f"{self.le_codigo_txt}:{self.le_nombre}"  
 
     def from_gestor(self,obj):
         copy_object(orig=obj,dest=self)
@@ -191,7 +191,7 @@ class ListaSenales_I(models.Model):
     ls_digitos_enteros = models.SmallIntegerField(db_column='LS_DIGITOS_ENTEROS', blank=True, null=True)  # Field name made lowercase.
     ls_digitos_decimales = models.SmallIntegerField(db_column='LS_DIGITOS_DECIMALES', blank=True, null=True)  # Field name made lowercase.
     ls_tipo_almacenamiento = models.CharField(db_column='LS_TIPO_ALMACENAMIENTO', max_length=5, blank=True, null=True)  # Field name made lowercase.
-    ls_alarma = models.CharField(db_column='LS_ALARMA', max_length=12, blank=True, null=True)  # Field name made lowercase.
+    ls_alarma = models.CharField(db_column='LS_ALARMA', max_length=12, blank=True, null=True,default='NORMAL')  # Field name made lowercase.
     ls_tendencia = models.CharField(db_column='LS_TENDENCIA', max_length=50, blank=True, null=True)  # Field name made lowercase.
     ls_ver_web = models.SmallIntegerField(db_column='LS_VER_WEB', blank=True, null=True)  # Field name made lowercase.
     ls_ver_intranet = models.SmallIntegerField(db_column='LS_VER_INTRANET', blank=True, null=True)  # Field name made lowercase.

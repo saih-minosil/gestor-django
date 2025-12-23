@@ -130,7 +130,8 @@ DATABASES = {
         'NAME': 'BD79188001',
         'HOST': '10.31.156.178',
         'USER': 'django-user',
-        'PASSWORD': 'CeCuSaIh2025',
+        'PASSWORD': 'CeCuSaIh2026',
+        'PORT' : '1434',
         'OPTIONS': {
                 'driver': 'ODBC Driver 18 for SQL Server',
                 'extra_params':"TrustServerCertificate=yes", 
@@ -152,9 +153,17 @@ DATABASES = {
     'vsad':{
         'ENGINE': 'django.db.backends.mysql',
         'NAME' : 'FEWS_FORECAST',
-        'HOST' : '10.31.156.174',
-        'USER' : 'jorge',
-        'PASSWORD': '0KDU1nod__'
+        'HOST' : '10.31.156.143',
+        'USER' : 'vsad_new',
+        'PASSWORD': 'CeCuSaIh2025'
+    },
+    'microcom':{
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME' : 'odm2',
+        'HOST' : '10.31.156.176',
+        'USER' : 'saihminosil',
+        'PASSWORD': 'CeCuSaIh2025',
+        'PORT': '3306'
     }
 }
 
